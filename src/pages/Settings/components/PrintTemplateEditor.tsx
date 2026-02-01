@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useTheme } from '../../../contexts/ThemeContext';
 import { Printer, Save, Check, Loader2, Palette, Image as ImageIcon, Type, MapPin, Upload } from 'lucide-react';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { db, storage } from '../../../lib/firebase';
+import { db } from '../../../lib/firebase';
+// Firebase storage removed in favor of Base64 storage
 import { generateVoucherHTML, VoucherData } from '../../Accounts/components/PrintTemplate';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 interface PrintSettings {
   gatesColumnLabel: string;
@@ -127,20 +127,14 @@ export default function PrintTemplateEditor() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.size > 2 * 1024 * 1024) { // 2MB limit
-      alert('حجم الصورة يجب أن يكون أقل من 2 ميجابايت');
-      return;
-    }
-
     setIsUploading(true);
     try {
-      const storageRef = ref(storage, `logos/print_${Date.now()}_${file.name}`);
-      await uploadBytes(storageRef, file);
-      const url = await getDownloadURL(storageRef);
-      setSettings(prev => ({ ...prev, logoUrl: url }));
+      const { fileToBase64 } = await import('../../../utils/imageUtils');
+      const base64 = await fileToBase64(file, 800, 0.7);
+      setSettings(prev => ({ ...prev, logoUrl: base64 }));
     } catch (error) {
-      console.error("Error uploading image:", error);
-      alert('فشل رفع الصورة. يرجى المحاولة مرة أخرى.');
+      console.error("Error processing image:", error);
+      alert('فشل معالجة الصورة. يرجى المحاولة مرة أخرى.');
     } finally {
       setIsUploading(false);
     }

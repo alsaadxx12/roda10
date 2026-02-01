@@ -25,8 +25,8 @@ import {
   Image as ImageIcon
 } from 'lucide-react';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
-import { db, storage } from '../../../lib/firebase';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { db } from '../../../lib/firebase';
+// Firebase storage removed in favor of Base64 storage
 import { generateStatementHTML, StatementData } from '../utils/statementTemplateEngine';
 
 const DEFAULT_TEMPLATE = `<!DOCTYPE html>
@@ -818,20 +818,14 @@ export default function StatementTemplateEditor() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.size > 2 * 1024 * 1024) { // 2MB limit
-      alert('حجم الصورة يجب أن يكون أقل من 2 ميجابايت');
-      return;
-    }
-
     setIsUploadingLogo(true);
     try {
-      const storageRef = ref(storage, `logos/statement_${Date.now()}_${file.name}`);
-      await uploadBytes(storageRef, file);
-      const url = await getDownloadURL(storageRef);
-      setCustomLogoUrl(url);
+      const { fileToBase64 } = await import('../../../utils/imageUtils');
+      const base64 = await fileToBase64(file, 800, 0.7);
+      setCustomLogoUrl(base64);
     } catch (error) {
-      console.error("Error uploading logo:", error);
-      alert('فشل رفع الصورة. يرجى المحاولة مرة أخرى.');
+      console.error("Error processing logo:", error);
+      alert('فشل معالجة الصورة. يرجى المحاولة مرة أخرى.');
     } finally {
       setIsUploadingLogo(false);
     }

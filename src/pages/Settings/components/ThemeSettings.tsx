@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { useTheme } from '../../../contexts/ThemeContext';
 import { Palette, Image as ImageIcon, Save, Check, Loader2, Upload } from 'lucide-react';
 import SettingsCard from '../../../components/SettingsCard';
-import { storage } from '../../../lib/firebase';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+// Firebase storage removed in favor of Base64 storage
 
 interface ThemePreset {
   name: string;
@@ -78,23 +77,20 @@ export default function ThemeSettings() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.size > 2 * 1024 * 1024) { // 2MB limit
-      alert('حجم الصورة يجب أن يكون أقل من 2 ميجابايت');
-      return;
-    }
-
     if (type === 'logo') setIsUploadingLogo(true);
     if (type === 'favicon') setIsUploadingFavicon(true);
 
     try {
-      const storageRef = ref(storage, `logos/${type}_${Date.now()}_${file.name}`);
-      await uploadBytes(storageRef, file);
-      const url = await getDownloadURL(storageRef);
-      if (type === 'logo') setLogoUrl(url);
-      if (type === 'favicon') setFaviconUrl(url);
+      const { fileToBase64 } = await import('../../../utils/imageUtils');
+      // Use smaller max width for favicon
+      const maxWidth = type === 'favicon' ? 128 : 800;
+      const base64 = await fileToBase64(file, maxWidth, 0.7);
+
+      if (type === 'logo') setLogoUrl(base64);
+      if (type === 'favicon') setFaviconUrl(base64);
     } catch (error) {
-      console.error(`Error uploading ${type}:`, error);
-      alert('فشل رفع الصورة. يرجى المحاولة مرة أخرى.');
+      console.error(`Error processing ${type}:`, error);
+      alert('فشل معالجة الصورة. يرجى المحاولة مرة أخرى.');
     } finally {
       if (type === 'logo') setIsUploadingLogo(false);
       if (type === 'favicon') setIsUploadingFavicon(false);
