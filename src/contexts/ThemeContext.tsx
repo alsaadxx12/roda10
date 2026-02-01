@@ -6,6 +6,7 @@ type Theme = 'light' | 'dark';
 
 interface CustomSettings {
   logoUrl: string;
+  logoText?: string;
   faviconUrl?: string;
   headerGradient: string;
 }
@@ -22,6 +23,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 const DEFAULT_SETTINGS: CustomSettings = {
   logoUrl: '',
+  logoText: '',
   faviconUrl: '',
   headerGradient: 'from-indigo-700 via-indigo-800 to-blue-800'
 };

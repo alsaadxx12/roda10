@@ -102,16 +102,22 @@ const Login: React.FC = () => {
                     <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
 
                     <div className="text-center mb-8 md:mb-12">
-                        {customSettings.logoUrl && (
+                        {customSettings.logoUrl ? (
                             <motion.div
                                 whileHover={{ scale: 1.05, rotate: 2 }}
                                 className="inline-block p-6 md:p-6 bg-white/5 rounded-[32px] md:rounded-[40px] border border-white/10 mb-6 shadow-2xl"
                             >
                                 <img src={customSettings.logoUrl} alt="Logo" className="w-28 h-28 md:w-28 md:h-28 object-contain drop-shadow-[0_0_15px_rgba(59,130,246,0.5)]" />
                             </motion.div>
-                        )}
+                        ) : customSettings.logoText ? (
+                            <div className="mb-6 pt-4">
+                                <span className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400 tracking-tighter drop-shadow-xl">
+                                    {customSettings.logoText}
+                                </span>
+                            </div>
+                        ) : null}
                         <h1 className="text-2xl md:text-4xl font-black text-white mb-2 md:mb-3 tracking-tight">بوابة الدخول</h1>
-                        <p className="text-slate-400 font-medium text-sm md:text-lg">منظومة FLY4ALL v4.0</p>
+                        <p className="text-slate-400 font-medium text-sm md:text-lg">منظومة RODA10 v4.0</p>
                     </div>
 
                     {showInit ? (

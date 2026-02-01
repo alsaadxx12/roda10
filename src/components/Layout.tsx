@@ -749,9 +749,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             </div>
           </div>
 
-          {/* Right Side - Logo */}
+          {/* Right Side - Logo/Brand */}
           <div className="flex items-center gap-2 md:gap-4 flex-shrink-0">
-            {customSettings.logoUrl && (
+            {customSettings.logoUrl ? (
               <div className="flex items-center">
                 <img
                   src={customSettings.logoUrl}
@@ -760,7 +760,13 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   onError={(e: any) => (e.currentTarget.style.display = 'none')}
                 />
               </div>
-            )}
+            ) : customSettings.logoText ? (
+              <div className="flex items-center">
+                <span className="text-lg md:text-xl font-black text-white tracking-wider drop-shadow-md">
+                  {customSettings.logoText}
+                </span>
+              </div>
+            ) : null}
           </div>
         </div>
       </header>

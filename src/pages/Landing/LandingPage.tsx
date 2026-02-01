@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import { useTheme } from '../../contexts/ThemeContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     ArrowRight,
@@ -22,6 +23,7 @@ import {
 const LandingPage: React.FC = () => {
     const navigate = useNavigate();
     const { user } = useAuth();
+    const { customSettings } = useTheme();
     const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
     const faqs = [
@@ -61,6 +63,11 @@ const LandingPage: React.FC = () => {
                         className="flex items-center gap-3 cursor-pointer"
                         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                     >
+                        {customSettings.logoText && (
+                            <span className="text-2xl md:text-3xl font-black text-white tracking-tighter hover:text-blue-400 transition-colors">
+                                {customSettings.logoText}
+                            </span>
+                        )}
                     </motion.div>
                 </div>
             </nav>
@@ -389,6 +396,11 @@ const LandingPage: React.FC = () => {
                     <div className="grid md:grid-cols-4 gap-12 mb-16">
                         <div className="col-span-2">
                             <div className="flex items-center gap-3 mb-6">
+                                {customSettings.logoText && (
+                                    <span className="text-3xl font-black text-white tracking-widest leading-none">
+                                        {customSettings.logoText}
+                                    </span>
+                                )}
                             </div>
                             <p className="text-slate-500 max-w-md font-medium leading-relaxed">
                                 المنصة الرائدة في إدارة تكنولوجيا الطيران، نؤمن بقوة البيانات في تحويل الأعمال التجارية وجعلها أكثر كفاءة وربحية.

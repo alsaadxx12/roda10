@@ -30,7 +30,7 @@ interface PrintSettings {
 }
 
 export default function PrintTemplateEditor() {
-  const { theme } = useTheme();
+  const { theme, customSettings } = useTheme();
   const [settings, setSettings] = useState<PrintSettings>({
     gatesColumnLabel: 'العمود الأول',
     internalColumnLabel: 'العمود الثاني',
@@ -95,7 +95,10 @@ export default function PrintTemplateEditor() {
         fly: 500,
         phone: '07701234567',
       };
-      const html = await generateVoucherHTML(sampleVoucher, settings);
+      const html = await generateVoucherHTML(sampleVoucher, {
+        ...settings,
+        logoText: customSettings.logoText
+      });
       setPreviewHtml(html);
     };
 

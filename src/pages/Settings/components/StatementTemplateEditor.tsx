@@ -341,6 +341,12 @@ const DEFAULT_TEMPLATE = `<!DOCTYPE html>
         <img src="{{company.logoUrl}}" alt="Company Logo">
       </div>
       {{/if}}
+      
+      {{#if company.showTextLogo}}
+      <div class="logo-section">
+        <span style="font-size: 24px; font-weight: 900; color: #111; letter-spacing: -0.5px;">{{company.logoText}}</span>
+      </div>
+      {{/if}}
 
       <div class="to-section">
         <div class="to-title">TO:</div>
@@ -551,7 +557,7 @@ const AVAILABLE_VARIABLES = [
 ];
 
 export default function StatementTemplateEditor() {
-  const { theme } = useTheme();
+  const { theme, customSettings } = useTheme();
   const { user } = useAuth();
   const [template, setTemplate] = useState(DEFAULT_TEMPLATE);
   const [previewHtml, setPreviewHtml] = useState('');
@@ -702,7 +708,15 @@ export default function StatementTemplateEditor() {
       // Apply custom colors
       previewTemplate = applyColorsToTemplate(previewTemplate);
 
-      const html = generateStatementHTML(previewTemplate, SAMPLE_DATA);
+      const html = generateStatementHTML(previewTemplate, {
+        ...SAMPLE_DATA,
+        company: {
+          ...SAMPLE_DATA.company,
+          logoUrl: customLogoUrl || customSettings.logoUrl,
+          logoText: customSettings.logoText,
+          showTextLogo: !customLogoUrl && !customSettings.logoUrl && !!customSettings.logoText
+        }
+      });
       setPreviewHtml(html);
     } catch (error) {
       console.error('Error generating preview:', error);

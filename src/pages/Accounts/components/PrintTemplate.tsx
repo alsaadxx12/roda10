@@ -25,6 +25,7 @@ type TemplateSettings = {
   primaryColor: string;
   textColor: string;
   logoUrl: string;
+  logoText?: string;
   footerAddress: string;
   companyNameLabel: string;
   receiptNoLabel: string;
@@ -90,6 +91,7 @@ export async function generateVoucherHTML(
     primaryColor = '#4A0E6B',
     textColor = '#111827',
     logoUrl = "",
+    logoText = "",
     footerAddress = '9647730308111 - 964771800033 | كربلاء - شارع الإسكان - قرب مستشفى احمد الوائلي',
     companyNameLabel = 'شركة الروضتين للسفر والسياحة',
     receiptNoLabel = 'Receipt No:',
@@ -237,6 +239,10 @@ export async function generateVoucherHTML(
           ${logoUrl ? `
           <div class="logo-container">
             <img src="${logoUrl}" alt="Logo" class="logo">
+          </div>
+          ` : logoText ? `
+          <div class="logo-container" style="display: flex; align-items: center; justify-content: flex-end;">
+            <span style="font-size: 16pt; font-weight: 900; color: ${primaryColor}; tracking-tighter: -1px;">${logoText}</span>
           </div>
           ` : '<div class="logo-container"></div>'}
         </div>

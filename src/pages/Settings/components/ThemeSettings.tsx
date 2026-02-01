@@ -49,6 +49,7 @@ const THEME_PRESETS: ThemePreset[] = [
 export default function ThemeSettings() {
   const { theme, customSettings, setCustomSettings } = useTheme();
   const [logoUrl, setLogoUrl] = useState(customSettings.logoUrl || '');
+  const [logoText, setLogoText] = useState(customSettings.logoText || '');
   const [faviconUrl, setFaviconUrl] = useState(customSettings.faviconUrl || '');
   const [selectedGradient, setSelectedGradient] = useState(customSettings.headerGradient || THEME_PRESETS[0].gradient);
   const [isSaving, setIsSaving] = useState(false);
@@ -60,6 +61,7 @@ export default function ThemeSettings() {
     setIsSaving(true);
     setCustomSettings({
       logoUrl: logoUrl,
+      logoText: logoText,
       faviconUrl: faviconUrl,
       headerGradient: selectedGradient,
     }).then(() => {
@@ -143,6 +145,26 @@ export default function ThemeSettings() {
         description="تغيير الشعار والأيقونة المعروضة في النظام والمتصفح"
       >
         <div className="space-y-6">
+          {/* Logo Text */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+              اسم الشركة (الشعار النصي)
+            </label>
+            <input
+              type="text"
+              value={logoText}
+              onChange={(e) => setLogoText(e.target.value)}
+              placeholder="أدخل اسم الشركة ليظهر كشعار"
+              className={`w-full px-4 py-3 rounded-xl border-2 transition-all outline-none ${theme === 'dark'
+                ? 'bg-gray-900/50 border-gray-700 focus:border-blue-500 text-white'
+                : 'bg-white border-gray-200 focus:border-blue-500 text-gray-900'
+                }`}
+            />
+            <p className="mt-2 text-xs text-gray-500 dark:text-gray-400 font-medium">
+              سيتم استخدام هذا النص كشعار في حال عدم توفر صورة أو كبديل سريع.
+            </p>
+          </div>
+
           {/* Logo Upload */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
@@ -150,8 +172,8 @@ export default function ThemeSettings() {
             </label>
             <div
               className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all ${theme === 'dark'
-                  ? 'border-gray-600 hover:border-blue-500 bg-gray-900/50'
-                  : 'border-gray-300 hover:border-blue-500 bg-gray-50'
+                ? 'border-gray-600 hover:border-blue-500 bg-gray-900/50'
+                : 'border-gray-300 hover:border-blue-500 bg-gray-50'
                 } ${isUploadingLogo ? 'opacity-50 pointer-events-none' : ''}`}
               onClick={() => document.getElementById('logo-upload')?.click()}
             >
@@ -186,8 +208,8 @@ export default function ThemeSettings() {
             </label>
             <div
               className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all ${theme === 'dark'
-                  ? 'border-gray-600 hover:border-blue-500 bg-gray-900/50'
-                  : 'border-gray-300 hover:border-blue-500 bg-gray-50'
+                ? 'border-gray-600 hover:border-blue-500 bg-gray-900/50'
+                : 'border-gray-300 hover:border-blue-500 bg-gray-50'
                 } ${isUploadingFavicon ? 'opacity-50 pointer-events-none' : ''}`}
               onClick={() => document.getElementById('favicon-upload')?.click()}
             >
