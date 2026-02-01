@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useTheme } from '../../../contexts/ThemeContext';
 import { Printer, Save, Check, Loader2, Palette, Image as ImageIcon, Type, MapPin, Upload } from 'lucide-react';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { db } from '../../../lib/firebase';
-import { generateVoucherHTML } from '../../Accounts/components/PrintTemplate';
-import ModernInput from '../../../components/ModernInput';
+import { db, storage } from '../../../lib/firebase';
+import { generateVoucherHTML, VoucherData } from '../../Accounts/components/PrintTemplate';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 interface PrintSettings {
   gatesColumnLabel: string;
@@ -55,6 +55,7 @@ export default function PrintTemplateEditor() {
   });
   const [previewHtml, setPreviewHtml] = useState('');
   const [isSaving, setIsSaving] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
 
   const loadSettings = async () => {
@@ -79,7 +80,7 @@ export default function PrintTemplateEditor() {
 
   useEffect(() => {
     const generatePreview = async () => {
-      const sampleVoucher = {
+      const sampleVoucher: VoucherData = {
         type: 'receipt',
         invoiceNumber: '12345',
         createdAt: new Date(),
@@ -93,7 +94,6 @@ export default function PrintTemplateEditor() {
         external: 2000,
         fly: 500,
         phone: '07701234567',
-        ...settings,
       };
       const html = await generateVoucherHTML(sampleVoucher, settings);
       setPreviewHtml(html);
@@ -120,7 +120,7 @@ export default function PrintTemplateEditor() {
     setSettings(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -129,18 +129,24 @@ export default function PrintTemplateEditor() {
       return;
     }
 
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setSettings(prev => ({ ...prev, logoUrl: reader.result as string }));
-    };
-    reader.readAsDataURL(file);
+    setIsUploading(true);
+    try {
+      const storageRef = ref(storage, `logos/print_${Date.now()}_${file.name}`);
+      await uploadBytes(storageRef, file);
+      const url = await getDownloadURL(storageRef);
+      setSettings(prev => ({ ...prev, logoUrl: url }));
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      alert('فشل رفع الصورة. يرجى المحاولة مرة أخرى.');
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   return (
     <div className="space-y-6">
-      <div className={`p-6 rounded-2xl border ${
-        theme === 'dark' ? 'bg-gray-800/50 border-gray-700' : 'bg-white border-gray-200'
-      }`}>
+      <div className={`p-6 rounded-2xl border ${theme === 'dark' ? 'bg-gray-800/50 border-gray-700' : 'bg-white border-gray-200'
+        }`}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="space-y-6">
             <h4 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-3 flex items-center gap-2">
@@ -163,10 +169,19 @@ export default function PrintTemplateEditor() {
               <span>تخصيص الشعار</span>
             </h4>
             <div className="flex items-center gap-4">
-              <img src={settings.logoUrl} alt="Logo Preview" className="w-16 h-16 object-contain rounded-lg bg-gray-100 p-1" />
-              <label className="flex-1 cursor-pointer flex items-center justify-center gap-2 px-4 py-3 bg-gray-50 dark:bg-gray-700 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg hover:border-indigo-500 dark:hover:border-indigo-400">
+              <div className="relative w-16 h-16">
+                <img src={settings.logoUrl} alt="Logo Preview" className={`w-full h-full object-contain rounded-lg bg-gray-100 p-1 ${isUploading ? 'opacity-30' : ''}`} />
+                {isUploading && (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <Loader2 className="w-6 h-6 text-indigo-600 animate-spin" />
+                  </div>
+                )}
+              </div>
+              <label className={`flex-1 cursor-pointer flex items-center justify-center gap-2 px-4 py-3 bg-gray-50 dark:bg-gray-700 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg hover:border-indigo-500 dark:hover:border-indigo-400 ${isUploading ? 'opacity-50 pointer-events-none' : ''}`}>
                 <Upload className="w-5 h-5 text-gray-500" />
-                <span className="text-sm font-medium text-gray-600 dark:text-gray-300">تغيير الشعار</span>
+                <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
+                  {isUploading ? 'جاري الرفع...' : 'تغيير الشعار'}
+                </span>
                 <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
               </label>
             </div>
@@ -205,7 +220,7 @@ export default function PrintTemplateEditor() {
           </div>
         </div>
       </div>
-      
+
       <div className="flex justify-end mt-4">
         <button
           onClick={handleSave}
@@ -222,7 +237,7 @@ export default function PrintTemplateEditor() {
           </div>
         )}
       </div>
-      
+
       <div>
         <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-3">
           <div className={`p-2.5 rounded-xl bg-gradient-to-br from-indigo-100 to-indigo-50 shadow-inner`}>

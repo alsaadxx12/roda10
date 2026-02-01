@@ -1,8 +1,8 @@
 import QRCode from "qrcode";
 
-type VoucherType = 'receipt' | 'payment';
+export type VoucherType = 'receipt' | 'payment';
 
-type VoucherData = {
+export type VoucherData = {
   type: VoucherType;
   invoiceNumber?: string | number;
   createdAt?: Date | string | number;

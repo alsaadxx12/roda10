@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTheme } from '../../../contexts/ThemeContext';
 import { Palette, Image as ImageIcon, Save, Check, Loader2, Upload } from 'lucide-react';
 import SettingsCard from '../../../components/SettingsCard';
+import { storage } from '../../../lib/firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 interface ThemePreset {
   name: string;
@@ -47,14 +49,18 @@ const THEME_PRESETS: ThemePreset[] = [
 export default function ThemeSettings() {
   const { theme, customSettings, setCustomSettings } = useTheme();
   const [logoUrl, setLogoUrl] = useState(customSettings.logoUrl || '');
+  const [faviconUrl, setFaviconUrl] = useState(customSettings.faviconUrl || '');
   const [selectedGradient, setSelectedGradient] = useState(customSettings.headerGradient || THEME_PRESETS[0].gradient);
   const [isSaving, setIsSaving] = useState(false);
+  const [isUploadingLogo, setIsUploadingLogo] = useState(false);
+  const [isUploadingFavicon, setIsUploadingFavicon] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
 
   const handleSave = () => {
     setIsSaving(true);
     setCustomSettings({
       logoUrl: logoUrl,
+      faviconUrl: faviconUrl,
       headerGradient: selectedGradient,
     }).then(() => {
       setIsSaving(false);
@@ -65,8 +71,8 @@ export default function ThemeSettings() {
       setIsSaving(false);
     });
   };
-  
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: 'logo' | 'favicon') => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -75,11 +81,22 @@ export default function ThemeSettings() {
       return;
     }
 
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setLogoUrl(reader.result as string);
-    };
-    reader.readAsDataURL(file);
+    if (type === 'logo') setIsUploadingLogo(true);
+    if (type === 'favicon') setIsUploadingFavicon(true);
+
+    try {
+      const storageRef = ref(storage, `logos/${type}_${Date.now()}_${file.name}`);
+      await uploadBytes(storageRef, file);
+      const url = await getDownloadURL(storageRef);
+      if (type === 'logo') setLogoUrl(url);
+      if (type === 'favicon') setFaviconUrl(url);
+    } catch (error) {
+      console.error(`Error uploading ${type}:`, error);
+      alert('فشل رفع الصورة. يرجى المحاولة مرة أخرى.');
+    } finally {
+      if (type === 'logo') setIsUploadingLogo(false);
+      if (type === 'favicon') setIsUploadingFavicon(false);
+    }
   };
 
   return (
@@ -99,11 +116,10 @@ export default function ThemeSettings() {
                 <button
                   key={preset.name}
                   onClick={() => setSelectedGradient(preset.gradient)}
-                  className={`relative p-4 rounded-xl border-4 transition-all duration-300 transform hover:scale-105 ${
-                    selectedGradient === preset.gradient
-                      ? 'border-blue-500 shadow-2xl'
-                      : 'border-transparent hover:border-blue-200'
-                  }`}
+                  className={`relative p-4 rounded-xl border-4 transition-all duration-300 transform hover:scale-105 ${selectedGradient === preset.gradient
+                    ? 'border-blue-500 shadow-2xl'
+                    : 'border-transparent hover:border-blue-200'
+                    }`}
                 >
                   <div className={`w-full h-16 rounded-lg bg-gradient-to-r ${preset.gradient}`}></div>
                   <p className="text-center text-sm font-bold mt-3 text-gray-800 dark:text-gray-200">
@@ -123,35 +139,38 @@ export default function ThemeSettings() {
 
       <SettingsCard
         icon={ImageIcon}
-        title="تخصيص الشعار"
-        description="تغيير الشعار المعروض في النظام"
+        title="تخصيص الشعار والأيقونة"
+        description="تغيير الشعار والأيقونة المعروضة في النظام والمتصفح"
       >
-        <div className="space-y-4">
+        <div className="space-y-6">
+          {/* Logo Upload */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-              رفع شعار جديد
+              شعار النظام الرئيسي
             </label>
             <div
-              className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all ${
-                theme === 'dark'
+              className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all ${theme === 'dark'
                   ? 'border-gray-600 hover:border-blue-500 bg-gray-900/50'
                   : 'border-gray-300 hover:border-blue-500 bg-gray-50'
-              }`}
+                } ${isUploadingLogo ? 'opacity-50 pointer-events-none' : ''}`}
               onClick={() => document.getElementById('logo-upload')?.click()}
             >
               <input
                 id="logo-upload"
                 type="file"
                 accept="image/*"
-                onChange={handleImageUpload}
+                onChange={(e) => handleFileUpload(e, 'logo')}
                 className="hidden"
               />
               <div className="flex flex-col items-center gap-2">
-                <Upload className={`w-10 h-10 ${
-                  theme === 'dark' ? 'text-gray-500' : 'text-gray-400'
-                }`} />
+                {isUploadingLogo ? (
+                  <Loader2 className="w-10 h-10 text-blue-500 animate-spin" />
+                ) : (
+                  <Upload className={`w-10 h-10 ${theme === 'dark' ? 'text-gray-500' : 'text-gray-400'
+                    }`} />
+                )}
                 <span className="font-medium text-sm text-gray-700 dark:text-gray-300">
-                  انقر هنا أو اسحب الصورة
+                  {isUploadingLogo ? 'جاري الرفع...' : 'انقر لرفع شعار النظام'}
                 </span>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
                   PNG, JPG, GIF (بحد أقصى 2MB)
@@ -159,16 +178,64 @@ export default function ThemeSettings() {
               </div>
             </div>
           </div>
-          {logoUrl && (
-            <div>
-              <p className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">معاينة الشعار:</p>
-              <div className={`p-4 rounded-lg flex items-center justify-center ${
-                theme === 'dark' ? 'bg-gray-900/50' : 'bg-gray-100'
-              }`}>
-                <img src={logoUrl} alt="معاينة الشعار" className="max-h-20" />
+
+          {/* Favicon Upload */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+              أيقونة المتصفح (Favicon)
+            </label>
+            <div
+              className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all ${theme === 'dark'
+                  ? 'border-gray-600 hover:border-blue-500 bg-gray-900/50'
+                  : 'border-gray-300 hover:border-blue-500 bg-gray-50'
+                } ${isUploadingFavicon ? 'opacity-50 pointer-events-none' : ''}`}
+              onClick={() => document.getElementById('favicon-upload')?.click()}
+            >
+              <input
+                id="favicon-upload"
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleFileUpload(e, 'favicon')}
+                className="hidden"
+              />
+              <div className="flex flex-col items-center gap-2">
+                {isUploadingFavicon ? (
+                  <Loader2 className="w-10 h-10 text-blue-500 animate-spin" />
+                ) : (
+                  <Upload className={`w-10 h-10 ${theme === 'dark' ? 'text-gray-500' : 'text-gray-400'
+                    }`} />
+                )}
+                <span className="font-medium text-sm text-gray-700 dark:text-gray-300">
+                  {isUploadingFavicon ? 'جاري الرفع...' : 'انقر لرفع أيقونة المتصفح'}
+                </span>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  PNG, ICO (بحد أقصى 1MB)
+                </p>
               </div>
             </div>
-          )}
+          </div>
+
+          {/* Previews */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {logoUrl && (
+              <div>
+                <p className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">معاينة الشعار:</p>
+                <div className={`p-4 rounded-lg flex items-center justify-center h-32 ${theme === 'dark' ? 'bg-gray-900/50' : 'bg-gray-100'
+                  }`}>
+                  <img src={logoUrl} alt="معاينة الشعار" className="max-h-24 object-contain" />
+                </div>
+              </div>
+            )}
+            {faviconUrl && (
+              <div>
+                <p className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">معاينة الأيقونة:</p>
+                <div className={`p-4 rounded-lg flex items-center justify-center h-32 ${theme === 'dark' ? 'bg-gray-900/50' : 'bg-gray-100'
+                  }`}>
+                  <img src={faviconUrl} alt="معاينة الأيقونة" className="w-16 h-16 object-contain" />
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </SettingsCard>
 

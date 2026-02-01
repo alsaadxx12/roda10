@@ -6,6 +6,7 @@ type Theme = 'light' | 'dark';
 
 interface CustomSettings {
   logoUrl: string;
+  faviconUrl?: string;
   headerGradient: string;
 }
 
@@ -21,6 +22,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 const DEFAULT_SETTINGS: CustomSettings = {
   logoUrl: '',
+  faviconUrl: '',
   headerGradient: 'from-indigo-700 via-indigo-800 to-blue-800'
 };
 
@@ -59,6 +61,26 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
     return () => unsubscribe();
   }, []);
+
+  // Update favicon dynamically
+  useEffect(() => {
+    const url = customSettings.faviconUrl || customSettings.logoUrl;
+    if (url) {
+      let link: HTMLLinkElement | null = document.querySelector("link[rel~='icon']");
+      if (!link) {
+        link = document.createElement('link');
+        link.rel = 'icon';
+        document.getElementsByTagName('head')[0].appendChild(link);
+      }
+      link.href = url;
+
+      // Also update apple-touch-icon
+      let appleLink: HTMLLinkElement | null = document.querySelector("link[rel='apple-touch-icon']");
+      if (appleLink) {
+        appleLink.href = url;
+      }
+    }
+  }, [customSettings.logoUrl, customSettings.faviconUrl]);
 
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme);

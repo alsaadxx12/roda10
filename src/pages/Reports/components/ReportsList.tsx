@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useTheme } from '../../../contexts/ThemeContext';
-import { ArrowRight, Plane, Calendar, Brain, List, RefreshCw, MessageCircle, Copy, CheckCircle, AlertTriangle } from 'lucide-react';
+import { Plane, Calendar, Brain, List, RefreshCw, MessageCircle, Copy, CheckCircle, AlertTriangle } from 'lucide-react';
 import { BookingReport, MatchResult } from '../types';
 import { useNotification } from '../../../contexts/NotificationContext';
 import { ExtractedData } from '../../../lib/services/smartTicketExtractor';
