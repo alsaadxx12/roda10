@@ -14,6 +14,8 @@ import {
 import { motion } from 'framer-motion';
 import { useTheme } from '../../contexts/ThemeContext';
 import WelcomeOverlay from '../../components/WelcomeOverlay';
+import SystemInit from './SystemInit';
+import { isSystemEmpty } from '../../lib/collections/setup';
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -26,6 +28,17 @@ const Login: React.FC = () => {
 
     const [showWelcome, setShowWelcome] = useState(false);
     const { customSettings } = useTheme();
+    const [isEmpty, setIsEmpty] = useState(false);
+    const [showInit, setShowInit] = useState(false);
+
+    useEffect(() => {
+        const checkSystem = async () => {
+            const empty = await isSystemEmpty();
+            setIsEmpty(empty);
+            if (empty) setShowInit(true);
+        };
+        checkSystem();
+    }, []);
 
     useEffect(() => {
         if (user && !loading) {
@@ -100,68 +113,72 @@ const Login: React.FC = () => {
                         <p className="text-slate-400 font-medium text-sm md:text-lg">منظومة FLY4ALL v4.0</p>
                     </div>
 
-                    <form onSubmit={handleLogin} className="space-y-6 md:space-y-8">
-                        <div className="space-y-4 md:space-y-6">
-                            <div className="relative group">
-                                <label className="text-[10px] md:text-xs font-black text-blue-400 uppercase tracking-widest mb-1 md:mb-2 block mr-2">البريد الإلكتروني</label>
-                                <div className="relative">
-                                    <input
-                                        type="email"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        className="w-full pl-5 pr-12 md:pr-14 py-4 md:py-5 bg-white/5 border border-white/10 rounded-[16px] md:rounded-[24px] focus:outline-none focus:border-blue-500 text-white text-right transition-all font-black text-base md:text-lg placeholder:text-slate-700 focus:bg-white/10"
-                                        placeholder="user@fly4all.com"
-                                        dir="ltr"
-                                        required
-                                    />
-                                    <Mail className="absolute right-4 md:right-5 top-1/2 -translate-y-1/2 w-5 h-5 md:w-6 md:h-6 text-slate-500 group-focus-within:text-blue-500 transition-colors" />
+                    {showInit ? (
+                        <SystemInit onComplete={() => setShowInit(false)} />
+                    ) : (
+                        <form onSubmit={handleLogin} className="space-y-6 md:space-y-8">
+                            <div className="space-y-4 md:space-y-6">
+                                <div className="relative group">
+                                    <label className="text-[10px] md:text-xs font-black text-blue-400 uppercase tracking-widest mb-1 md:mb-2 block mr-2">البريد الإلكتروني</label>
+                                    <div className="relative">
+                                        <input
+                                            type="email"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                            className="w-full pl-5 pr-12 md:pr-14 py-4 md:py-5 bg-white/5 border border-white/10 rounded-[16px] md:rounded-[24px] focus:outline-none focus:border-blue-500 text-white text-right transition-all font-black text-base md:text-lg placeholder:text-slate-700 focus:bg-white/10"
+                                            placeholder="user@fly4all.com"
+                                            dir="ltr"
+                                            required
+                                        />
+                                        <Mail className="absolute right-4 md:right-5 top-1/2 -translate-y-1/2 w-5 h-5 md:w-6 md:h-6 text-slate-500 group-focus-within:text-blue-500 transition-colors" />
+                                    </div>
+                                </div>
+
+                                <div className="relative group">
+                                    <label className="text-[10px] md:text-xs font-black text-blue-400 uppercase tracking-widest mb-1 md:mb-2 block mr-2">كلمة المرور</label>
+                                    <div className="relative">
+                                        <input
+                                            type={showPassword ? "text" : "password"}
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
+                                            className="w-full pl-12 md:pl-14 pr-12 md:pr-14 py-4 md:py-5 bg-white/5 border border-white/10 rounded-[16px] md:rounded-[24px] focus:outline-none focus:border-blue-500 text-white text-center transition-all font-black text-xl md:text-2xl tracking-[0.2em] md:tracking-[0.3em] focus:bg-white/10"
+                                            placeholder="••••••••"
+                                            dir="ltr"
+                                            required
+                                        />
+                                        <Lock className="absolute right-4 md:right-5 top-1/2 -translate-y-1/2 w-5 h-5 md:w-6 md:h-6 text-slate-500 group-focus-within:text-blue-500 transition-colors" />
+                                        <button
+                                            type="button"
+                                            className="absolute left-4 md:left-5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition-colors"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                        >
+                                            {showPassword ? <EyeOff className="w-5 h-5 md:w-6 md:h-6" /> : <Eye className="w-5 h-5 md:w-6 md:h-6" />}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div className="relative group">
-                                <label className="text-[10px] md:text-xs font-black text-blue-400 uppercase tracking-widest mb-1 md:mb-2 block mr-2">كلمة المرور</label>
-                                <div className="relative">
-                                    <input
-                                        type={showPassword ? "text" : "password"}
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        className="w-full pl-12 md:pl-14 pr-12 md:pr-14 py-4 md:py-5 bg-white/5 border border-white/10 rounded-[16px] md:rounded-[24px] focus:outline-none focus:border-blue-500 text-white text-center transition-all font-black text-xl md:text-2xl tracking-[0.2em] md:tracking-[0.3em] focus:bg-white/10"
-                                        placeholder="••••••••"
-                                        dir="ltr"
-                                        required
-                                    />
-                                    <Lock className="absolute right-4 md:right-5 top-1/2 -translate-y-1/2 w-5 h-5 md:w-6 md:h-6 text-slate-500 group-focus-within:text-blue-500 transition-colors" />
-                                    <button
-                                        type="button"
-                                        className="absolute left-4 md:left-5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition-colors"
-                                        onClick={() => setShowPassword(!showPassword)}
-                                    >
-                                        {showPassword ? <EyeOff className="w-5 h-5 md:w-6 md:h-6" /> : <Eye className="w-5 h-5 md:w-6 md:h-6" />}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                            {(error || authError) && (
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    className="flex items-center gap-3 md:gap-4 p-4 md:p-5 bg-red-500/10 text-red-400 rounded-2xl border border-red-500/20"
+                                >
+                                    <AlertCircle className="w-5 h-5 md:w-6 md:h-6 flex-shrink-0" />
+                                    <p className="text-xs md:text-sm font-bold leading-relaxed">{error || authError}</p>
+                                </motion.div>
+                            )}
 
-                        {(error || authError) && (
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                className="flex items-center gap-3 md:gap-4 p-4 md:p-5 bg-red-500/10 text-red-400 rounded-2xl border border-red-500/20"
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className="w-full flex items-center justify-center py-5 md:py-6 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-[16px] md:rounded-[24px] font-black text-lg md:text-xl hover:shadow-[0_0_30px_rgba(37,99,235,0.4)] transition-all hover:scale-[1.02] active:scale-[0.98] shadow-2xl relative overflow-hidden group"
                             >
-                                <AlertCircle className="w-5 h-5 md:w-6 md:h-6 flex-shrink-0" />
-                                <p className="text-xs md:text-sm font-bold leading-relaxed">{error || authError}</p>
-                            </motion.div>
-                        )}
-
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className="w-full flex items-center justify-center py-5 md:py-6 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-[16px] md:rounded-[24px] font-black text-lg md:text-xl hover:shadow-[0_0_30px_rgba(37,99,235,0.4)] transition-all hover:scale-[1.02] active:scale-[0.98] shadow-2xl relative overflow-hidden group"
-                        >
-                            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                            {loading ? <Loader2 className="w-7 h-7 md:w-8 md:h-8 animate-spin" /> : <span className="relative z-10">دخول آمن للمنظومة</span>}
-                        </button>
-                    </form>
+                                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                                {loading ? <Loader2 className="w-7 h-7 md:w-8 md:h-8 animate-spin" /> : <span className="relative z-10">دخول آمن للمنظومة</span>}
+                            </button>
+                        </form>
+                    )}
                 </div>
 
                 <div className="mt-8 md:mt-10 text-center flex flex-col items-center gap-4 md:gap-6">
