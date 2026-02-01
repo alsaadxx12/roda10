@@ -1,4 +1,4 @@
-const CACHE_NAME = 'fly4-cache-v2';
+const CACHE_NAME = 'fly4-cache-v3';
 const urlsToCache = [
     '/',
     '/index.html',
@@ -16,15 +16,23 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+    // 1. Skip non-GET requests
+    if (event.request.method !== 'GET') return;
+
     const url = new URL(event.request.url);
 
-    // CRITICAL: Bypass all external requests (not on the same origin)
-    // This fixes CORS issues with Firebase Storage and other external APIs
+    // 2. CRITICAL: Bypass ALL external requests
+    // This fixes CORS issues with Firebase Storage, UltraMsg, etc.
     if (url.origin !== self.location.origin) {
         return;
     }
 
-    // Use Network-First for HTML and Manifest to ensure we get the latest JS bundle hashes
+    // 3. Bypass explicit API/Storage patterns even if same-origin (unlikely but safe)
+    if (url.href.includes('firebasestorage.googleapis.com') || url.href.includes('api.ultramsg.com')) {
+        return;
+    }
+
+    // 4. For HTML/Manifest: Network-First
     if (event.request.mode === 'navigate' || urlsToCache.includes(url.pathname)) {
         event.respondWith(
             fetch(event.request)
@@ -42,7 +50,7 @@ self.addEventListener('fetch', (event) => {
         return;
     }
 
-    // Default to Cache-First for other static assets
+    // 5. For other local static assets (JS, CSS, local images): Cache-First
     event.respondWith(
         caches.match(event.request)
             .then((response) => {
