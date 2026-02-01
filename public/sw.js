@@ -1,4 +1,4 @@
-const CACHE_NAME = 'fly4-cache-v1';
+const CACHE_NAME = 'fly4-cache-v2';
 const urlsToCache = [
     '/',
     '/index.html',
@@ -18,9 +18,10 @@ self.addEventListener('install', (event) => {
 self.addEventListener('fetch', (event) => {
     const url = new URL(event.request.url);
 
-    // Bypass Firebase Storage URLs to avoid CORS issues in Service Worker
-    if (url.hostname === 'firebasestorage.googleapis.com') {
-        return; // Let the browser handle these requests directly
+    // CRITICAL: Bypass all external requests (not on the same origin)
+    // This fixes CORS issues with Firebase Storage and other external APIs
+    if (url.origin !== self.location.origin) {
+        return;
     }
 
     // Use Network-First for HTML and Manifest to ensure we get the latest JS bundle hashes
