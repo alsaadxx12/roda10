@@ -130,7 +130,7 @@ export default function PrintTemplateEditor() {
     setIsUploading(true);
     try {
       const { fileToBase64 } = await import('../../../utils/imageUtils');
-      const base64 = await fileToBase64(file, 800, 0.7);
+      const base64 = await fileToBase64(file, 800);
       setSettings(prev => ({ ...prev, logoUrl: base64 }));
     } catch (error) {
       console.error("Error processing image:", error);

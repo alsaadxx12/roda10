@@ -821,7 +821,7 @@ export default function StatementTemplateEditor() {
     setIsUploadingLogo(true);
     try {
       const { fileToBase64 } = await import('../../../utils/imageUtils');
-      const base64 = await fileToBase64(file, 800, 0.7);
+      const base64 = await fileToBase64(file, 800);
       setCustomLogoUrl(base64);
     } catch (error) {
       console.error("Error processing logo:", error);

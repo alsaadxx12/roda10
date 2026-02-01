@@ -84,7 +84,7 @@ export default function ThemeSettings() {
       const { fileToBase64 } = await import('../../../utils/imageUtils');
       // Use smaller max width for favicon
       const maxWidth = type === 'favicon' ? 128 : 800;
-      const base64 = await fileToBase64(file, maxWidth, 0.7);
+      const base64 = await fileToBase64(file, maxWidth);
 
       if (type === 'logo') setLogoUrl(base64);
       if (type === 'favicon') setFaviconUrl(base64);

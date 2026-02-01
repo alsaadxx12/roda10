@@ -1,7 +1,7 @@
 /**
  * Converts a File to a Base64 string with optional resizing and compression
  */
-export const fileToBase64 = (file: File, maxWidth = 800, quality = 0.7): Promise<string> => {
+export const fileToBase64 = (file: File, maxWidth = 800): Promise<string> => {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -30,8 +30,8 @@ export const fileToBase64 = (file: File, maxWidth = 800, quality = 0.7): Promise
 
                 ctx.drawImage(img, 0, 0, width, height);
 
-                // Convert to Base64 (using JPEG for better compression)
-                const base64String = canvas.toDataURL('image/jpeg', quality);
+                // Convert to Base64 (using PNG to preserve transparency)
+                const base64String = canvas.toDataURL('image/png');
                 resolve(base64String);
             };
             img.onerror = (error) => reject(error);
