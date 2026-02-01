@@ -18,6 +18,11 @@ self.addEventListener('install', (event) => {
 self.addEventListener('fetch', (event) => {
     const url = new URL(event.request.url);
 
+    // Bypass Firebase Storage URLs to avoid CORS issues in Service Worker
+    if (url.hostname === 'firebasestorage.googleapis.com') {
+        return; // Let the browser handle these requests directly
+    }
+
     // Use Network-First for HTML and Manifest to ensure we get the latest JS bundle hashes
     if (event.request.mode === 'navigate' || urlsToCache.includes(url.pathname)) {
         event.respondWith(
