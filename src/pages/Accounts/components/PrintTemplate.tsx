@@ -1,4 +1,3 @@
-import React from 'react';
 import QRCode from "qrcode";
 
 type VoucherType = 'receipt' | 'payment';
@@ -90,7 +89,7 @@ export async function generateVoucherHTML(
   const {
     primaryColor = '#4A0E6B',
     textColor = '#111827',
-    logoUrl = "https://image.winudf.com/v2/image1/Y29tLmZseTRhbGwuYXBwX2ljb25fMTc0MTM3NDI5Ml8wODk/icon.webp?w=140&fakeurl=1&type=.webp",
+    logoUrl = "",
     footerAddress = '9647730308111 - 964771800033 | كربلاء - شارع الإسكان - قرب مستشفى احمد الوائلي',
     companyNameLabel = 'شركة الروضتين للسفر والسياحة',
     receiptNoLabel = 'Receipt No:',
@@ -103,7 +102,6 @@ export async function generateVoucherHTML(
     phoneLabel = 'Phone Number',
     cashierLabel = 'منظم الوصل',
     recipientSignatureLabel = 'توقيع المستلم',
-    directorSignatureLabel = 'المدير',
   } = templateSettings;
 
   const formatDate = (date: Date | string | number | undefined) => {
@@ -236,9 +234,11 @@ export async function generateVoucherHTML(
           <div class="company-info">
             <div class="company-name">${companyNameLabel}</div>
           </div>
+          ${logoUrl ? `
           <div class="logo-container">
             <img src="${logoUrl}" alt="Logo" class="logo">
           </div>
+          ` : '<div class="logo-container"></div>'}
         </div>
         
         <div class="info-bar">

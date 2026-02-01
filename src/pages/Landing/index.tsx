@@ -311,18 +311,20 @@ function Landing() {
         {/* Content */}
         <div className="relative z-10 max-w-xl text-right animate-fadeIn">
           <div className="mb-12 relative flex flex-col items-end gap-6 group">
-            <div className="relative">
-              <div className="absolute inset-0 bg-blue-500/20 blur-2xl rounded-full scale-110 group-hover:bg-blue-500/30 transition-all duration-500" />
-              <img
-                src={customSettings.logoUrl}
-                alt="FLY4ALL Logo"
-                className="h-28 w-auto drop-shadow-2xl relative z-10 transition-transform duration-500 group-hover:scale-105"
-              />
-            </div>
+            {customSettings.logoUrl && (
+              <div className="relative">
+                <div className="absolute inset-0 bg-blue-500/20 blur-2xl rounded-full scale-110 group-hover:bg-blue-500/30 transition-all duration-500" />
+                <img
+                  src={customSettings.logoUrl}
+                  alt="FLY4ALL Logo"
+                  className="h-28 w-auto drop-shadow-2xl relative z-10 transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+            )}
 
             {/* Simple Explanation Section */}
             <div className="bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-2xl transform transition-all duration-500 hover:bg-white/10 text-right max-w-md">
-              <h3 className="text-xl font-bold text-blue-400 mb-2">أهلاً بك في منصة FLY4ALL</h3>
+              <h3 className="text-xl font-bold text-blue-400 mb-2">أهلاً بك في منصة RODA10</h3>
               <p className="text-slate-300 text-sm leading-relaxed">
                 بوابتك المتكاملة لإدارة عمليات الطيران بكل احترافية. نسعى لتوفير أدوات ذكية تضمن لك الكفاءة، السرعة، والأمان في كل خطوة من رحلتك الإدارية.
               </p>
@@ -359,7 +361,7 @@ function Landing() {
 
           {/* Copyright */}
           <div className="absolute bottom-12 right-12 text-slate-500 text-sm font-medium">
-            © 2024 جميع الحقوق محفوظة لشركة FLY4ALL
+            © 2024 جميع الحقوق محفوظة لشركة RODA10
           </div>
         </div>
       </div>

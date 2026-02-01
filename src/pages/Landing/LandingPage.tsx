@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { useTheme } from '../../contexts/ThemeContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     ArrowRight,
@@ -23,12 +22,11 @@ import {
 const LandingPage: React.FC = () => {
     const navigate = useNavigate();
     const { user } = useAuth();
-    const { customSettings } = useTheme();
     const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
     const faqs = [
         {
-            q: "ما الذي يميز FLY4ALL عن غيره من أنظمة إدارة الطيران؟",
+            q: "ما الذي يميز    RODA10 عن غيره من أنظمة إدارة الطيران؟",
             a: "نتميز بالجمع بين قوة الأداء الرقمي وسهولة الاستخدام المطلقة. نظامنا مصمم خصيصاً ليناسب احتياجات مكاتب السفر والشركات في منطقة الشرق الأوسط، مع دعم كامل للعملتين (دولار ودينار) ومزامنة فورية."
         },
         {
@@ -63,7 +61,6 @@ const LandingPage: React.FC = () => {
                         className="flex items-center gap-3 cursor-pointer"
                         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                     >
-                        <img src={customSettings.logoUrl} alt="Logo" className="h-8 md:h-12 w-auto" />
                     </motion.div>
                 </div>
             </nav>
@@ -368,7 +365,7 @@ const LandingPage: React.FC = () => {
                             هل أنت مستعد لقيادة <br /> مستقبل الطيران؟
                         </h2>
                         <p className="text-blue-100/80 text-lg md:text-xl max-w-2xl mx-auto mb-12 font-medium">
-                            انضم إلى مئات الشركات التي تثق بـ FLY4ALL لإدارة عملياتها اليومية وتوسع أعمالها.
+                            انضم إلى مئات الشركات التي تثق بـ RODA10 لإدارة عملياتها اليومية وتوسع أعمالها.
                         </p>
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
                             <button
@@ -392,7 +389,6 @@ const LandingPage: React.FC = () => {
                     <div className="grid md:grid-cols-4 gap-12 mb-16">
                         <div className="col-span-2">
                             <div className="flex items-center gap-3 mb-6">
-                                <img src={customSettings.logoUrl} alt="Logo" className="h-10 w-auto" />
                             </div>
                             <p className="text-slate-500 max-w-md font-medium leading-relaxed">
                                 المنصة الرائدة في إدارة تكنولوجيا الطيران، نؤمن بقوة البيانات في تحويل الأعمال التجارية وجعلها أكثر كفاءة وربحية.
@@ -416,7 +412,7 @@ const LandingPage: React.FC = () => {
                         </div>
                     </div>
                     <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 text-slate-600 font-bold text-sm">
-                        <p>© 2024 FLY4ALL Technology. جميع الحقوق محفوظة.</p>
+                        <p>© 2024 RODA10 Technology. جميع الحقوق محفوظة.</p>
                         <div className="flex gap-6">
                             <span>تطوير بواسطة ذكاء اصطناعي فائق</span>
                         </div>
