@@ -27,8 +27,8 @@ self.addEventListener('fetch', (event) => {
         return;
     }
 
-    // 3. Bypass explicit API/Storage patterns even if same-origin (unlikely but safe)
-    if (url.href.includes('firebasestorage.googleapis.com') || url.href.includes('api.ultramsg.com')) {
+    // 3. Bypass explicit Storage patterns even if same-origin (unlikely but safe)
+    if (url.href.includes('firebasestorage.googleapis.com')) {
         return;
     }
 
