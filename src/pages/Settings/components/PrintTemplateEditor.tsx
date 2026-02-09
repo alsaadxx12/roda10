@@ -32,6 +32,7 @@ interface PrintSettings {
   amountInWordsLabelEn: string;
   detailsLabelEn: string;
   phoneLabelEn: string;
+  logoSize: number;
 }
 
 export default function PrintTemplateEditor() {
@@ -62,6 +63,7 @@ export default function PrintTemplateEditor() {
     amountInWordsLabelEn: 'The amount is written',
     detailsLabelEn: 'Details',
     phoneLabelEn: 'Phone Number',
+    logoSize: 50,
   });
   const [previewHtml, setPreviewHtml] = useState('');
   const [isSaving, setIsSaving] = useState(false);
@@ -193,100 +195,120 @@ export default function PrintTemplateEditor() {
               </div>
             </div>
 
-            <h4 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-3 flex items-center gap-2">
-              <ImageIcon className="w-5 h-5 text-indigo-500" />
-              <span>تخصيص الشعار</span>
-            </h4>
-            <div className="flex items-center gap-4">
-              <div className="relative w-16 h-16">
-                <img src={settings.logoUrl} alt="Logo Preview" className={`w-full h-full object-contain rounded-lg bg-gray-100 p-1 ${isUploading ? 'opacity-30' : ''}`} />
-                {isUploading && (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <Loader2 className="w-6 h-6 text-indigo-600 animate-spin" />
-                  </div>
-                )}
-              </div>
-              <label className={`flex-1 cursor-pointer flex items-center justify-center gap-2 px-4 py-3 bg-gray-50 dark:bg-gray-700 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg hover:border-indigo-500 dark:hover:border-indigo-400 ${isUploading ? 'opacity-50 pointer-events-none' : ''}`}>
-                <Upload className="w-5 h-5 text-gray-500" />
-                <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
-                  {isUploading ? 'جاري الرفع...' : 'تغيير الشعار'}
+            <div className="space-y-2">
+              <div className="flex justify-between items-center bg-gray-50 dark:bg-gray-800/50 p-2 rounded-lg border border-gray-100 dark:border-gray-700">
+                <span className="text-sm font-bold text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                  <ImageIcon className="w-4 h-4 text-blue-500" />
+                  حجم الشعار: {settings.logoSize}px
                 </span>
-                <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
-              </label>
-            </div>
-          </div>
-          <div className="space-y-6">
-            <h4 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-3 flex items-center gap-2">
-              <Type className="w-5 h-5 text-indigo-500" />
-              <span>تخصيص العناوين</span>
-            </h4>
-            <div className="grid grid-cols-2 gap-3">
-              <input name="companyNameLabel" value={settings.companyNameLabel} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="عنوان الشركة" />
-              <input name="receiptNoLabel" value={settings.receiptNoLabel} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="تسمية رقم الإيصال" />
-              <input name="dateLabel" value={settings.dateLabel} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="تسمية التاريخ" />
-              <input name="dayLabel" value={settings.dayLabel} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="تسمية اليوم" />
-              <input name="receivedFromLabel" value={settings.receivedFromLabel} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="تسمية المستلم منه" />
-              <input name="amountReceivedLabel" value={settings.amountReceivedLabel} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="تسمية المبلغ المستلم" />
-              <input name="amountInWordsLabel" value={settings.amountInWordsLabel} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="تسمية المبلغ كتابة" />
-              <input name="detailsLabel" value={settings.detailsLabel} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="تسمية التفاصيل" />
-              <input name="phoneLabel" value={settings.phoneLabel} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="تسمية الهاتف" />
-              <input name="cashierLabel" value={settings.cashierLabel} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="تسمية الكاشير" />
-              <input name="recipientSignatureLabel" value={settings.recipientSignatureLabel} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="تسمية توقيع المستلم" />
-              <input name="directorSignatureLabel" value={settings.directorSignatureLabel} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="تسمية توقيع المدير" />
-              <input name="receivedFromLabelEn" value={settings.receivedFromLabelEn} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="Received From Label" />
-              <input name="amountReceivedLabelEn" value={settings.amountReceivedLabelEn} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="Amount Received Label" />
-              <input name="amountInWordsLabelEn" value={settings.amountInWordsLabelEn} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="Amount In Words Label" />
-              <input name="detailsLabelEn" value={settings.detailsLabelEn} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="Details Label" />
-              <input name="phoneLabelEn" value={settings.phoneLabelEn} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="Phone Number Label" />
+                <input
+                  type="range"
+                  name="logoSize"
+                  min="20"
+                  max="150"
+                  value={settings.logoSize}
+                  onChange={(e) => setSettings({ ...settings, logoSize: parseInt(e.target.value) })}
+                  className="w-48 h-2 bg-blue-100 rounded-lg appearance-none cursor-pointer dark:bg-blue-900/30 accent-blue-600"
+                />
+              </div>
             </div>
 
-            <h4 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-3 flex items-center gap-2">
-              <MapPin className="w-5 h-5 text-indigo-500" />
-              <span>تخصيص التذييل</span>
-            </h4>
-            <textarea
-              name="footerAddress"
-              value={settings.footerAddress}
-              onChange={handleInputChange}
-              className="w-full px-3 py-2 text-sm border rounded-md h-20 resize-none"
-              placeholder="العنوان، أرقام الهواتف، إلخ..."
-            />
+            <div className="flex flex-col gap-2">
+              <h4 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-3 flex items-center gap-2">
+                <ImageIcon className="w-5 h-5 text-indigo-500" />
+                <span>تخصيص الشعار</span>
+              </h4>
+              <div className="flex items-center gap-4">
+                <div className="relative w-16 h-16">
+                  <img src={settings.logoUrl} alt="Logo Preview" className={`w-full h-full object-contain rounded-lg bg-gray-100 p-1 ${isUploading ? 'opacity-30' : ''}`} />
+                  {isUploading && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <Loader2 className="w-6 h-6 text-indigo-600 animate-spin" />
+                    </div>
+                  )}
+                </div>
+                <label className={`flex-1 cursor-pointer flex items-center justify-center gap-2 px-4 py-3 bg-gray-50 dark:bg-gray-700 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg hover:border-indigo-500 dark:hover:border-indigo-400 ${isUploading ? 'opacity-50 pointer-events-none' : ''}`}>
+                  <Upload className="w-5 h-5 text-gray-500" />
+                  <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
+                    {isUploading ? 'جاري الرفع...' : 'تغيير الشعار'}
+                  </span>
+                  <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
+                </label>
+              </div>
+            </div>
+            <div className="space-y-6">
+              <h4 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-3 flex items-center gap-2">
+                <Type className="w-5 h-5 text-indigo-500" />
+                <span>تخصيص العناوين</span>
+              </h4>
+              <div className="grid grid-cols-2 gap-3">
+                <input name="companyNameLabel" value={settings.companyNameLabel} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="عنوان الشركة" />
+                <input name="receiptNoLabel" value={settings.receiptNoLabel} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="تسمية رقم الإيصال" />
+                <input name="dateLabel" value={settings.dateLabel} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="تسمية التاريخ" />
+                <input name="dayLabel" value={settings.dayLabel} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="تسمية اليوم" />
+                <input name="receivedFromLabel" value={settings.receivedFromLabel} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="تسمية المستلم منه" />
+                <input name="amountReceivedLabel" value={settings.amountReceivedLabel} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="تسمية المبلغ المستلم" />
+                <input name="amountInWordsLabel" value={settings.amountInWordsLabel} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="تسمية المبلغ كتابة" />
+                <input name="detailsLabel" value={settings.detailsLabel} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="تسمية التفاصيل" />
+                <input name="phoneLabel" value={settings.phoneLabel} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="تسمية الهاتف" />
+                <input name="cashierLabel" value={settings.cashierLabel} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="تسمية الكاشير" />
+                <input name="recipientSignatureLabel" value={settings.recipientSignatureLabel} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="تسمية توقيع المستلم" />
+                <input name="directorSignatureLabel" value={settings.directorSignatureLabel} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="تسمية توقيع المدير" />
+                <input name="receivedFromLabelEn" value={settings.receivedFromLabelEn} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="Received From Label" />
+                <input name="amountReceivedLabelEn" value={settings.amountReceivedLabelEn} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="Amount Received Label" />
+                <input name="amountInWordsLabelEn" value={settings.amountInWordsLabelEn} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="Amount In Words Label" />
+                <input name="detailsLabelEn" value={settings.detailsLabelEn} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="Details Label" />
+                <input name="phoneLabelEn" value={settings.phoneLabelEn} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="Phone Number Label" />
+              </div>
+
+              <h4 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-3 flex items-center gap-2">
+                <MapPin className="w-5 h-5 text-indigo-500" />
+                <span>تخصيص التذييل</span>
+              </h4>
+              <textarea
+                name="footerAddress"
+                value={settings.footerAddress}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 text-sm border rounded-md h-20 resize-none"
+                placeholder="العنوان، أرقام الهواتف، إلخ..."
+              />
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="flex justify-end mt-4">
-        <button
-          onClick={handleSave}
-          disabled={isSaving}
-          className="flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 font-bold"
-        >
-          {isSaving ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
-          {isSaving ? 'جاري الحفظ...' : 'حفظ الإعدادات'}
-        </button>
-        {saveSuccess && (
-          <div className="flex items-center gap-2 text-green-600 ml-4">
-            <Check className="w-5 h-5" />
-            تم الحفظ بنجاح!
-          </div>
-        )}
-      </div>
+        <div className="flex justify-end mt-4">
+          <button
+            onClick={handleSave}
+            disabled={isSaving}
+            className="flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 font-bold"
+          >
+            {isSaving ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
+            {isSaving ? 'جاري الحفظ...' : 'حفظ الإعدادات'}
+          </button>
+          {saveSuccess && (
+            <div className="flex items-center gap-2 text-green-600 ml-4">
+              <Check className="w-5 h-5" />
+              تم الحفظ بنجاح!
+            </div>
+          )}
+        </div>
 
-      <div>
-        <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-3">
-          <div className={`p-2.5 rounded-xl bg-gradient-to-br from-indigo-100 to-indigo-50 shadow-inner`}>
-            <Printer className="w-5 h-5 text-indigo-600" />
-          </div>
-          معاينة مباشرة
-        </h3>
-        <div className="flex justify-center w-full bg-gray-200 dark:bg-gray-900 p-8 rounded-2xl">
-          <div className="w-full aspect-[210/148] border-4 border-gray-300 dark:border-gray-700 rounded-2xl overflow-hidden shadow-2xl bg-white">
-            <iframe
-              srcDoc={previewHtml}
-              className="w-full h-full border-none"
-              title="Voucher Preview"
-              style={{ transform: 'scale(1)', transformOrigin: 'top left' }}
-            />
+        <div>
+          <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-3">
+            <div className={`p-2.5 rounded-xl bg-gradient-to-br from-indigo-100 to-indigo-50 shadow-inner`}>
+              <Printer className="w-5 h-5 text-indigo-600" />
+            </div>
+            معاينة مباشرة
+          </h3>
+          <div className="flex justify-center w-full bg-gray-200 dark:bg-gray-900 p-8 rounded-2xl">
+            <div className="w-full aspect-[210/148] border-4 border-gray-300 dark:border-gray-700 rounded-2xl overflow-hidden shadow-2xl bg-white">
+              <iframe
+                srcDoc={previewHtml}
+                className="w-full h-full border-none"
+                title="Voucher Preview"
+                style={{ transform: 'scale(1)', transformOrigin: 'top left' }}
+              />
+            </div>
           </div>
         </div>
       </div>

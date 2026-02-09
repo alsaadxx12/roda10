@@ -55,6 +55,7 @@ interface AccountsTableProps {
 
 const AccountsTable: React.FC<AccountsTableProps> = (props) => {
   const { settings } = useAccountSettings();
+  const { theme, customSettings } = useTheme();
   const { currentRate } = useExchangeRate();
   const [showCurrencyDialog, setShowCurrencyDialog] = useState(false);
   const [voucherToPrint, setVoucherToPrint] = useState<any>(null);
@@ -157,16 +158,22 @@ const AccountsTable: React.FC<AccountsTableProps> = (props) => {
           ].filter(entry => entry.value > 0);
 
           return (
-            <div key={voucher.id} className={`relative rounded-xl shadow-sm border overflow-hidden transition-all duration-300 group ${isSettled
-              ? 'bg-gradient-to-br from-purple-900 to-indigo-900 border-purple-700'
-              : 'bg-white dark:bg-gray-800/60 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
-              }`}>
+            <div key={voucher.id}
+              className={`relative rounded-xl shadow-sm border overflow-hidden transition-all duration-300 group ${isSettled
+                ? 'text-white'
+                : 'bg-white dark:bg-gray-800/60 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+                }`}
+              style={isSettled ? {
+                background: `linear-gradient(to bottom right, ${customSettings.settledColor || '#4c1d95'}, ${customSettings.settledColorSecondary || '#312e81'})`,
+                borderColor: `${customSettings.settledColor || '#4c1d95'}ee`
+              } : {}}>
               {isSettled && (
                 <div className="absolute top-0 left-0 w-32 h-32 overflow-hidden pointer-events-none z-20">
-                  <div className="absolute transform -rotate-45 bg-gradient-to-r from-purple-500 via-indigo-600 to-purple-500 text-center text-white font-[950] text-[9.5px] py-1.5 -left-10 top-8 w-44 shadow-[0_4px_12px_rgba(0,0,0,0.3)] uppercase tracking-wider border-y border-white/20 backdrop-blur-sm">
+                  <div className="absolute transform -rotate-45 text-center text-white font-[950] text-[9.5px] py-1.5 -left-10 top-8 w-44 shadow-[0_4px_12px_rgba(0,0,0,0.3)] uppercase tracking-wider border-y border-white/20 backdrop-blur-sm"
+                    style={{ background: `linear-gradient(to right, ${customSettings.settledRibbonColor || '#8b5cf6'}dd, ${customSettings.settledColor || '#4c1d95'}dd, ${customSettings.settledRibbonColor || '#8b5cf6'}dd)` }}>
                     <div className="relative">
                       متحاسب عليه
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] animate-[shimmer_2s_infinite]" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer-slide" />
                     </div>
                   </div>
                 </div>

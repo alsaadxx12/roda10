@@ -48,6 +48,7 @@ type TemplateSettings = {
   amountInWordsLabelEn?: string;
   detailsLabelEn?: string;
   phoneLabelEn?: string;
+  logoSize?: number;
 };
 
 const numberToArabicWords = (num: number): string => {
@@ -114,6 +115,7 @@ export async function generateVoucherHTML(
     amountInWordsLabelEn = 'The amount is written',
     detailsLabelEn = 'Details',
     phoneLabelEn = 'Phone Number',
+    logoSize = 50,
   } = templateSettings;
 
   const formatDate = (date: Date | string | number | undefined) => {
@@ -214,7 +216,7 @@ export async function generateVoucherHTML(
         .company-info { text-align: right; }
         .company-name { font-size: 14pt; font-weight: 800; color: ${primaryColor}; }
         .logo-container { text-align: left; }
-        .logo { height: 50px; width: auto; object-fit: contain; }
+        .logo { height: ${logoSize}px; width: auto; object-fit: contain; }
         .info-bar { display: flex; justify-content: space-between; align-items: center; padding: 6px 16px; flex-shrink: 0;}
         .info-bar-left { text-align: left; }
         .info-bar-right { text-align: right; }
@@ -249,7 +251,7 @@ export async function generateVoucherHTML(
           </div>
           ` : logoText ? `
           <div class="logo-container" style="display: flex; align-items: center; justify-content: flex-end;">
-            <span style="font-size: 16pt; font-weight: 900; color: ${primaryColor}; tracking-tighter: -1px;">${logoText}</span>
+            <span style="font-size: ${logoSize / 3}pt; font-weight: 900; color: ${primaryColor}; tracking-tighter: -1px;">${logoText}</span>
           </div>
           ` : '<div class="logo-container"></div>'}
         </div>

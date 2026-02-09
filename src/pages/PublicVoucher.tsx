@@ -122,6 +122,7 @@ const PublicVoucher: React.FC = () => {
   const primaryColor = printSettings?.primaryColor || '#4A0E6B';
   const textColor = printSettings?.textColor || '#333';
   const logoUrl = printSettings?.logoUrl || "https://image.winudf.com/v2/image1/Y29tLmZseTRhbGwuYXBwX2ljb25fMTc0MTM3NDI5Ml8wODk/icon.webp?w=140&fakeurl=1&type=.webp";
+  const logoSize = printSettings?.logoSize || 50;
 
   if (loading) {
     return (
@@ -276,11 +277,11 @@ const PublicVoucher: React.FC = () => {
               </div>
               {logoUrl ? (
                 <div className="logo-container">
-                  <img src={logoUrl} alt="Logo" className="logo" />
+                  <img src={logoUrl} alt="Logo" className="logo" style={{ height: `${logoSize}px`, width: 'auto' }} />
                 </div>
               ) : printSettings?.logoText ? (
                 <div className="logo-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                  <span style={{ fontSize: '16pt', fontWeight: 900, color: primaryColor }}>{printSettings.logoText}</span>
+                  <span style={{ fontSize: `${logoSize / 3}pt`, fontWeight: 900, color: primaryColor }}>{printSettings.logoText}</span>
                 </div>
               ) : (
                 <div className="logo-container"></div>

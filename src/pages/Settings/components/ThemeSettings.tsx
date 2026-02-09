@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTheme } from '../../../contexts/ThemeContext';
-import { Palette, Image as ImageIcon, Save, Check, Loader2, Upload } from 'lucide-react';
+import { Palette, Image as ImageIcon, Save, Check, Loader2, Upload, Sparkles, DollarSign, LayoutGrid, Zap } from 'lucide-react';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../lib/firebase';
 import SettingsCard from '../../../components/SettingsCard';
@@ -53,6 +53,11 @@ export default function ThemeSettings() {
   const [logoText, setLogoText] = useState(customSettings.logoText || '');
   const [faviconUrl, setFaviconUrl] = useState(customSettings.faviconUrl || '');
   const [selectedGradient, setSelectedGradient] = useState(customSettings.headerGradient || THEME_PRESETS[0].gradient);
+  const [logoSize, setLogoSize] = useState(customSettings.logoSize || 32);
+  const [showLogoGlow, setShowLogoGlow] = useState(customSettings.showLogoGlow || false);
+  const [settledColor, setSettledColor] = useState(customSettings.settledColor || '#4c1d95');
+  const [settledColorSecondary, setSettledColorSecondary] = useState(customSettings.settledColorSecondary || '#312e81');
+  const [settledRibbonColor, setSettledRibbonColor] = useState(customSettings.settledRibbonColor || '#8b5cf6');
   const [isSaving, setIsSaving] = useState(false);
   const [isUploadingLogo, setIsUploadingLogo] = useState(false);
   const [isUploadingFavicon, setIsUploadingFavicon] = useState(false);
@@ -65,6 +70,11 @@ export default function ThemeSettings() {
       logoText: logoText,
       faviconUrl: faviconUrl,
       headerGradient: selectedGradient,
+      logoSize: logoSize,
+      showLogoGlow: showLogoGlow,
+      settledColor: settledColor,
+      settledColorSecondary: settledColorSecondary,
+      settledRibbonColor: settledRibbonColor,
     }).then(async () => {
       // Sync with print settings
       try {
@@ -250,6 +260,41 @@ export default function ThemeSettings() {
             </div>
           </div>
 
+          {/* Logo Size and Glow Controls */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 rounded-xl bg-gray-50 dark:bg-gray-900/40 border border-gray-200 dark:border-gray-800">
+            <div className="space-y-3">
+              <label className="flex items-center gap-2 text-sm font-bold text-gray-700 dark:text-gray-300">
+                <ImageIcon className="w-4 h-4 text-blue-500" />
+                حجم الشعار: {logoSize}px
+              </label>
+              <input
+                type="range"
+                min="20"
+                max="100"
+                value={logoSize}
+                onChange={(e) => setLogoSize(parseInt(e.target.value))}
+                className="w-full h-2 bg-blue-100 rounded-lg appearance-none cursor-pointer dark:bg-blue-900/30 accent-blue-600"
+              />
+            </div>
+
+            <div className="flex items-center justify-between p-2">
+              <label className="flex items-center gap-2 text-sm font-bold text-gray-700 dark:text-gray-300">
+                <Sparkles className={`w-4 h-4 ${showLogoGlow ? 'text-yellow-500 animate-pulse' : 'text-gray-400'}`} />
+                توهج الشعار (Glow)
+              </label>
+              <button
+                onClick={() => setShowLogoGlow(!showLogoGlow)}
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${showLogoGlow ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-700'
+                  }`}
+              >
+                <span
+                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${showLogoGlow ? 'translate-x-6' : 'translate-x-1'
+                    }`}
+                />
+              </button>
+            </div>
+          </div>
+
           {/* Previews */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {logoUrl && (
@@ -257,7 +302,33 @@ export default function ThemeSettings() {
                 <p className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">معاينة الشعار:</p>
                 <div className={`p-4 rounded-lg flex items-center justify-center h-32 ${theme === 'dark' ? 'bg-gray-900/50' : 'bg-gray-100'
                   }`}>
-                  <img src={logoUrl} alt="معاينة الشعار" className="max-h-24 object-contain" />
+                  <img
+                    src={logoUrl}
+                    alt="معاينة الشعار"
+                    className="object-contain transition-all duration-300"
+                    style={{
+                      height: `${logoSize}px`,
+                      filter: showLogoGlow ? 'drop-shadow(0 0 12px rgba(59, 130, 246, 0.8))' : 'none'
+                    }}
+                  />
+                </div>
+              </div>
+            )}
+            {logoText && !logoUrl && (
+              <div>
+                <p className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">معاينة الشعار النصي:</p>
+                <div className={`p-4 rounded-lg flex items-center justify-center h-32 ${theme === 'dark' ? 'bg-gray-900/50' : 'bg-gray-100'
+                  }`}>
+                  <span
+                    className="font-black tracking-wider transition-all duration-300"
+                    style={{
+                      fontSize: `${logoSize / 2}pt`,
+                      color: '#4f46e5',
+                      textShadow: showLogoGlow ? '0 0 12px rgba(79, 70, 229, 0.6)' : 'none'
+                    }}
+                  >
+                    {logoText}
+                  </span>
                 </div>
               </div>
             )}
@@ -270,6 +341,117 @@ export default function ThemeSettings() {
                 </div>
               </div>
             )}
+          </div>
+        </div>
+      </SettingsCard>
+
+      <SettingsCard
+        icon={DollarSign}
+        title="تخصيص السندات والحسابات"
+        description="التحكم في ألوان السندات المتحاسب عليها وتصميم الحاويات"
+      >
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 text-sm font-bold text-gray-700 dark:text-gray-300">
+                <LayoutGrid className="w-4 h-4 text-purple-500" />
+                لون السند (الأساسي)
+              </label>
+              <div className="flex gap-2">
+                <input
+                  type="color"
+                  value={settledColor}
+                  onChange={(e) => setSettledColor(e.target.value)}
+                  className="w-12 h-12 rounded-lg cursor-pointer border-2 border-white dark:border-gray-800 shadow-sm"
+                />
+                <input
+                  type="text"
+                  value={settledColor}
+                  onChange={(e) => setSettledColor(e.target.value)}
+                  className="flex-1 px-3 py-2 rounded-lg border dark:bg-gray-900 dark:border-gray-700 text-xs font-mono"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 text-sm font-bold text-gray-700 dark:text-gray-300">
+                <Palette className="w-4 h-4 text-indigo-500" />
+                لون السند (الثانوي)
+              </label>
+              <div className="flex gap-2">
+                <input
+                  type="color"
+                  value={settledColorSecondary}
+                  onChange={(e) => setSettledColorSecondary(e.target.value)}
+                  className="w-12 h-12 rounded-lg cursor-pointer border-2 border-white dark:border-gray-800 shadow-sm"
+                />
+                <input
+                  type="text"
+                  value={settledColorSecondary}
+                  onChange={(e) => setSettledColorSecondary(e.target.value)}
+                  className="flex-1 px-3 py-2 rounded-lg border dark:bg-gray-900 dark:border-gray-700 text-xs font-mono"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 text-sm font-bold text-gray-700 dark:text-gray-300">
+                <Zap className="w-4 h-4 text-yellow-500" />
+                لون شريط التحاسب
+              </label>
+              <div className="flex gap-2">
+                <input
+                  type="color"
+                  value={settledRibbonColor}
+                  onChange={(e) => setSettledRibbonColor(e.target.value)}
+                  className="w-12 h-12 rounded-lg cursor-pointer border-2 border-white dark:border-gray-800 shadow-sm"
+                />
+                <input
+                  type="text"
+                  value={settledRibbonColor}
+                  onChange={(e) => setSettledRibbonColor(e.target.value)}
+                  className="flex-1 px-3 py-2 rounded-lg border dark:bg-gray-900 dark:border-gray-700 text-xs font-mono"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8 p-6 bg-gray-50 dark:bg-gray-800/30 rounded-2xl border border-gray-100 dark:border-gray-700">
+            <p className="text-sm font-bold text-gray-700 dark:text-gray-300 mb-6 flex items-center gap-2 justify-center">
+              <Check className="w-5 h-5 text-green-500" />
+              معاينة السند المتحاسب عليه (المباشرة):
+            </p>
+            <div className="max-w-md mx-auto relative rounded-[2rem] shadow-2xl border-4 overflow-hidden h-40 transition-all duration-500 transform hover:scale-105"
+              style={{
+                background: `linear-gradient(135deg, ${settledColor}, ${settledColorSecondary})`,
+                borderColor: `${settledColor}44`
+              }}>
+              {/* Ribbon */}
+              <div className="absolute top-0 left-0 w-32 h-32 overflow-hidden pointer-events-none z-20">
+                <div className="absolute transform -rotate-45 text-center text-white font-[950] text-[10px] py-1.5 -left-10 top-8 w-44 shadow-2xl uppercase tracking-widest border-y border-white/20 backdrop-blur-md"
+                  style={{ background: `linear-gradient(to right, ${settledRibbonColor}ee, ${settledColor}ee, ${settledRibbonColor}ee)` }}>
+                  <div className="relative">
+                    متحاسب عليه
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer-slide" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Card Content Skeleton */}
+              <div className="p-8 flex flex-col justify-center h-full gap-3 opacity-40">
+                <div className="h-5 w-3/4 bg-white/30 rounded-full"></div>
+                <div className="h-3 w-1/2 bg-white/20 rounded-full"></div>
+                <div className="flex justify-between items-center mt-4">
+                  <div className="h-8 w-24 bg-emerald-500/30 rounded-xl border border-white/10"></div>
+                  <div className="h-8 w-16 bg-white/30 rounded-2xl"></div>
+                </div>
+              </div>
+
+              {/* Decorative elements */}
+              <div className="absolute top-4 right-4 text-white/10">
+                <DollarSign className="w-16 h-16" />
+              </div>
+            </div>
           </div>
         </div>
       </SettingsCard>

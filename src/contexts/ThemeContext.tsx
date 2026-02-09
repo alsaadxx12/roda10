@@ -9,6 +9,11 @@ interface CustomSettings {
   logoText?: string;
   faviconUrl?: string;
   headerGradient: string;
+  logoSize?: number;
+  showLogoGlow?: boolean;
+  settledColor?: string;
+  settledColorSecondary?: string;
+  settledRibbonColor?: string;
 }
 
 type ThemeContextType = {
@@ -25,7 +30,12 @@ const DEFAULT_SETTINGS: CustomSettings = {
   logoUrl: '',
   logoText: '',
   faviconUrl: '',
-  headerGradient: 'from-indigo-700 via-indigo-800 to-blue-800'
+  headerGradient: 'from-indigo-700 via-indigo-800 to-blue-800',
+  logoSize: 32,
+  showLogoGlow: false,
+  settledColor: '#4c1d95',
+  settledColorSecondary: '#312e81',
+  settledRibbonColor: '#8b5cf6'
 };
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {

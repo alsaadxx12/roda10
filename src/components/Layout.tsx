@@ -756,13 +756,23 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 <img
                   src={customSettings.logoUrl}
                   alt="Logo"
-                  className="h-8 md:h-9 w-auto object-contain"
+                  className="w-auto object-contain transition-all duration-500"
+                  style={{
+                    height: `${customSettings.logoSize || 32}px`,
+                    filter: customSettings.showLogoGlow ? 'drop-shadow(0 0 12px rgba(255,255,255,0.8))' : 'none'
+                  }}
                   onError={(e: any) => (e.currentTarget.style.display = 'none')}
                 />
               </div>
             ) : customSettings.logoText ? (
               <div className="flex items-center">
-                <span className="text-lg md:text-xl font-black text-white tracking-wider drop-shadow-md">
+                <span
+                  className="font-black text-white tracking-wider drop-shadow-md transition-all duration-500"
+                  style={{
+                    fontSize: `${(customSettings.logoSize || 32) / 2}pt`,
+                    textShadow: customSettings.showLogoGlow ? '0 0 12px rgba(255,255,255,0.6)' : 'none'
+                  }}
+                >
                   {customSettings.logoText}
                 </span>
               </div>

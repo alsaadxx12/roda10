@@ -1,8 +1,6 @@
 import React from 'react';
 import { collection, getDocs, deleteDoc, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../lib/firebase';
-import { useLanguage } from '../../../contexts/LanguageContext';
-import { useTheme } from '../../../contexts/ThemeContext';
 import { Trash2, Globe, Check, Loader2, Printer, CircleAlert as AlertCircle } from 'lucide-react';
 import PrintTemplateEditor from './PrintTemplateEditor';
 import AISettingsTab from './AISettingsTab';
@@ -10,7 +8,6 @@ import LanguageSettings from './LanguageSettings';
 import CompanySettings from './CompanySettings';
 
 export default function SystemSettings() {
-  const { theme } = useTheme();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
   const [isDeleting, setIsDeleting] = React.useState(false);
   const [deleteError, setDeleteError] = React.useState<string | null>(null);
@@ -18,8 +15,6 @@ export default function SystemSettings() {
   const [isUpdatingSettings, setIsUpdatingSettings] = React.useState(false);
   const [allowCustomCompanies, setAllowCustomCompanies] = React.useState(true);
   const [aiApiKey, setAiApiKey] = React.useState('');
-  const [error, setError] = React.useState<string | null>(null);
-  const [settingsSuccess, setSettingsSuccess] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     const loadSystemSettings = async () => {
@@ -76,8 +71,6 @@ export default function SystemSettings() {
 
   const handleUpdateSettings = async () => {
     setIsUpdatingSettings(true);
-    setError(null);
-    setSettingsSuccess(null);
 
     try {
       const settingsRef = doc(db, 'system_settings', 'global');
@@ -109,15 +102,8 @@ export default function SystemSettings() {
           updatedAt: new Date()
         });
       }
-
-      setSettingsSuccess('تم حفظ الإعدادات بنجاح');
-
-      setTimeout(() => {
-        setSettingsSuccess(null);
-      }, 3000);
     } catch (error) {
       console.error('Error updating settings:', error);
-      setError('فشل في حفظ الإعدادات');
     } finally {
       setIsUpdatingSettings(false);
     }
