@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '../../../contexts/ThemeContext';
 import { Printer, Save, Check, Loader2, Palette, Image as ImageIcon, Type, MapPin, Upload } from 'lucide-react';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../lib/firebase';
 // Firebase storage removed in favor of Base64 storage
 import { generateVoucherHTML, VoucherData } from '../../Accounts/components/PrintTemplate';
@@ -109,6 +109,28 @@ export default function PrintTemplateEditor() {
     setIsSaving(true);
     try {
       await setDoc(doc(db, 'settings', 'print'), settings);
+
+      // Update theme settings as well to keep logo in sync
+      const themeSettingsRef = doc(db, 'settings', 'theme');
+      await setDoc(themeSettingsRef, {
+        logoUrl: settings.logoUrl,
+        logoText: settings.companyNameLabel,
+        updatedAt: new Date()
+      }, { merge: true });
+
+      // Sync labels with account_settings/global
+      const globalSettingsRef = doc(db, 'account_settings', 'global');
+      const globalDocSnap = await getDoc(globalSettingsRef);
+      if (globalDocSnap.exists()) {
+        await updateDoc(globalSettingsRef, {
+          gatesColumnLabel: settings.gatesColumnLabel,
+          internalColumnLabel: settings.internalColumnLabel,
+          externalColumnLabel: settings.externalColumnLabel,
+          flyColumnLabel: settings.flyColumnLabel,
+          updatedAt: new Date()
+        });
+      }
+
       setSaveSuccess(true);
       setTimeout(() => setSaveSuccess(false), 2000);
     } catch (error) {

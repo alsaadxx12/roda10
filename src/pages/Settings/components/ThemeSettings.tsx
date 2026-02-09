@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useTheme } from '../../../contexts/ThemeContext';
 import { Palette, Image as ImageIcon, Save, Check, Loader2, Upload } from 'lucide-react';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../../../lib/firebase';
 import SettingsCard from '../../../components/SettingsCard';
 // Firebase storage removed in favor of Base64 storage
 
@@ -63,7 +65,22 @@ export default function ThemeSettings() {
       logoText: logoText,
       faviconUrl: faviconUrl,
       headerGradient: selectedGradient,
-    }).then(() => {
+    }).then(async () => {
+      // Sync with print settings
+      try {
+        const printSettingsRef = doc(db, 'settings', 'print');
+        const printDocSnap = await getDoc(printSettingsRef);
+        if (printDocSnap.exists()) {
+          await updateDoc(printSettingsRef, {
+            logoUrl: logoUrl,
+            companyNameLabel: logoText,
+            updatedAt: new Date()
+          });
+        }
+      } catch (e) {
+        console.error("Failed to sync with print settings:", e);
+      }
+
       setIsSaving(false);
       setSaveSuccess(true);
       setTimeout(() => setSaveSuccess(false), 2000);

@@ -30,7 +30,7 @@ export const registerBiometrics = async (userId: string, email: string) => {
     const publicKeyCredentialCreationOptions: PublicKeyCredentialCreationOptions = {
         challenge,
         rp: {
-            name: "Fly4All",
+            name: "RODA10",
             id: window.location.hostname === 'localhost' ? 'localhost' : window.location.hostname,
         },
         user: {

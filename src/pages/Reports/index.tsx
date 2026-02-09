@@ -86,7 +86,7 @@ const ReportsPage: React.FC = () => {
       notificationType: data?.type || 'delay',
       newFlightNumber: data?.newFlightNumber || '',
       newAirline: data?.newAirline || '',
-      signature: 'fly4all team',
+      signature: 'RODA10 team',
     };
 
     setExtractedData(initialFlightData);

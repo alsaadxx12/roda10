@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../lib/firebase';
-import { Loader2, Printer, AlertTriangle, Facebook, Instagram, Globe } from 'lucide-react';
+import { Loader2, Printer, AlertTriangle } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { numberToArabicWords } from '../utils/helpers';
 import { QRCodeCanvas } from 'qrcode.react';
@@ -14,13 +14,14 @@ const PublicVoucher: React.FC = () => {
   const convertToIQD = searchParams.get('convertToIQD') === 'true';
 
   const [voucherData, setVoucherData] = useState<any>(null);
+  const [printSettings, setPrintSettings] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { theme } = useTheme();
+  useTheme();
   const [showButtons, setShowButtons] = useState(true);
 
   useEffect(() => {
-    const fetchVoucher = async () => {
+    const fetchData = async () => {
       if (!voucherId) {
         setError('معرّف السند غير موجود');
         setLoading(false);
@@ -29,8 +30,17 @@ const PublicVoucher: React.FC = () => {
 
       setLoading(true);
       try {
+        // Fetch voucher
         const voucherRef = doc(db, 'vouchers', voucherId);
         const voucherDoc = await getDoc(voucherRef);
+
+        // Fetch print settings
+        const settingsRef = doc(db, 'settings', 'print');
+        const settingsDoc = await getDoc(settingsRef);
+
+        if (settingsDoc.exists()) {
+          setPrintSettings(settingsDoc.data());
+        }
 
         if (!voucherDoc.exists()) {
           setError('السند غير موجود أو تم حذفه');
@@ -51,7 +61,7 @@ const PublicVoucher: React.FC = () => {
       }
     };
 
-    fetchVoucher();
+    fetchData();
   }, [voucherId]);
 
   useEffect(() => {
@@ -81,7 +91,11 @@ const PublicVoucher: React.FC = () => {
   const getVoucherType = () => voucherData?.type === 'receipt' ? 'سند قبض' : 'سند صرف';
 
   const getRecipientLabel = () => {
-    return voucherData.type === 'receipt' ? 'استلمنا من' : 'المبلغ المدفوع';
+    if (voucherData.type === 'receipt') {
+      return printSettings?.receivedFromLabel || 'استلمنا من السيد/ السادة:';
+    } else {
+      return 'ادفعوا إلى السيد/ السادة:';
+    }
   };
 
   const formatDate = (date: Date | undefined) => {
@@ -105,7 +119,9 @@ const PublicVoucher: React.FC = () => {
     }
   };
 
-  const logoUrl = "https://image.winudf.com/v2/image1/Y29tLmZseTRhbGwuYXBwX2ljb25fMTc0MTM3NDI5Ml8wODk/icon.webp?w=140&fakeurl=1&type=.webp";
+  const primaryColor = printSettings?.primaryColor || '#4A0E6B';
+  const textColor = printSettings?.textColor || '#333';
+  const logoUrl = printSettings?.logoUrl || "https://image.winudf.com/v2/image1/Y29tLmZseTRhbGwuYXBwX2ljb25fMTc0MTM3NDI5Ml8wODk/icon.webp?w=140&fakeurl=1&type=.webp";
 
   if (loading) {
     return (
@@ -149,10 +165,10 @@ const PublicVoucher: React.FC = () => {
   const distributionTotal = displayGates + displayInternal + displayExternal + displayFly;
 
   const distributionEntries = [
-    { label: voucherData.gatesColumnLabel || 'جات', value: displayGates },
-    { label: voucherData.internalColumnLabel || 'داخلي', value: displayInternal },
-    { label: voucherData.externalColumnLabel || 'خارجي', value: displayExternal },
-    { label: voucherData.flyColumnLabel || 'فلاي', value: displayFly },
+    { label: printSettings?.gatesColumnLabel || voucherData.gatesColumnLabel || 'جات', value: displayGates },
+    { label: printSettings?.internalColumnLabel || voucherData.internalColumnLabel || 'داخلي', value: displayInternal },
+    { label: printSettings?.externalColumnLabel || voucherData.externalColumnLabel || 'خارجي', value: displayExternal },
+    { label: printSettings?.flyColumnLabel || voucherData.flyColumnLabel || 'فلاي', value: displayFly },
   ].filter(entry => entry.value > 0);
 
   const hihelloLink = "https://hihello.com/p/207f5029-5db4-480e-abc9-c61c39b55a36";
@@ -223,18 +239,19 @@ const PublicVoucher: React.FC = () => {
               height: 100%;
               display: flex;
               flex-direction: column;
-              border: 1.5px solid #4A0E6B;
+              border: 1.5px solid ${primaryColor};
               font-size: 10pt;
+              color: ${textColor};
             }
-            .header { display: flex; justify-content: space-between; align-items: center; padding: 8px 16px; border-bottom: 1.5px solid #4A0E6B; }
+            .header { display: flex; justify-content: space-between; align-items: center; padding: 8px 16px; border-bottom: 1.5px solid ${primaryColor}; }
             .company-info { text-align: right; }
-            .company-name { font-size: 14pt; font-weight: 800; color: #4A0E6B; }
+            .company-name { font-size: 14pt; font-weight: 800; color: ${primaryColor}; }
             .logo-container { text-align: left; }
             .logo { height: 50px; width: auto; object-fit: contain; }
             .info-bar { display: flex; justify-content: space-between; align-items: center; padding: 6px 16px; }
             .info-bar-left { text-align: left; }
             .info-bar-right { text-align: right; }
-            .info-bar-left div, .info-bar-right div { font-size: 8pt; font-weight: 700; color: #333; line-height: 1.4; }
+            .info-bar-left div, .info-bar-right div { font-size: 8pt; font-weight: 700; color: ${textColor}; line-height: 1.4; }
             .voucher-title { text-align: center; flex-grow: 1; }
             .voucher-title h1 { margin: 0; font-size: 16pt; font-weight: 900; color: #F57C00; }
             .content { flex-grow: 1; padding: 8px 16px; }
@@ -250,12 +267,12 @@ const PublicVoucher: React.FC = () => {
             .signatures { display: flex; justify-content: space-between; align-items: flex-end; padding: 8px 16px 5px; }
             .signature-box { text-align: center; font-size: 8pt; font-weight: 700; border-top: 1px dashed #9ca3af; padding-top: 8px; width: 150px; }
             .qr-codes-container { display: flex; justify-content: center; align-items: center; gap: 40px; }
-            .footer-bar { text-align: center; padding: 10px; background-color: #4A0E6B; color: white; font-size: 8pt; font-weight: 700; line-height: 1.2; height: 40px; box-sizing: border-box; }
+            .footer-bar { text-align: center; padding: 10px; background-color: ${primaryColor}; color: white; font-size: 8pt; font-weight: 700; line-height: 1.2; height: 40px; box-sizing: border-box; }
           `}</style>
           <div className="voucher-container">
             <div className="header">
               <div className="company-info">
-                <div className="company-name">شركة الروضتين للسفر والسياحة</div>
+                <div className="company-name">{printSettings?.companyNameLabel || 'شركة الروضتين للسفر والسياحة'}</div>
               </div>
               <div className="logo-container">
                 <img src={logoUrl} alt="Logo" className="logo" />
@@ -264,13 +281,13 @@ const PublicVoucher: React.FC = () => {
 
             <div className="info-bar">
               <div className="info-bar-left">
-                <div><strong>Receipt No:</strong> #{voucherData.invoiceNumber ?? 'N/A'}</div>
+                <div><strong>{printSettings?.receiptNoLabel || 'Receipt No:'}</strong> #{voucherData.invoiceNumber ?? 'N/A'}</div>
                 {voucherData.currency === 'USD' && voucherData.amount && <div><strong>GN:</strong> {voucherData.amount}</div>}
               </div>
               <div className="voucher-title"><h1>{getVoucherType()}</h1></div>
               <div className="info-bar-right">
-                <div><strong>Date:</strong> {formatDate(voucherData.createdAt)}</div>
-                <div><strong>Day:</strong> {formatDay(voucherData.createdAt)}</div>
+                <div><strong>{printSettings?.dateLabel || 'Date:'}</strong> {formatDate(voucherData.createdAt)}</div>
+                <div><strong>{printSettings?.dayLabel || 'Day:'}</strong> {formatDay(voucherData.createdAt)}</div>
               </div>
             </div>
 
@@ -280,21 +297,28 @@ const PublicVoucher: React.FC = () => {
                   <tr>
                     <td className="label-ar">{getRecipientLabel()}</td>
                     <td className="value-col">{voucherData.companyName ?? '-'}</td>
-                    <td className="label-en">Received From</td>
+                    <td className="label-en">{printSettings?.receivedFromLabel || 'Received From'}</td>
                   </tr>
                   <tr>
-                    <td className="label-ar">المبلغ المستلم</td>
+                    <td className="label-ar">{printSettings?.amountReceivedLabel || (voucherData.type === 'receipt' ? 'المبلغ المستلم' : 'المبلغ المدفوع')}</td>
                     <td className="value-col" dir="ltr">{displayAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} {displayCurrencySymbol}</td>
                     <td className="label-en">Amount Received</td>
                   </tr>
                   <tr>
-                    <td className="label-ar">المبلغ كتابة</td>
+                    <td className="label-ar">{printSettings?.amountInWordsLabel || 'المبلغ كتابة'}</td>
                     <td className="value-col">{amountWordsText}</td>
                     <td className="label-en">The amount is written</td>
                   </tr>
+                  {voucherData.phone && (
+                    <tr>
+                      <td className="label-ar">{printSettings?.phoneLabel || 'رقم الهاتف'}</td>
+                      <td className="value-col" dir="ltr">{voucherData.phone}</td>
+                      <td className="label-en">Phone Number</td>
+                    </tr>
+                  )}
                   {voucherData.details && (
                     <tr>
-                      <td className="label-ar">التفاصيل</td>
+                      <td className="label-ar">{printSettings?.detailsLabel || 'التفاصيل'}</td>
                       <td className="value-col">{voucherData.details}</td>
                       <td className="label-en">Details</td>
                     </tr>
@@ -316,7 +340,7 @@ const PublicVoucher: React.FC = () => {
 
             <div className="signatures">
               <div className="signature-box" style={{ textAlign: 'right' }}>
-                <div>منظم الوصل: {voucherData.employeeName || 'شهد حيدر'}</div>
+                <div>{printSettings?.cashierLabel || 'منظم الوصل'}: {voucherData.employeeName || 'شهد حيدر'}</div>
               </div>
               <div className="qr-codes-container">
                 <div className="p-2 bg-white rounded-2xl overflow-hidden shadow-lg">
@@ -328,7 +352,7 @@ const PublicVoucher: React.FC = () => {
                     level={"H"}
                     includeMargin={false}
                     imageSettings={{
-                      src: "https://image.winudf.com/v2/image1/Y29tLmZseTRhbGwuYXBwX2ljb25fMTc0MTM3NDI5Ml8wODk/icon.webp?w=140&fakeurl=1&type=.webp",
+                      src: logoUrl,
                       height: 20,
                       width: 20,
                       excavate: true,
@@ -337,12 +361,12 @@ const PublicVoucher: React.FC = () => {
                 </div>
               </div>
               <div className="signature-box" style={{ textAlign: 'left' }}>
-                <div>توقيع المستلم</div>
+                <div>{printSettings?.recipientSignatureLabel || 'توقيع المستلم'}</div>
               </div>
             </div>
 
             <footer className="footer-bar">
-              9647730308111 - 964771800033 | كربلاء - شارع الإسكان - قرب مستشفى احمد الوائلي
+              {printSettings?.footerAddress || '9647730308111 - 964771800033 | كربلاء - شارع الإسكان - قرب مستشفى احمد الوائلي'}
             </footer>
           </div>
         </div>

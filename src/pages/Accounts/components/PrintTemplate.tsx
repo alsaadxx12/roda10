@@ -27,18 +27,18 @@ type TemplateSettings = {
   logoUrl: string;
   logoText?: string;
   footerAddress: string;
-  companyNameLabel: string;
-  receiptNoLabel: string;
-  dateLabel: string;
-  dayLabel: string;
-  receivedFromLabel: string;
-  amountReceivedLabel: string;
-  amountInWordsLabel: string;
-  detailsLabel: string;
-  phoneLabel: string;
-  cashierLabel: string;
-  recipientSignatureLabel: string;
-  directorSignatureLabel: string;
+  companyNameLabel?: string;
+  receiptNoLabel?: string;
+  dateLabel?: string;
+  dayLabel?: string;
+  receivedFromLabel?: string;
+  amountReceivedLabel?: string;
+  amountInWordsLabel?: string;
+  detailsLabel?: string;
+  phoneLabel?: string;
+  cashierLabel?: string;
+  recipientSignatureLabel?: string;
+  directorSignatureLabel?: string;
   gatesColumnLabel?: string;
   internalColumnLabel?: string;
   externalColumnLabel?: string;
@@ -268,27 +268,27 @@ export async function generateVoucherHTML(
                 <td class="label-en">${receivedFromLabel}</td>
               </tr>
               <tr>
-                <td class="label-ar">المبلغ المستلم</td>
+                <td class="label-ar">${amountReceivedLabel}</td>
                 <td class="value-col" dir="ltr">${displayAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${displayCurrencySymbol}</td>
-                <td class="label-en">${amountReceivedLabel}</td>
+                <td class="label-en">Amount Received</td>
               </tr>
               <tr>
-                <td class="label-ar">المبلغ كتابة</td>
+                <td class="label-ar">${amountInWordsLabel}</td>
                 <td class="value-col">${amountWordsText}</td>
-                <td class="label-en">${amountInWordsLabel}</td>
+                <td class="label-en">The amount is written</td>
               </tr>
               ${voucherData.phone ? `
                 <tr>
-                  <td class="label-ar">رقم الهاتف</td>
+                  <td class="label-ar">${phoneLabel}</td>
                   <td class="value-col" dir="ltr">${voucherData.phone}</td>
-                  <td class="label-en">${phoneLabel}</td>
+                  <td class="label-en">Phone Number</td>
                 </tr>
               ` : ''}
               ${voucherData.details ? `
                 <tr>
-                  <td class="label-ar">التفاصيل</td>
+                  <td class="label-ar">${detailsLabel}</td>
                   <td class="value-col">${voucherData.details}</td>
-                  <td class="label-en">${detailsLabel}</td>
+                  <td class="label-en">Details</td>
                 </tr>
               ` : ''}
             </tbody>

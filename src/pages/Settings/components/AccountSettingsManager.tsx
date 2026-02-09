@@ -50,15 +50,15 @@ export default function AccountSettingsManager() {
   useEffect(() => {
     const loadSettings = async () => {
       if (!user?.uid) return;
-      
+
       setIsLoading(true);
       setError(null);
-      
+
       try {
         // First check if global settings exist
         const globalSettingsRef = doc(db, 'account_settings', 'global');
         const globalDocSnap = await getDoc(globalSettingsRef);
-        
+
         if (globalDocSnap.exists()) {
           const data = globalDocSnap.data() as AccountSettings;
           setSettings({
@@ -78,31 +78,31 @@ export default function AccountSettingsManager() {
           });
           setIsGlobalSettings(true);
         } else {
-            // Create default settings if global settings don't exist
-            const defaultSettings: AccountSettings = {
-              userId: 'global',
-              useCustomColumns: true,
-              showGatesColumn: true,
-              showInternalColumn: true,
-              showExternalColumn: true,
-              showFlyColumn: true,
-              visibleColumns: [],
-              gatesColumnLabel: 'العمود الأول',
-              internalColumnLabel: 'العمود الثاني',
-              externalColumnLabel: 'العمود الثالث',
-              flyColumnLabel: 'العمود الرابع',
-              nextInvoiceNumber: '1000'
-            };
-            
-            // Create global settings
-            await setDoc(globalSettingsRef, {
-              ...defaultSettings,
-              createdAt: new Date(),
-              updatedAt: new Date()
-            });
-            
-            setSettings(defaultSettings);
-            setIsGlobalSettings(true);
+          // Create default settings if global settings don't exist
+          const defaultSettings: AccountSettings = {
+            userId: 'global',
+            useCustomColumns: true,
+            showGatesColumn: true,
+            showInternalColumn: true,
+            showExternalColumn: true,
+            showFlyColumn: true,
+            visibleColumns: [],
+            gatesColumnLabel: 'العمود الأول',
+            internalColumnLabel: 'العمود الثاني',
+            externalColumnLabel: 'العمود الثالث',
+            flyColumnLabel: 'العمود الرابع',
+            nextInvoiceNumber: '1000'
+          };
+
+          // Create global settings
+          await setDoc(globalSettingsRef, {
+            ...defaultSettings,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          });
+
+          setSettings(defaultSettings);
+          setIsGlobalSettings(true);
         }
       } catch (error) {
         console.error('Error loading account settings:', error);
@@ -111,28 +111,28 @@ export default function AccountSettingsManager() {
         setIsLoading(false);
       }
     };
-    
+
     loadSettings();
   }, [user?.uid]);
 
   // Save settings to Firestore
   const saveSettings = async () => {
     if (!isGlobalSettings) return;
-    
+
     setIsSaving(true);
     setError(null);
     setSuccess(null);
-    
+
     try {
       // Always use global settings
       const settingsRef = doc(db, 'account_settings', 'global');
-      
+
       // Ensure nextInvoiceNumber is a string
       const nextInvoiceNumber = settings.nextInvoiceNumber || '1000';
-      
+
       // Check if document exists first
       const docSnap = await getDoc(settingsRef);
-      
+
       const settingsData = {
         useCustomColumns: settings.useCustomColumns,
         showGatesColumn: settings.showGatesColumn,
@@ -147,7 +147,7 @@ export default function AccountSettingsManager() {
         nextInvoiceNumber: nextInvoiceNumber,
         updatedAt: new Date()
       };
-      
+
       if (docSnap.exists()) {
         await updateDoc(settingsRef, settingsData);
       } else {
@@ -156,9 +156,22 @@ export default function AccountSettingsManager() {
           createdAt: new Date()
         });
       }
-      
+
+      // Sync labels with settings/print
+      const printSettingsRef = doc(db, 'settings', 'print');
+      const printDocSnap = await getDoc(printSettingsRef);
+      if (printDocSnap.exists()) {
+        await updateDoc(printSettingsRef, {
+          gatesColumnLabel: settings.gatesColumnLabel,
+          internalColumnLabel: settings.internalColumnLabel,
+          externalColumnLabel: settings.externalColumnLabel,
+          flyColumnLabel: settings.flyColumnLabel,
+          updatedAt: new Date()
+        });
+      }
+
       setSuccess('تم حفظ الإعدادات العامة بنجاح لجميع المستخدمين');
-      
+
       // Hide success message after 3 seconds
       setTimeout(() => {
         setSuccess(null);
@@ -203,7 +216,7 @@ export default function AccountSettingsManager() {
             </div>
           </div>
         </div>
-        
+
         <div className="p-6">
           <div className="flex items-center gap-3">
             <div className="p-3 rounded-xl bg-gradient-to-br from-blue-100 to-blue-50">
@@ -216,7 +229,7 @@ export default function AccountSettingsManager() {
               </p>
             </div>
           </div>
-          
+
           <div className="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-100">
             <div className="flex items-center gap-2 mb-2">
               <Info className="w-4 h-4 text-blue-600 flex-shrink-0" />
@@ -241,21 +254,21 @@ export default function AccountSettingsManager() {
             </div>
           </div>
         </div>
-        
+
         {/* Invoice Sequence Settings */}
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-4">
             <Hash className="w-5 h-5 text-blue-600" />
             <h4 className="font-medium text-gray-800">إعدادات تسلسل الفواتير</h4>
           </div>
-          
+
           <div className="p-4 bg-indigo-50 rounded-lg border border-indigo-100 mb-4">
             <div className="flex items-center gap-2 text-indigo-700">
               <Info className="w-5 h-5 flex-shrink-0 text-indigo-600" />
               <p className="text-sm">يمكنك تحديد رقم البداية لتسلسل الفواتير الخاصة بسندات القبض والدفع.</p>
             </div>
           </div>
-          
+
           <div className="p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-200 transition-all shadow-sm hover:shadow">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-3">
@@ -283,7 +296,7 @@ export default function AccountSettingsManager() {
             </div>
           </div>
         </div>
-        
+
         <div className="p-6">
           {/* Column Visibility Settings */}
           <div className="mb-8">
@@ -291,14 +304,14 @@ export default function AccountSettingsManager() {
               <Eye className="w-5 h-5 text-blue-600" />
               <h4 className="font-medium text-gray-800">إعدادات ظهور الأعمدة</h4>
             </div>
-            
+
             <div className="p-4 bg-indigo-50 rounded-lg border border-indigo-100 mb-4">
               <div className="flex items-center gap-2 text-indigo-700">
                 <Info className="w-5 h-5 flex-shrink-0 text-indigo-600" />
                 <p className="text-sm">يمكنك التحكم في ظهور الأعمدة في الجداول من خلال زر "الأعمدة" الموجود أعلى كل جدول.</p>
               </div>
             </div>
-            
+
             <div className="flex items-center mb-4">
               <label className="flex items-center gap-2 cursor-pointer">
                 <div className="relative inline-flex h-6 w-12 items-center rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
@@ -306,23 +319,22 @@ export default function AccountSettingsManager() {
                   onClick={() => setSettings(prev => ({ ...prev, useCustomColumns: !prev.useCustomColumns }))}
                 >
                   <span
-                    className={`${
-                      settings.useCustomColumns ? 'translate-x-1' : 'translate-x-7'
-                    } inline-block h-4 w-4 transform rounded-full bg-gray-50 transition-transform`}
+                    className={`${settings.useCustomColumns ? 'translate-x-1' : 'translate-x-7'
+                      } inline-block h-4 w-4 transform rounded-full bg-gray-50 transition-transform`}
                   />
-                </div> 
+                </div>
                 <span className="text-gray-800 font-medium">تفعيل تخصيص الأعمدة</span>
               </label>
             </div>
           </div>
-          
+
           {/* Custom Columns Settings */}
           <div className="mb-8">
             <div className="flex items-center gap-2 mb-4">
               <Table className="w-5 h-5 text-blue-600" />
               <h4 className="font-medium text-gray-800">تخصيص تسميات الأعمدة</h4>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-200 transition-all shadow-sm hover:shadow">
                 <div className="flex items-center justify-between mb-3">
@@ -335,16 +347,15 @@ export default function AccountSettingsManager() {
                   <button
                     onClick={() => settings.useCustomColumns && toggleColumn('showGatesColumn')}
                     className="relative inline-flex h-6 w-12 items-center rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                    style={{ 
+                    style={{
                       backgroundColor: settings.showGatesColumn ? '#3b82f6' : '#9ca3af',
                       opacity: settings.useCustomColumns ? 1 : 0.5,
                       cursor: settings.useCustomColumns ? 'pointer' : 'not-allowed'
                     }}
                   >
                     <span
-                      className={`${
-                        settings.showGatesColumn ? 'translate-x-1' : 'translate-x-7'
-                      } inline-block h-4 w-4 transform rounded-full bg-gray-50 transition-transform`}
+                      className={`${settings.showGatesColumn ? 'translate-x-1' : 'translate-x-7'
+                        } inline-block h-4 w-4 transform rounded-full bg-gray-50 transition-transform`}
                     />
                     <span className="sr-only">
                       {settings.showGatesColumn ? 'Enabled' : 'Disabled'}
@@ -356,7 +367,7 @@ export default function AccountSettingsManager() {
                     <label className="block text-xs font-medium text-gray-700 mb-1">تسمية العمود</label>
                     <input
                       type="text"
-                      value={settings.gatesColumnLabel} 
+                      value={settings.gatesColumnLabel}
                       onChange={(e) => setSettings(prev => ({ ...prev, gatesColumnLabel: e.target.value }))}
                       className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-800"
                       placeholder="العمود الأول"
@@ -364,7 +375,7 @@ export default function AccountSettingsManager() {
                   </div>
                 )}
               </div>
-              
+
               <div className="p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-200 transition-all shadow-sm hover:shadow">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-3">
@@ -376,16 +387,15 @@ export default function AccountSettingsManager() {
                   <button
                     onClick={() => settings.useCustomColumns && toggleColumn('showInternalColumn')}
                     className="relative inline-flex h-6 w-12 items-center rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                    style={{ 
+                    style={{
                       backgroundColor: settings.showInternalColumn ? '#3b82f6' : '#9ca3af',
                       opacity: settings.useCustomColumns ? 1 : 0.5,
                       cursor: settings.useCustomColumns ? 'pointer' : 'not-allowed'
                     }}
                   >
                     <span
-                      className={`${
-                        settings.showInternalColumn ? 'translate-x-1' : 'translate-x-7'
-                      } inline-block h-4 w-4 transform rounded-full bg-gray-50 transition-transform`}
+                      className={`${settings.showInternalColumn ? 'translate-x-1' : 'translate-x-7'
+                        } inline-block h-4 w-4 transform rounded-full bg-gray-50 transition-transform`}
                     />
                     <span className="sr-only">
                       {settings.showInternalColumn ? 'Enabled' : 'Disabled'}
@@ -405,7 +415,7 @@ export default function AccountSettingsManager() {
                   </div>
                 )}
               </div>
-              
+
               <div className="p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-200 transition-all shadow-sm hover:shadow">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-3">
@@ -417,16 +427,15 @@ export default function AccountSettingsManager() {
                   <button
                     onClick={() => settings.useCustomColumns && toggleColumn('showExternalColumn')}
                     className="relative inline-flex h-6 w-12 items-center rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                    style={{ 
+                    style={{
                       backgroundColor: settings.showExternalColumn ? '#3b82f6' : '#9ca3af',
                       opacity: settings.useCustomColumns ? 1 : 0.5,
                       cursor: settings.useCustomColumns ? 'pointer' : 'not-allowed'
                     }}
                   >
                     <span
-                      className={`${
-                        settings.showExternalColumn ? 'translate-x-1' : 'translate-x-7'
-                      } inline-block h-4 w-4 transform rounded-full bg-gray-50 transition-transform`}
+                      className={`${settings.showExternalColumn ? 'translate-x-1' : 'translate-x-7'
+                        } inline-block h-4 w-4 transform rounded-full bg-gray-50 transition-transform`}
                     />
                     <span className="sr-only">
                       {settings.showExternalColumn ? 'Enabled' : 'Disabled'}
@@ -446,7 +455,7 @@ export default function AccountSettingsManager() {
                   </div>
                 )}
               </div>
-              
+
               <div className="p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-200 transition-all shadow-sm hover:shadow">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-3">
@@ -458,16 +467,15 @@ export default function AccountSettingsManager() {
                   <button
                     onClick={() => settings.useCustomColumns && toggleColumn('showFlyColumn')}
                     className="relative inline-flex h-6 w-12 items-center rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                    style={{ 
+                    style={{
                       backgroundColor: settings.showFlyColumn ? '#3b82f6' : '#9ca3af',
                       opacity: settings.useCustomColumns ? 1 : 0.5,
                       cursor: settings.useCustomColumns ? 'pointer' : 'not-allowed'
                     }}
                   >
                     <span
-                      className={`${
-                        settings.showFlyColumn ? 'translate-x-1' : 'translate-x-7'
-                      } inline-block h-4 w-4 transform rounded-full bg-gray-50 transition-transform`}
+                      className={`${settings.showFlyColumn ? 'translate-x-1' : 'translate-x-7'
+                        } inline-block h-4 w-4 transform rounded-full bg-gray-50 transition-transform`}
                     />
                     <span className="sr-only">
                       {settings.showFlyColumn ? 'Enabled' : 'Disabled'}
@@ -489,7 +497,7 @@ export default function AccountSettingsManager() {
               </div>
             </div>
           </div>
-          
+
           {/* Save Button */}
           <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">
             {error && (
@@ -498,14 +506,14 @@ export default function AccountSettingsManager() {
                 <span>{error}</span>
               </div>
             )}
-            
+
             {success && (
               <div className="flex-1 p-3 bg-green-50 text-green-600 rounded-lg text-sm flex items-center gap-2 border border-green-100">
                 <Check className="w-5 h-5 flex-shrink-0 text-green-600" />
                 <span>{success}</span>
               </div>
             )}
-            
+
             <button
               onClick={saveSettings}
               disabled={isSaving}
