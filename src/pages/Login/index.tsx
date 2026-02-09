@@ -59,7 +59,7 @@ const Login: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-slate-950 font-['Tajawal'] p-4 md:p-6 overflow-hidden relative">
+        <div className="min-h-screen flex items-center justify-center bg-[#011b15] font-['Tajawal'] p-4 md:p-6 overflow-hidden relative">
             <WelcomeOverlay
                 isVisible={showWelcome}
                 userName={email.split('@')[0]}
@@ -78,7 +78,7 @@ const Login: React.FC = () => {
                         scale: [1, 1.2, 1]
                     }}
                     transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                    className="absolute top-[-10%] left-[-10%] w-[1000px] h-[1000px] bg-blue-600/10 rounded-full blur-[140px]"
+                    className="absolute top-[-10%] left-[-10%] w-[1000px] h-[1000px] bg-emerald-600/10 rounded-full blur-[140px]"
                 />
                 <motion.div
                     animate={{
@@ -87,7 +87,7 @@ const Login: React.FC = () => {
                         scale: [1, 1.3, 1]
                     }}
                     transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-                    className="absolute bottom-[-10%] right-[-10%] w-[800px] h-[800px] bg-indigo-600/10 rounded-full blur-[140px]"
+                    className="absolute bottom-[-10%] right-[-10%] w-[800px] h-[800px] bg-teal-600/10 rounded-full blur-[140px]"
                 />
             </div>
 
@@ -97,9 +97,9 @@ const Login: React.FC = () => {
                 transition={{ type: "spring", stiffness: 100, damping: 20 }}
                 className="w-full max-w-md md:max-w-lg relative z-10"
             >
-                <div className="bg-slate-900/40 backdrop-blur-3xl border border-white/10 rounded-[32px] md:rounded-[48px] p-6 md:p-14 shadow-2xl relative overflow-hidden group">
+                <div className="bg-emerald-950/40 backdrop-blur-3xl border border-white/10 rounded-[32px] md:rounded-[48px] p-6 md:p-14 shadow-2xl relative overflow-hidden group">
                     {/* Interior Glow */}
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
+                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
 
                     <div className="text-center mb-8 md:mb-12">
                         {customSettings.logoUrl ? (

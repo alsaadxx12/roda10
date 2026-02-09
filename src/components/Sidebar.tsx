@@ -168,14 +168,14 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen, toggleSidebar, isColla
                         className={`group relative flex items-center justify-center p-3 rounded-xl transition-all duration-300 transform hover:scale-105 ${isActive
                           ? theme === 'dark'
                             ? 'bg-gray-800 text-white shadow-lg'
-                            : 'bg-gradient-to-r from-indigo-50 to-blue-50 text-indigo-700 shadow-md border border-indigo-200'
+                            : 'bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-700 shadow-md border border-emerald-200'
                           : theme === 'dark'
                             ? 'text-gray-300 hover:bg-gray-800/50 hover:text-white'
-                            : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600'
+                            : 'text-gray-700 hover:bg-gray-50 hover:text-emerald-600'
                           }`}
                         title={t(item.textKey)}
                       >
-                        <div className={`relative ${isActive ? theme === 'dark' ? 'bg-white/20' : 'bg-gradient-to-br from-indigo-500 to-blue-500 text-white' : ''} p-1 rounded-lg`}>
+                        <div className={`relative ${isActive ? theme === 'dark' ? 'bg-white/20' : 'bg-gradient-to-br from-emerald-500 to-teal-500 text-white' : ''} p-1 rounded-lg`}>
                           <Icon className={`w-5 h-5 ${isActive ? 'text-white' : ''}`} />
                         </div>
                       </Link>
@@ -222,7 +222,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen, toggleSidebar, isColla
             )}
           </button>
         </div>
-      </aside>
+      </aside >
 
       {isPasswordModalOpen && (
         <div
@@ -234,7 +234,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen, toggleSidebar, isColla
               }`}
             onClick={(e: any) => e.stopPropagation()}
           >
-            <div className="p-5 bg-gradient-to-r from-amber-500 to-orange-500 text-white">
+            <div className="p-5 bg-gradient-to-r from-emerald-500 to-teal-500 text-white">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="p-2.5 bg-white/20 rounded-xl">
@@ -294,9 +294,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen, toggleSidebar, isColla
                     value={currentPassword}
                     onChange={(e) => setCurrentPassword(e.target.value)}
                     className={`w-full px-4 py-3 rounded-lg transition-all ${theme === 'dark'
-                      ? 'bg-gray-700 border-gray-600 text-white focus:border-amber-500'
-                      : 'bg-gray-50 border-gray-200 text-gray-900 focus:border-amber-500'
-                      } border focus:outline-none focus:ring-2 focus:ring-amber-500/20`}
+                      ? 'bg-gray-700 border-gray-600 text-white focus:border-emerald-500'
+                      : 'bg-gray-50 border-gray-200 text-gray-900 focus:border-emerald-500'
+                      } border focus:outline-none focus:ring-2 focus:ring-emerald-500/20`}
                     placeholder="••••••••"
                     required
                   />
@@ -314,9 +314,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen, toggleSidebar, isColla
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                     className={`w-full px-4 py-3 rounded-lg transition-all ${theme === 'dark'
-                      ? 'bg-gray-700 border-gray-600 text-white focus:border-amber-500'
-                      : 'bg-gray-50 border-gray-200 text-gray-900 focus:border-amber-500'
-                      } border focus:outline-none focus:ring-2 focus:ring-amber-500/20`}
+                      ? 'bg-gray-700 border-gray-600 text-white focus:border-emerald-500'
+                      : 'bg-gray-50 border-gray-200 text-gray-900 focus:border-emerald-500'
+                      } border focus:outline-none focus:ring-2 focus:ring-emerald-500/20`}
                     placeholder="••••••••"
                     required
                     minLength={8}
@@ -341,9 +341,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen, toggleSidebar, isColla
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     className={`w-full px-4 py-3 rounded-lg transition-all ${theme === 'dark'
-                      ? 'bg-gray-700 border-gray-600 text-white focus:border-amber-500'
-                      : 'bg-gray-50 border-gray-200 text-gray-900 focus:border-amber-500'
-                      } border focus:outline-none focus:ring-2 focus:ring-amber-500/20`}
+                      ? 'bg-gray-700 border-gray-600 text-white focus:border-emerald-500'
+                      : 'bg-gray-50 border-gray-200 text-gray-900 focus:border-emerald-500'
+                      } border focus:outline-none focus:ring-2 focus:ring-emerald-500/20`}
                     placeholder="••••••••"
                     required
                   />
@@ -367,7 +367,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen, toggleSidebar, isColla
                 <button
                   type="submit"
                   disabled={isChangingPassword}
-                  className="px-4 py-2 text-white bg-gradient-to-r from-amber-500 to-orange-500 rounded-lg hover:from-amber-600 hover:to-orange-600 transition-all disabled:opacity-50 flex items-center gap-2"
+                  className="px-4 py-2 text-white bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg hover:from-emerald-600 hover:to-teal-600 transition-all disabled:opacity-50 flex items-center gap-2"
                 >
                   {isChangingPassword ? (
                     <>
@@ -385,7 +385,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen, toggleSidebar, isColla
             </form>
           </div>
         </div>
-      )}
+      )
+      }
     </>
   );
 };

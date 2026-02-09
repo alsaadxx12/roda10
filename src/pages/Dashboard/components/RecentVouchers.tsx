@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useTheme } from '../../../contexts/ThemeContext';
 import { collection, query, orderBy, limit, onSnapshot, where } from 'firebase/firestore';
 import { db } from '../../../lib/firebase';
@@ -10,7 +10,6 @@ import {
   Loader2,
   User,
   ExternalLink,
-  ChevronRight,
   TrendingDown,
   TrendingUp
 } from 'lucide-react';
@@ -90,8 +89,8 @@ export default function RecentVouchers() {
       <div className="relative p-6 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5">
         <div className="flex items-center gap-4">
           <div className={`flex items-center justify-center w-12 h-12 rounded-xl shadow-md ${theme === 'dark'
-              ? 'bg-gradient-to-br from-indigo-500 text-white shadow-indigo-500/20'
-              : 'bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-blue-600/20'
+              ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-emerald-500/20'
+              : 'bg-gradient-to-br from-green-600 to-emerald-600 text-white shadow-emerald-600/20'
             }`}>
             <FileText className="w-6 h-6" />
           </div>
@@ -140,7 +139,7 @@ export default function RecentVouchers() {
           <div className="flex-1 flex flex-col items-center justify-center gap-4">
             <div className={`relative flex items-center justify-center w-12 h-12 rounded-full border-2 border-dashed animate-spin ${theme === 'dark' ? 'border-white/20' : 'border-gray-200'
               }`}>
-              <Loader2 className={`w-6 h-6 ${theme === 'dark' ? 'text-white' : 'text-blue-600'}`} />
+              <Loader2 className={`w-6 h-6 ${theme === 'dark' ? 'text-white' : 'text-emerald-600'}`} />
             </div>
             <p className={`text-sm font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
               جاري التحميل...
@@ -244,4 +243,3 @@ export default function RecentVouchers() {
     </div>
   );
 }
-

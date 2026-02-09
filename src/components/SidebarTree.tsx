@@ -161,10 +161,10 @@ const SidebarTree: React.FC<SidebarTreeProps> = ({ isCollapsed, onItemClick }) =
         ${isActive
                 ? theme === 'dark'
                     ? 'bg-gray-800 text-white shadow-lg'
-                    : 'bg-gradient-to-r from-indigo-50 to-blue-50 text-indigo-700 shadow-md border border-indigo-200'
+                    : 'bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-700 shadow-md border border-emerald-200'
                 : theme === 'dark'
                     ? 'text-gray-300 hover:bg-gray-800/50 hover:text-white'
-                    : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600'
+                    : 'text-gray-700 hover:bg-gray-50 hover:text-emerald-600'
             }
     `;
 
@@ -173,7 +173,7 @@ const SidebarTree: React.FC<SidebarTreeProps> = ({ isCollapsed, onItemClick }) =
        ${isActive
                 ? theme === 'dark'
                     ? 'bg-white/20 shadow-inner'
-                    : 'bg-gradient-to-br from-indigo-500 to-blue-500 shadow-md'
+                    : 'bg-gradient-to-br from-emerald-500 to-teal-500 shadow-md'
                 : `${node.iconBg || 'bg-gray-100 dark:bg-gray-700'} group-hover:scale-110`
             }
     `;
@@ -191,7 +191,7 @@ const SidebarTree: React.FC<SidebarTreeProps> = ({ isCollapsed, onItemClick }) =
         return (
             <div className={containerClasses}>
                 {isActive && theme === 'light' && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-indigo-100/50 to-blue-100/50 rounded-xl animate-pulse -z-10"></div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-emerald-100/50 to-teal-100/50 rounded-xl animate-pulse -z-10"></div>
                 )}
 
                 {Icon && (

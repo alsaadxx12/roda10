@@ -72,12 +72,12 @@ const ExchangeRateChart: React.FC<ExchangeRateChartProps> = ({ data, currentRate
       {
         name: `السعر السابق (${previous.date})`,
         value: previous.rate,
-        color: theme === 'dark' ? '#a78bfa' : '#8b5cf6',
+        color: theme === 'dark' ? '#10b981' : '#059669',
       },
       {
         name: `السعر الحالي (${latest.date})`,
         value: latest.rate,
-        color: theme === 'dark' ? '#60a5fa' : '#3b82f6',
+        color: theme === 'dark' ? '#14b8a6' : '#0d9488',
       },
     ];
   }, [data, theme]);
@@ -100,7 +100,7 @@ const ExchangeRateChart: React.FC<ExchangeRateChartProps> = ({ data, currentRate
       <div className={`rounded-2xl shadow-lg border p-6 ${theme === 'dark' ? 'bg-gray-800/60 border-gray-700' : 'bg-white border-gray-200'}`}>
         <div className="h-96 flex items-center justify-center">
           <div className="text-center">
-            <motion.div className="rounded-full h-12 w-12 border-b-2 border-indigo-500 mx-auto mb-4" animate="spin" variants={loadingAnimation} />
+            <motion.div className="rounded-full h-12 w-12 border-b-2 border-emerald-500 mx-auto mb-4" animate="spin" variants={loadingAnimation} />
             <p className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>جاري تحميل البيانات...</p>
           </div>
         </div>
@@ -126,11 +126,11 @@ const ExchangeRateChart: React.FC<ExchangeRateChartProps> = ({ data, currentRate
   return (
     <div className={`rounded-2xl shadow-lg border overflow-hidden ${theme === 'dark' ? 'bg-gray-800/60 border-gray-700' : 'bg-white border-gray-200'}`}>
       {/* Header */}
-      <div className={`p-6 border-b ${theme === 'dark' ? 'border-gray-700 bg-gradient-to-r from-indigo-900/20 to-gray-800' : 'border-gray-200 bg-gradient-to-r from-indigo-50 to-white'}`}>
+      <div className={`p-6 border-b ${theme === 'dark' ? 'border-gray-700 bg-gradient-to-r from-emerald-900/20 to-gray-800' : 'border-gray-200 bg-gradient-to-r from-emerald-50 to-white'}`}>
         <div className="flex items-start justify-between mb-6">
           <div className="flex items-center gap-4">
-            <div className={`p-3 rounded-xl ${theme === 'dark' ? 'bg-indigo-500/20' : 'bg-indigo-100'}`}>
-              <DollarSign className={`w-6 h-6 ${theme === 'dark' ? 'text-indigo-400' : 'text-indigo-600'}`} />
+            <div className={`p-3 rounded-xl ${theme === 'dark' ? 'bg-emerald-500/20' : 'bg-emerald-100'}`}>
+              <DollarSign className={`w-6 h-6 ${theme === 'dark' ? 'text-emerald-400' : 'text-emerald-600'}`} />
             </div>
             <div>
               <h3 className={`text-xl font-bold ${theme === 'dark' ? 'text-gray-100' : 'text-gray-800'}`}>سعر الصرف المعتمد</h3>
@@ -142,28 +142,28 @@ const ExchangeRateChart: React.FC<ExchangeRateChartProps> = ({ data, currentRate
           <div className={`flex items-center gap-2 p-1.5 rounded-xl border ${theme === 'dark' ? 'bg-gray-700/50 border-gray-600' : 'bg-gray-100 border-gray-200'}`}>
             <button
               onClick={() => setChartType('area')}
-              className={`p-2 rounded-lg transition-all ${chartType === 'area' ? 'bg-indigo-500 text-white shadow-lg' : theme === 'dark' ? 'text-gray-400 hover:text-gray-200 hover:bg-gray-600' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-200'}`}
+              className={`p-2 rounded-lg transition-all ${chartType === 'area' ? 'bg-emerald-500 text-white shadow-lg' : theme === 'dark' ? 'text-gray-400 hover:text-gray-200 hover:bg-gray-600' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-200'}`}
               title="مخطط منطقة"
             >
               <AreaChartIcon className="w-4 h-4" />
             </button>
             <button
               onClick={() => setChartType('line')}
-              className={`p-2 rounded-lg transition-all ${chartType === 'line' ? 'bg-indigo-500 text-white shadow-lg' : theme === 'dark' ? 'text-gray-400 hover:text-gray-200 hover:bg-gray-600' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-200'}`}
+              className={`p-2 rounded-lg transition-all ${chartType === 'line' ? 'bg-emerald-500 text-white shadow-lg' : theme === 'dark' ? 'text-gray-400 hover:text-gray-200 hover:bg-gray-600' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-200'}`}
               title="مخطط خطي"
             >
               <LineChartIcon className="w-4 h-4" />
             </button>
             <button
               onClick={() => setChartType('bar')}
-              className={`p-2 rounded-lg transition-all ${chartType === 'bar' ? 'bg-indigo-500 text-white shadow-lg' : theme === 'dark' ? 'text-gray-400 hover:text-gray-200 hover:bg-gray-600' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-200'}`}
+              className={`p-2 rounded-lg transition-all ${chartType === 'bar' ? 'bg-emerald-500 text-white shadow-lg' : theme === 'dark' ? 'text-gray-400 hover:text-gray-200 hover:bg-gray-600' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-200'}`}
               title="مخطط أعمدة"
             >
               <BarChart3 className="w-4 h-4" />
             </button>
             <button
               onClick={() => setChartType('pie')}
-              className={`p-2 rounded-lg transition-all ${chartType === 'pie' ? 'bg-indigo-500 text-white shadow-lg' : theme === 'dark' ? 'text-gray-400 hover:text-gray-200 hover:bg-gray-600' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-200'}`}
+              className={`p-2 rounded-lg transition-all ${chartType === 'pie' ? 'bg-emerald-500 text-white shadow-lg' : theme === 'dark' ? 'text-gray-400 hover:text-gray-200 hover:bg-gray-600' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-200'}`}
               title="مخطط دائري"
             >
               <PieChartIcon className="w-4 h-4" />
@@ -213,8 +213,8 @@ const ExchangeRateChart: React.FC<ExchangeRateChartProps> = ({ data, currentRate
                 <BarChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 10 }}>
                   <defs>
                     <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#60a5fa" stopOpacity={0.9} />
-                      <stop offset="100%" stopColor="#8b5cf6" stopOpacity={0.7} />
+                      <stop offset="0%" stopColor="#10b981" stopOpacity={0.9} />
+                      <stop offset="100%" stopColor="#047857" stopOpacity={0.7} />
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke={theme === 'dark' ? '#374151' : '#e5e7eb'} opacity={0.5} />
@@ -232,15 +232,15 @@ const ExchangeRateChart: React.FC<ExchangeRateChartProps> = ({ data, currentRate
                     formatter={(value: any) => [`${value.toLocaleString()} د.ع`, 'سعر الصرف']}
                     labelFormatter={(label) => `التاريخ: ${label}`}
                   />
-                  <ReferenceLine y={currentRate} stroke={theme === 'dark' ? '#8b5cf6' : '#6366f1'} strokeDasharray="5 5" strokeWidth={2} />
+                  <ReferenceLine y={currentRate} stroke={theme === 'dark' ? '#059669' : '#10b981'} strokeDasharray="5 5" strokeWidth={2} />
                   <Bar dataKey="rate" fill="url(#barGradient)" name="سعر الصرف" radius={[8, 8, 0, 0]} />
                 </BarChart>
               ) : chartType === 'area' ? (
                 <AreaChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 10 }}>
                   <defs>
                     <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#6366f1" stopOpacity={0.8} />
-                      <stop offset="100%" stopColor="#8b5cf6" stopOpacity={0.6} />
+                      <stop offset="0%" stopColor="#10b981" stopOpacity={0.8} />
+                      <stop offset="100%" stopColor="#047857" stopOpacity={0.6} />
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke={theme === 'dark' ? '#374151' : '#e5e7eb'} opacity={0.5} />
@@ -258,8 +258,8 @@ const ExchangeRateChart: React.FC<ExchangeRateChartProps> = ({ data, currentRate
                     formatter={(value: any) => [`${value.toLocaleString()} د.ع`, 'سعر الصرف']}
                     labelFormatter={(label) => `التاريخ: ${label}`}
                   />
-                  <ReferenceLine y={currentRate} stroke={theme === 'dark' ? '#8b5cf6' : '#6366f1'} strokeDasharray="5 5" strokeWidth={2} />
-                  <Area type="monotone" dataKey="rate" stroke="#6366f1" strokeWidth={3} fill="url(#areaGradient)" fillOpacity={1} activeDot={{ r: 6 }} name="سعر الصرف" />
+                  <ReferenceLine y={currentRate} stroke={theme === 'dark' ? '#059669' : '#10b981'} strokeDasharray="5 5" strokeWidth={2} />
+                  <Area type="monotone" dataKey="rate" stroke="#059669" strokeWidth={3} fill="url(#areaGradient)" fillOpacity={1} activeDot={{ r: 6 }} name="سعر الصرف" />
                 </AreaChart>
               ) : (
                 <LineChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 10 }}>
@@ -278,8 +278,8 @@ const ExchangeRateChart: React.FC<ExchangeRateChartProps> = ({ data, currentRate
                     formatter={(value: any) => [`${value.toLocaleString()} د.ع`, 'سعر الصرف']}
                     labelFormatter={(label) => `التاريخ: ${label}`}
                   />
-                  <ReferenceLine y={currentRate} stroke={theme === 'dark' ? '#8b5cf6' : '#6366f1'} strokeDasharray="5 5" strokeWidth={2} />
-                  <Line type="monotone" dataKey="rate" stroke="#60a5fa" strokeWidth={3} dot={false} activeDot={{ r: 6 }} name="سعر الصرف" />
+                  <ReferenceLine y={currentRate} stroke={theme === 'dark' ? '#059669' : '#10b981'} strokeDasharray="5 5" strokeWidth={2} />
+                  <Line type="monotone" dataKey="rate" stroke="#10b981" strokeWidth={3} dot={false} activeDot={{ r: 6 }} name="سعر الصرف" />
                 </LineChart>
               )}
             </ResponsiveContainer>

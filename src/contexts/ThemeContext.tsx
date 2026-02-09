@@ -30,12 +30,12 @@ const DEFAULT_SETTINGS: CustomSettings = {
   logoUrl: '',
   logoText: '',
   faviconUrl: '',
-  headerGradient: 'from-indigo-700 via-indigo-800 to-blue-800',
+  headerGradient: 'from-emerald-700 via-emerald-800 to-green-900',
   logoSize: 32,
   showLogoGlow: false,
-  settledColor: '#4c1d95',
-  settledColorSecondary: '#312e81',
-  settledRibbonColor: '#8b5cf6'
+  settledColor: '#064e3b',
+  settledColorSecondary: '#022c22',
+  settledRibbonColor: '#10b981'
 };
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {

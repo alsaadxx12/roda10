@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, RotateCcw, Calendar, Trash2, Save, DollarSign } from 'lucide-react';
+import { X, RotateCcw, Calendar, Trash2, Save } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../lib/firebase';
@@ -198,25 +198,21 @@ export default function GlobalRefundModal({
 
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-      <div className={`relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl ${
-        theme === 'dark' ? 'bg-gray-800' : 'bg-white'
-      }`}>
-        <div className={`sticky top-0 z-10 flex items-center justify-between p-6 border-b ${
-          theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
+      <div className={`relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl ${theme === 'dark' ? 'bg-[#011b15]' : 'bg-white'
         }`}>
+        <div className={`sticky top-0 z-10 flex items-center justify-between p-6 border-b ${theme === 'dark' ? 'bg-emerald-950/40 border-emerald-800/50 backdrop-blur-md' : 'bg-white border-gray-200'
+          }`}>
           <div className="flex items-center gap-3">
             <div className="p-2 bg-gradient-to-br from-red-500 to-red-600 rounded-xl">
               <RotateCcw className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h2 className={`text-xl font-bold ${
-                theme === 'dark' ? 'text-white' : 'text-gray-900'
-              }`}>
+              <h2 className={`text-xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'
+                }`}>
                 {editingTicket ? 'تعديل استرجاع' : 'إضافة استرجاع جديد'}
               </h2>
-              <p className={`text-sm ${
-                theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
-              }`}>
+              <p className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+                }`}>
                 تسجيل عملية استرجاع تذكرة
               </p>
             </div>
@@ -224,11 +220,10 @@ export default function GlobalRefundModal({
           <button
             onClick={onClose}
             disabled={loading}
-            className={`p-2 rounded-lg transition-colors ${
-              theme === 'dark'
-                ? 'hover:bg-gray-700 text-gray-400 hover:text-white'
-                : 'hover:bg-gray-100 text-gray-600 hover:text-gray-900'
-            } ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            className={`p-2 rounded-lg transition-colors ${theme === 'dark'
+              ? 'hover:bg-gray-700 text-gray-400 hover:text-white'
+              : 'hover:bg-gray-100 text-gray-600 hover:text-gray-900'
+              } ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
             <X className="w-6 h-6" />
           </button>
@@ -236,9 +231,8 @@ export default function GlobalRefundModal({
 
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           <div>
-            <label className={`block text-sm font-bold mb-2 ${
-              theme === 'dark' ? 'text-gray-200' : 'text-gray-700'
-            }`}>
+            <label className={`block text-sm font-bold mb-2 ${theme === 'dark' ? 'text-gray-200' : 'text-gray-700'
+              }`}>
               رقم PNR <span className="text-red-500">*</span>
             </label>
             <input
@@ -248,19 +242,17 @@ export default function GlobalRefundModal({
               placeholder="أدخل رقم PNR"
               required
               dir="ltr"
-              className={`w-full px-4 py-3 rounded-xl border-2 font-mono text-lg text-center transition-all ${
-                theme === 'dark'
-                  ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/20'
-                  : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20'
-              } focus:outline-none`}
+              className={`w-full px-4 py-3 rounded-xl border-2 font-mono text-lg text-center transition-all ${theme === 'dark'
+                ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/20'
+                : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20'
+                } focus:outline-none`}
             />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className={`block text-sm font-bold mb-2 ${
-                theme === 'dark' ? 'text-gray-200' : 'text-gray-700'
-              }`}>
+              <label className={`block text-sm font-bold mb-2 ${theme === 'dark' ? 'text-gray-200' : 'text-gray-700'
+                }`}>
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4" />
                   تاريخ الاسترجاع <span className="text-red-500">*</span>
@@ -269,24 +261,21 @@ export default function GlobalRefundModal({
               <ArabicDatePicker
                 value={issueDate}
                 onChange={(date) => setIssueDate(date || new Date())}
-                showHijri={false}
               />
             </div>
 
             <div>
-              <label className={`block text-sm font-bold mb-2 ${
-                theme === 'dark' ? 'text-gray-200' : 'text-gray-700'
-              }`}>
+              <label className={`block text-sm font-bold mb-2 ${theme === 'dark' ? 'text-gray-200' : 'text-gray-700'
+                }`}>
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4" />
                   تاريخ الإدخال <span className="text-red-500">*</span>
                 </div>
               </label>
-              <div className={`w-full px-4 py-3 rounded-xl border-2 font-bold text-center ${
-                theme === 'dark'
-                  ? 'bg-gray-700 border-gray-600 text-gray-300'
-                  : 'bg-gray-100 border-gray-300 text-gray-600'
-              }`}>
+              <div className={`w-full px-4 py-3 rounded-xl border-2 font-bold text-center ${theme === 'dark'
+                ? 'bg-gray-700 border-gray-600 text-gray-300'
+                : 'bg-gray-100 border-gray-300 text-gray-600'
+                }`}>
                 {new Date(entryDate).toISOString().split('T')[0]}
               </div>
             </div>
@@ -294,20 +283,18 @@ export default function GlobalRefundModal({
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className={`block text-sm font-bold mb-2 ${
-                theme === 'dark' ? 'text-gray-200' : 'text-gray-700'
-              }`}>
+              <label className={`block text-sm font-bold mb-2 ${theme === 'dark' ? 'text-gray-200' : 'text-gray-700'
+                }`}>
                 المصدر <span className="text-red-500">*</span>
               </label>
               <select
                 value={source}
                 onChange={(e) => handleSourceChange(e.target.value)}
                 required
-                className={`w-full px-4 py-3 rounded-xl border-2 transition-all ${
-                  theme === 'dark'
-                    ? 'bg-gray-800 border-gray-700 text-white focus:border-red-500'
-                    : 'bg-white border-gray-300 text-gray-900 focus:border-red-500'
-                } focus:outline-none focus:ring-2 focus:ring-red-500/20`}
+                className={`w-full px-4 py-3 rounded-xl border-2 transition-all ${theme === 'dark'
+                  ? 'bg-gray-800 border-gray-700 text-white focus:border-red-500'
+                  : 'bg-white border-gray-300 text-gray-900 focus:border-red-500'
+                  } focus:outline-none focus:ring-2 focus:ring-red-500/20`}
               >
                 <option value="">اختر المصدر...</option>
                 {sources.map((s) => (
@@ -319,20 +306,18 @@ export default function GlobalRefundModal({
             </div>
 
             <div>
-              <label className={`block text-sm font-bold mb-2 ${
-                theme === 'dark' ? 'text-gray-200' : 'text-gray-700'
-              }`}>
+              <label className={`block text-sm font-bold mb-2 ${theme === 'dark' ? 'text-gray-200' : 'text-gray-700'
+                }`}>
                 المستفيد <span className="text-red-500">*</span>
               </label>
               <select
                 value={beneficiary}
                 onChange={(e) => setBeneficiary(e.target.value)}
                 required
-                className={`w-full px-4 py-3 rounded-xl border-2 transition-all ${
-                  theme === 'dark'
-                    ? 'bg-gray-800 border-gray-700 text-white focus:border-red-500'
-                    : 'bg-white border-gray-300 text-gray-900 focus:border-red-500'
-                } focus:outline-none focus:ring-2 focus:ring-red-500/20`}
+                className={`w-full px-4 py-3 rounded-xl border-2 transition-all ${theme === 'dark'
+                  ? 'bg-gray-800 border-gray-700 text-white focus:border-red-500'
+                  : 'bg-white border-gray-300 text-gray-900 focus:border-red-500'
+                  } focus:outline-none focus:ring-2 focus:ring-red-500/20`}
               >
                 <option value="">اختر المستفيد...</option>
                 {beneficiaries.map((b) => (
@@ -346,9 +331,8 @@ export default function GlobalRefundModal({
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className={`block text-sm font-bold mb-2 ${
-                theme === 'dark' ? 'text-gray-200' : 'text-gray-700'
-              }`}>
+              <label className={`block text-sm font-bold mb-2 ${theme === 'dark' ? 'text-gray-200' : 'text-gray-700'
+                }`}>
                 سعر الشراء <span className="text-red-500">*</span>
               </label>
               <div className="relative">
@@ -361,24 +345,21 @@ export default function GlobalRefundModal({
                   step="0.01"
                   min="0"
                   dir="ltr"
-                  className={`w-full px-4 py-3 pr-16 rounded-xl border-2 font-bold text-lg transition-all ${
-                    theme === 'dark'
-                      ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:border-red-500'
-                      : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400 focus:border-red-500'
-                  } focus:outline-none focus:ring-2 focus:ring-red-500/20`}
+                  className={`w-full px-4 py-3 pr-16 rounded-xl border-2 font-bold text-lg transition-all ${theme === 'dark'
+                    ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:border-red-500'
+                    : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400 focus:border-red-500'
+                    } focus:outline-none focus:ring-2 focus:ring-red-500/20`}
                 />
-                <span className={`absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold ${
-                  theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
-                }`}>
+                <span className={`absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+                  }`}>
                   {currency}
                 </span>
               </div>
             </div>
 
             <div>
-              <label className={`block text-sm font-bold mb-2 ${
-                theme === 'dark' ? 'text-gray-200' : 'text-gray-700'
-              }`}>
+              <label className={`block text-sm font-bold mb-2 ${theme === 'dark' ? 'text-gray-200' : 'text-gray-700'
+                }`}>
                 سعر الاسترجاع <span className="text-red-500">*</span>
               </label>
               <div className="relative">
@@ -391,15 +372,13 @@ export default function GlobalRefundModal({
                   step="0.01"
                   min="0"
                   dir="ltr"
-                  className={`w-full px-4 py-3 pr-16 rounded-xl border-2 font-bold text-lg transition-all ${
-                    theme === 'dark'
-                      ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:border-red-500'
-                      : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400 focus:border-red-500'
-                  } focus:outline-none focus:ring-2 focus:ring-red-500/20`}
+                  className={`w-full px-4 py-3 pr-16 rounded-xl border-2 font-bold text-lg transition-all ${theme === 'dark'
+                    ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:border-red-500'
+                    : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400 focus:border-red-500'
+                    } focus:outline-none focus:ring-2 focus:ring-red-500/20`}
                 />
-                <span className={`absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold ${
-                  theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
-                }`}>
+                <span className={`absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+                  }`}>
                   {currency}
                 </span>
               </div>
@@ -407,30 +386,27 @@ export default function GlobalRefundModal({
           </div>
 
           {purchasePrice && salePrice && (
-            <div className={`p-4 rounded-xl border-2 ${
-              profit >= 0
-                ? theme === 'dark'
-                  ? 'bg-green-900/20 border-green-700/50'
-                  : 'bg-green-50 border-green-200'
-                : theme === 'dark'
-                  ? 'bg-red-900/20 border-red-700/50'
-                  : 'bg-red-50 border-red-200'
-            }`}>
+            <div className={`p-4 rounded-xl border-2 ${profit >= 0
+              ? theme === 'dark'
+                ? 'bg-green-900/20 border-green-700/50'
+                : 'bg-green-50 border-green-200'
+              : theme === 'dark'
+                ? 'bg-red-900/20 border-red-700/50'
+                : 'bg-red-50 border-red-200'
+              }`}>
               <div className="text-center">
-                <p className={`text-sm font-bold mb-1 ${
-                  theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
-                }`}>
+                <p className={`text-sm font-bold mb-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                  }`}>
                   {profit >= 0 ? 'الربح' : 'الخسارة'}
                 </p>
-                <p className={`text-2xl font-black ${
-                  profit >= 0
-                    ? theme === 'dark'
-                      ? 'text-green-400'
-                      : 'text-green-600'
-                    : theme === 'dark'
-                      ? 'text-red-400'
-                      : 'text-red-600'
-                }`} dir="ltr">
+                <p className={`text-2xl font-black ${profit >= 0
+                  ? theme === 'dark'
+                    ? 'text-green-400'
+                    : 'text-green-600'
+                  : theme === 'dark'
+                    ? 'text-red-400'
+                    : 'text-red-600'
+                  }`} dir="ltr">
                   {Math.abs(profit).toFixed(2)} {currency}
                 </p>
               </div>
@@ -453,11 +429,10 @@ export default function GlobalRefundModal({
               type="button"
               onClick={onClose}
               disabled={loading}
-              className={`flex-1 px-6 py-3 rounded-xl font-bold transition-all ${
-                theme === 'dark'
-                  ? 'bg-gray-700 hover:bg-gray-600 text-white'
-                  : 'bg-gray-200 hover:bg-gray-300 text-gray-800'
-              } disabled:opacity-50 disabled:cursor-not-allowed`}
+              className={`flex-1 px-6 py-3 rounded-xl font-bold transition-all ${theme === 'dark'
+                ? 'bg-gray-700 hover:bg-gray-600 text-white'
+                : 'bg-gray-200 hover:bg-gray-300 text-gray-800'
+                } disabled:opacity-50 disabled:cursor-not-allowed`}
             >
               إلغاء
             </button>

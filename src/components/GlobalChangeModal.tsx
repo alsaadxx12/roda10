@@ -191,29 +191,25 @@ export default function GlobalChangeModal({
 
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
-      <div className={`relative w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl border-2 overflow-hidden ${
-        theme === 'dark'
-          ? 'bg-gradient-to-br from-gray-900 via-gray-900 to-gray-800 border-gray-700/50 shadow-orange-500/10'
-          : 'bg-gradient-to-br from-white via-gray-50 to-orange-50/30 border-gray-200/80 shadow-orange-500/20'
-      }`}>
-        <div className={`sticky top-0 z-10 flex items-center justify-between p-6 border-b-2 backdrop-blur-sm ${
-          theme === 'dark'
-            ? 'bg-gradient-to-r from-orange-950/30 via-gray-800/50 to-amber-950/30 border-gray-700/50'
-            : 'bg-gradient-to-r from-orange-50/80 via-amber-50/50 to-yellow-50/30 border-gray-200/80'
+      <div className={`relative w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl border-2 overflow-hidden ${theme === 'dark'
+        ? 'bg-gradient-to-br from-[#011b15] via-emerald-950/20 to-emerald-900/10 border-emerald-800/50 shadow-emerald-500/10'
+        : 'bg-gradient-to-br from-white via-emerald-50 to-teal-50/30 border-emerald-200/80 shadow-emerald-500/20'
         }`}>
+        <div className={`sticky top-0 z-10 flex items-center justify-between p-6 border-b-2 backdrop-blur-sm ${theme === 'dark'
+          ? 'bg-gradient-to-r from-emerald-950/30 via-gray-800/50 to-teal-950/30 border-emerald-700/50'
+          : 'bg-gradient-to-r from-emerald-50/80 via-teal-50/50 to-green-50/30 border-emerald-200/80'
+          }`}>
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl">
+            <div className="p-2 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl">
               <ArrowRightLeft className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h2 className={`text-xl font-bold ${
-                theme === 'dark' ? 'text-white' : 'text-gray-900'
-              }`}>
+              <h2 className={`text-xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'
+                }`}>
                 {editingTicket ? 'تعديل تغيير' : 'إضافة تغيير جديد'}
               </h2>
-              <p className={`text-sm ${
-                theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
-              }`}>
+              <p className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+                }`}>
                 تسجيل عملية تغيير من المصدر إلى المستفيد
               </p>
             </div>
@@ -221,11 +217,10 @@ export default function GlobalChangeModal({
           <button
             onClick={onClose}
             disabled={loading}
-            className={`p-2 rounded-lg transition-colors ${
-              theme === 'dark'
-                ? 'hover:bg-gray-700 text-gray-400 hover:text-white'
-                : 'hover:bg-gray-100 text-gray-600 hover:text-gray-900'
-            } ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            className={`p-2 rounded-lg transition-colors ${theme === 'dark'
+              ? 'hover:bg-gray-700 text-gray-400 hover:text-white'
+              : 'hover:bg-gray-100 text-gray-600 hover:text-gray-900'
+              } ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
             <X className="w-6 h-6" />
           </button>
@@ -233,9 +228,8 @@ export default function GlobalChangeModal({
 
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           <div>
-            <label className={`block text-sm font-bold mb-2 ${
-              theme === 'dark' ? 'text-gray-200' : 'text-gray-700'
-            }`}>
+            <label className={`block text-sm font-bold mb-2 ${theme === 'dark' ? 'text-gray-200' : 'text-gray-700'
+              }`}>
               رقم PNR <span className="text-red-500">*</span>
             </label>
             <input
@@ -245,81 +239,72 @@ export default function GlobalChangeModal({
               placeholder="أدخل رقم PNR"
               required
               dir="ltr"
-              className={`w-full px-4 py-3 rounded-xl border-2 font-mono text-lg text-center transition-all duration-200 ${
-                theme === 'dark'
-                  ? 'bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-500 shadow-lg shadow-gray-900/50 hover:shadow-orange-500/20 focus:shadow-orange-500/30 focus:border-orange-500'
-                  : 'bg-white border-gray-300/50 text-gray-900 placeholder-gray-400 shadow-lg shadow-gray-200/50 hover:shadow-orange-400/30 focus:shadow-orange-500/40 focus:border-orange-500'
-              } focus:outline-none focus:ring-2 focus:ring-orange-500/50`}
+              className={`w-full px-4 py-3 rounded-xl border-2 font-mono text-lg text-center transition-all duration-200 ${theme === 'dark'
+                ? 'bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-500 shadow-lg shadow-gray-900/50 hover:shadow-emerald-500/20 focus:shadow-emerald-500/30 focus:border-emerald-500'
+                : 'bg-white border-gray-300/50 text-gray-900 placeholder-gray-400 shadow-lg shadow-gray-200/50 hover:shadow-emerald-400/30 focus:shadow-emerald-500/40 focus:border-emerald-500'
+                } focus:outline-none focus:ring-2 focus:ring-emerald-500/50`}
             />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className={`block text-sm font-bold mb-2 ${
-                theme === 'dark' ? 'text-gray-200' : 'text-gray-700'
-              }`}>
+              <label className={`block text-sm font-bold mb-2 ${theme === 'dark' ? 'text-gray-200' : 'text-gray-700'
+                }`}>
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4" />
                   تاريخ التغيير <span className="text-red-500">*</span>
                 </div>
               </label>
               <ArabicDatePicker
-                selected={changeDate}
+                value={changeDate}
                 onChange={(date) => setChangeDate(date || new Date())}
-                dateFormat="dd/MM/yyyy"
               />
             </div>
 
             <div>
-              <label className={`block text-sm font-bold mb-2 ${
-                theme === 'dark' ? 'text-gray-200' : 'text-gray-700'
-              }`}>
+              <label className={`block text-sm font-bold mb-2 ${theme === 'dark' ? 'text-gray-200' : 'text-gray-700'
+                }`}>
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4" />
                   تاريخ الإدخال <span className="text-red-500">*</span>
                 </div>
               </label>
-              <div className={`w-full px-4 py-3 rounded-xl border-2 font-bold text-center ${
-                theme === 'dark'
-                  ? 'bg-gray-700 border-gray-600 text-gray-300'
-                  : 'bg-gray-100 border-gray-300 text-gray-600'
-              }`}>
+              <div className={`w-full px-4 py-3 rounded-xl border-2 font-bold text-center ${theme === 'dark'
+                ? 'bg-gray-700 border-gray-600 text-gray-300'
+                : 'bg-gray-100 border-gray-300 text-gray-600'
+                }`}>
                 {new Date(entryDate).toLocaleDateString('en-GB')}
               </div>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className={`p-6 rounded-xl border-2 ${
-              theme === 'dark'
-                ? 'bg-blue-900/20 border-blue-700/50'
-                : 'bg-blue-50 border-blue-200'
-            }`}>
+            <div className={`p-6 rounded-xl border-2 ${theme === 'dark'
+              ? 'bg-blue-900/20 border-blue-700/50'
+              : 'bg-blue-50 border-blue-200'
+              }`}>
               <div className="flex items-center gap-2 mb-4">
                 <ArrowRightLeft className="w-5 h-5 text-blue-500" />
-                <h3 className={`text-lg font-bold ${
-                  theme === 'dark' ? 'text-blue-300' : 'text-blue-700'
-                }`}>
+                <h3 className={`text-lg font-bold ${theme === 'dark' ? 'text-blue-300' : 'text-blue-700'
+                  }`}>
                   المصدر (غير لنا)
                 </h3>
               </div>
 
               <div className="space-y-4">
                 <div>
-                  <label className={`block text-xs font-bold mb-2 ${
-                    theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
-                  }`}>
+                  <label className={`block text-xs font-bold mb-2 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                    }`}>
                     اختر المصدر <span className="text-red-500">*</span>
                   </label>
                   <select
                     value={source}
                     onChange={(e) => handleSourceChange(e.target.value)}
                     required
-                    className={`w-full px-3 py-2.5 rounded-xl border-2 transition-all duration-200 ${
-                      theme === 'dark'
-                        ? 'bg-gray-800/50 border-gray-700/50 text-white shadow-md shadow-gray-900/40 hover:shadow-blue-500/20 focus:shadow-blue-500/30 focus:border-blue-500'
-                        : 'bg-white border-gray-300/50 text-gray-900 shadow-md shadow-gray-200/40 hover:shadow-blue-400/30 focus:shadow-blue-500/40 focus:border-blue-500'
-                    } focus:outline-none focus:ring-2 focus:ring-blue-500/50`}
+                    className={`w-full px-3 py-2.5 rounded-xl border-2 transition-all duration-200 ${theme === 'dark'
+                      ? 'bg-gray-800/50 border-gray-700/50 text-white shadow-md shadow-gray-900/40 hover:shadow-emerald-500/20 focus:shadow-emerald-500/30 focus:border-emerald-500'
+                      : 'bg-white border-gray-300/50 text-gray-900 shadow-md shadow-gray-200/40 hover:shadow-emerald-400/30 focus:shadow-emerald-500/40 focus:border-emerald-500'
+                      } focus:outline-none focus:ring-2 focus:ring-emerald-500/50`}
                   >
                     <option value="">اختر المصدر...</option>
                     {sources.map((s) => (
@@ -331,9 +316,8 @@ export default function GlobalChangeModal({
                 </div>
 
                 <div>
-                  <label className={`block text-xs font-bold mb-2 ${
-                    theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
-                  }`}>
+                  <label className={`block text-xs font-bold mb-2 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                    }`}>
                     المبلغ المدفوع للمصدر <span className="text-red-500">*</span>
                   </label>
                   <div className="space-y-2">
@@ -347,41 +331,38 @@ export default function GlobalChangeModal({
                         step="0.01"
                         min="0"
                         dir="ltr"
-                        className={`w-full px-3 py-3 rounded-xl border-2 font-bold text-lg transition-all duration-200 ${
-                          theme === 'dark'
-                            ? 'bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-500 shadow-lg shadow-gray-900/50 hover:shadow-blue-500/20 focus:shadow-blue-500/30'
-                            : 'bg-white border-gray-300/50 text-gray-900 placeholder-gray-400 shadow-lg shadow-gray-200/50 hover:shadow-blue-400/30 focus:shadow-blue-500/40'
-                        } focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500`}
+                        className={`w-full px-3 py-3 rounded-xl border-2 font-bold text-lg transition-all duration-200 ${theme === 'dark'
+                          ? 'bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-500 shadow-lg shadow-gray-900/50 hover:shadow-emerald-500/20 focus:shadow-emerald-500/30'
+                          : 'bg-white border-gray-300/50 text-gray-900 placeholder-gray-400 shadow-lg shadow-gray-200/50 hover:shadow-emerald-400/30 focus:shadow-emerald-500/40'
+                          } focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500`}
                       />
                     </div>
                     <div className="flex gap-2">
                       <button
                         type="button"
                         onClick={() => setSourceCurrency('IQD')}
-                        className={`flex-1 px-3 py-2 rounded-xl text-xs font-bold transition-all duration-200 ${
-                          sourceCurrency === 'IQD'
-                            ? theme === 'dark'
-                              ? 'bg-orange-600 text-white shadow-lg shadow-orange-500/50 scale-105'
-                              : 'bg-orange-600 text-white shadow-lg shadow-orange-500/50 scale-105'
-                            : theme === 'dark'
-                              ? 'bg-gray-700/50 text-gray-300 hover:bg-gray-600 shadow-md'
-                              : 'bg-gray-200/50 text-gray-700 hover:bg-gray-300 shadow-md'
-                        }`}
+                        className={`flex-1 px-3 py-2 rounded-xl text-xs font-bold transition-all duration-200 ${sourceCurrency === 'IQD'
+                          ? theme === 'dark'
+                            ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-500/50 scale-105'
+                            : 'bg-emerald-600 text-white shadow-lg shadow-emerald-500/50 scale-105'
+                          : theme === 'dark'
+                            ? 'bg-gray-700/50 text-gray-300 hover:bg-gray-600 shadow-md'
+                            : 'bg-gray-200/50 text-gray-700 hover:bg-gray-300 shadow-md'
+                          }`}
                       >
                         IQD
                       </button>
                       <button
                         type="button"
                         onClick={() => setSourceCurrency('USD')}
-                        className={`flex-1 px-3 py-2 rounded-xl text-xs font-bold transition-all duration-200 ${
-                          sourceCurrency === 'USD'
-                            ? theme === 'dark'
-                              ? 'bg-red-600 text-white shadow-lg shadow-red-500/50 scale-105'
-                              : 'bg-red-600 text-white shadow-lg shadow-red-500/50 scale-105'
-                            : theme === 'dark'
-                              ? 'bg-gray-700/50 text-gray-300 hover:bg-gray-600 shadow-md'
-                              : 'bg-gray-200/50 text-gray-700 hover:bg-gray-300 shadow-md'
-                        }`}
+                        className={`flex-1 px-3 py-2 rounded-xl text-xs font-bold transition-all duration-200 ${sourceCurrency === 'USD'
+                          ? theme === 'dark'
+                            ? 'bg-teal-600 text-white shadow-lg shadow-teal-500/50 scale-105'
+                            : 'bg-teal-600 text-white shadow-lg shadow-teal-500/50 scale-105'
+                          : theme === 'dark'
+                            ? 'bg-gray-700/50 text-gray-300 hover:bg-gray-600 shadow-md'
+                            : 'bg-gray-200/50 text-gray-700 hover:bg-gray-300 shadow-md'
+                          }`}
                       >
                         USD
                       </button>
@@ -391,36 +372,32 @@ export default function GlobalChangeModal({
               </div>
             </div>
 
-            <div className={`p-6 rounded-xl border-2 ${
-              theme === 'dark'
-                ? 'bg-green-900/20 border-green-700/50'
-                : 'bg-green-50 border-green-200'
-            }`}>
+            <div className={`p-6 rounded-xl border-2 ${theme === 'dark'
+              ? 'bg-green-900/20 border-green-700/50'
+              : 'bg-green-50 border-green-200'
+              }`}>
               <div className="flex items-center gap-2 mb-4">
                 <DollarSign className="w-5 h-5 text-green-500" />
-                <h3 className={`text-lg font-bold ${
-                  theme === 'dark' ? 'text-green-300' : 'text-green-700'
-                }`}>
+                <h3 className={`text-lg font-bold ${theme === 'dark' ? 'text-green-300' : 'text-green-700'
+                  }`}>
                   المستفيد (بعنا له)
                 </h3>
               </div>
 
               <div className="space-y-4">
                 <div>
-                  <label className={`block text-xs font-bold mb-2 ${
-                    theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
-                  }`}>
+                  <label className={`block text-xs font-bold mb-2 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                    }`}>
                     اختر المستفيد <span className="text-red-500">*</span>
                   </label>
                   <select
                     value={beneficiary}
                     onChange={(e) => handleBeneficiaryChange(e.target.value)}
                     required
-                    className={`w-full px-3 py-2.5 rounded-xl border-2 transition-all duration-200 ${
-                      theme === 'dark'
-                        ? 'bg-gray-800/50 border-gray-700/50 text-white shadow-md shadow-gray-900/40 hover:shadow-green-500/20 focus:shadow-green-500/30 focus:border-green-500'
-                        : 'bg-white border-gray-300/50 text-gray-900 shadow-md shadow-gray-200/40 hover:shadow-green-400/30 focus:shadow-green-500/40 focus:border-green-500'
-                    } focus:outline-none focus:ring-2 focus:ring-green-500/50`}
+                    className={`w-full px-3 py-2.5 rounded-xl border-2 transition-all duration-200 ${theme === 'dark'
+                      ? 'bg-gray-800/50 border-gray-700/50 text-white shadow-md shadow-gray-900/40 hover:shadow-green-500/20 focus:shadow-green-500/30 focus:border-green-500'
+                      : 'bg-white border-gray-300/50 text-gray-900 shadow-md shadow-gray-200/40 hover:shadow-green-400/30 focus:shadow-green-500/40 focus:border-green-500'
+                      } focus:outline-none focus:ring-2 focus:ring-green-500/50`}
                   >
                     <option value="">اختر المستفيد...</option>
                     {beneficiaries.map((b) => (
@@ -432,9 +409,8 @@ export default function GlobalChangeModal({
                 </div>
 
                 <div>
-                  <label className={`block text-xs font-bold mb-2 ${
-                    theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
-                  }`}>
+                  <label className={`block text-xs font-bold mb-2 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                    }`}>
                     المبلغ المستلم من المستفيد <span className="text-red-500">*</span>
                   </label>
                   <div className="space-y-2">
@@ -448,41 +424,38 @@ export default function GlobalChangeModal({
                         step="0.01"
                         min="0"
                         dir="ltr"
-                        className={`w-full px-3 py-3 rounded-xl border-2 font-bold text-lg transition-all duration-200 ${
-                          theme === 'dark'
-                            ? 'bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-500 shadow-lg shadow-gray-900/50 hover:shadow-green-500/20 focus:shadow-green-500/30'
-                            : 'bg-white border-gray-300/50 text-gray-900 placeholder-gray-400 shadow-lg shadow-gray-200/50 hover:shadow-green-400/30 focus:shadow-green-500/40'
-                        } focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-500`}
+                        className={`w-full px-3 py-3 rounded-xl border-2 font-bold text-lg transition-all duration-200 ${theme === 'dark'
+                          ? 'bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-500 shadow-lg shadow-gray-900/50 hover:shadow-green-500/20 focus:shadow-green-500/30'
+                          : 'bg-white border-gray-300/50 text-gray-900 placeholder-gray-400 shadow-lg shadow-gray-200/50 hover:shadow-green-400/30 focus:shadow-green-500/40'
+                          } focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-500`}
                       />
                     </div>
                     <div className="flex gap-2">
                       <button
                         type="button"
                         onClick={() => setBeneficiaryCurrency('IQD')}
-                        className={`flex-1 px-3 py-2 rounded-xl text-xs font-bold transition-all duration-200 ${
-                          beneficiaryCurrency === 'IQD'
-                            ? theme === 'dark'
-                              ? 'bg-green-600 text-white shadow-lg shadow-green-500/50 scale-105'
-                              : 'bg-green-600 text-white shadow-lg shadow-green-500/50 scale-105'
-                            : theme === 'dark'
-                              ? 'bg-gray-700/50 text-gray-300 hover:bg-gray-600 shadow-md'
-                              : 'bg-gray-200/50 text-gray-700 hover:bg-gray-300 shadow-md'
-                        }`}
+                        className={`flex-1 px-3 py-2 rounded-xl text-xs font-bold transition-all duration-200 ${beneficiaryCurrency === 'IQD'
+                          ? theme === 'dark'
+                            ? 'bg-green-600 text-white shadow-lg shadow-green-500/50 scale-105'
+                            : 'bg-green-600 text-white shadow-lg shadow-green-500/50 scale-105'
+                          : theme === 'dark'
+                            ? 'bg-gray-700/50 text-gray-300 hover:bg-gray-600 shadow-md'
+                            : 'bg-gray-200/50 text-gray-700 hover:bg-gray-300 shadow-md'
+                          }`}
                       >
                         IQD
                       </button>
                       <button
                         type="button"
                         onClick={() => setBeneficiaryCurrency('USD')}
-                        className={`flex-1 px-3 py-2 rounded-xl text-xs font-bold transition-all duration-200 ${
-                          beneficiaryCurrency === 'USD'
-                            ? theme === 'dark'
-                              ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-500/50 scale-105'
-                              : 'bg-emerald-600 text-white shadow-lg shadow-emerald-500/50 scale-105'
-                            : theme === 'dark'
-                              ? 'bg-gray-700/50 text-gray-300 hover:bg-gray-600 shadow-md'
-                              : 'bg-gray-200/50 text-gray-700 hover:bg-gray-300 shadow-md'
-                        }`}
+                        className={`flex-1 px-3 py-2 rounded-xl text-xs font-bold transition-all duration-200 ${beneficiaryCurrency === 'USD'
+                          ? theme === 'dark'
+                            ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-500/50 scale-105'
+                            : 'bg-emerald-600 text-white shadow-lg shadow-emerald-500/50 scale-105'
+                          : theme === 'dark'
+                            ? 'bg-gray-700/50 text-gray-300 hover:bg-gray-600 shadow-md'
+                            : 'bg-gray-200/50 text-gray-700 hover:bg-gray-300 shadow-md'
+                          }`}
                       >
                         USD
                       </button>
@@ -494,71 +467,59 @@ export default function GlobalChangeModal({
           </div>
 
           {sourceChangeAmount && beneficiaryChangeAmount && (
-            <div className={`p-4 rounded-xl border-2 ${
-              theme === 'dark'
-                ? 'bg-gray-800/50 border-gray-700/50'
-                : 'bg-gray-50 border-gray-200'
-            }`}>
+            <div className={`p-4 rounded-xl border-2 ${theme === 'dark'
+              ? 'bg-gray-800/50 border-gray-700/50'
+              : 'bg-gray-50 border-gray-200'
+              }`}>
               <div className="text-center space-y-2">
-                <p className={`text-sm font-bold ${
-                  theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
-                }`}>
+                <p className={`text-sm font-bold ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                  }`}>
                   ملخص التغيير
                 </p>
                 <div className="flex justify-around items-center gap-4">
                   <div className="flex flex-col items-center">
-                    <span className={`text-xs font-bold mb-1 ${
-                      theme === 'dark' ? 'text-gray-500' : 'text-gray-500'
-                    }`}>
+                    <span className={`text-xs font-bold mb-1 ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'
+                      }`}>
                       دفعنا (المصدر)
                     </span>
-                    <span className={`text-lg font-black ${
-                      theme === 'dark' ? 'text-red-400' : 'text-red-600'
-                    }`} dir="ltr">
+                    <span className={`text-lg font-black ${theme === 'dark' ? 'text-red-400' : 'text-red-600'
+                      }`} dir="ltr">
                       {parseFloat(sourceChangeAmount).toFixed(2)} {sourceCurrency}
                     </span>
                   </div>
-                  <ArrowRightLeft className={`w-5 h-5 ${
-                    theme === 'dark' ? 'text-gray-500' : 'text-gray-400'
-                  }`} />
+                  <ArrowRightLeft className={`w-5 h-5 ${theme === 'dark' ? 'text-gray-500' : 'text-gray-400'
+                    }`} />
                   <div className="flex flex-col items-center">
-                    <span className={`text-xs font-bold mb-1 ${
-                      theme === 'dark' ? 'text-gray-500' : 'text-gray-500'
-                    }`}>
+                    <span className={`text-xs font-bold mb-1 ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'
+                      }`}>
                       استلمنا (المستفيد)
                     </span>
-                    <span className={`text-lg font-black ${
-                      theme === 'dark' ? 'text-green-400' : 'text-green-600'
-                    }`} dir="ltr">
+                    <span className={`text-lg font-black ${theme === 'dark' ? 'text-green-400' : 'text-green-600'
+                      }`} dir="ltr">
                       {parseFloat(beneficiaryChangeAmount).toFixed(2)} {beneficiaryCurrency}
                     </span>
                   </div>
                 </div>
                 {sourceCurrency === beneficiaryCurrency && (
-                  <div className={`pt-2 border-t ${
-                    theme === 'dark' ? 'border-gray-700' : 'border-gray-300'
-                  }`}>
-                    <p className={`text-xs font-bold mb-1 ${
-                      theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+                  <div className={`pt-2 border-t ${theme === 'dark' ? 'border-gray-700' : 'border-gray-300'
                     }`}>
+                    <p className={`text-xs font-bold mb-1 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+                      }`}>
                       {profit >= 0 ? 'الربح' : 'الخسارة'}
                     </p>
-                    <p className={`text-xl font-black ${
-                      profit >= 0
-                        ? theme === 'dark' ? 'text-green-400' : 'text-green-600'
-                        : theme === 'dark' ? 'text-red-400' : 'text-red-600'
-                    }`} dir="ltr">
+                    <p className={`text-xl font-black ${profit >= 0
+                      ? theme === 'dark' ? 'text-green-400' : 'text-green-600'
+                      : theme === 'dark' ? 'text-red-400' : 'text-red-600'
+                      }`} dir="ltr">
                       {Math.abs(profit).toFixed(2)} {sourceCurrency}
                     </p>
                   </div>
                 )}
                 {sourceCurrency !== beneficiaryCurrency && (
-                  <div className={`pt-2 border-t ${
-                    theme === 'dark' ? 'border-gray-700' : 'border-gray-300'
-                  }`}>
-                    <p className={`text-xs font-bold ${
-                      theme === 'dark' ? 'text-yellow-400' : 'text-yellow-600'
+                  <div className={`pt-2 border-t ${theme === 'dark' ? 'border-gray-700' : 'border-gray-300'
                     }`}>
+                    <p className={`text-xs font-bold ${theme === 'dark' ? 'text-yellow-400' : 'text-yellow-600'
+                      }`}>
                       ⚠️ عملات مختلفة - يرجى المراجعة
                     </p>
                   </div>
@@ -583,18 +544,17 @@ export default function GlobalChangeModal({
               type="button"
               onClick={onClose}
               disabled={loading}
-              className={`flex-1 px-6 py-3 rounded-xl font-bold transition-all duration-200 ${
-                theme === 'dark'
-                  ? 'bg-gray-700/50 hover:bg-gray-600 text-white shadow-lg shadow-gray-900/50 hover:shadow-gray-600/30'
-                  : 'bg-gray-200/50 hover:bg-gray-300 text-gray-800 shadow-lg shadow-gray-300/50 hover:shadow-gray-400/40'
-              } disabled:opacity-50 disabled:cursor-not-allowed`}
+              className={`flex-1 px-6 py-3 rounded-xl font-bold transition-all duration-200 ${theme === 'dark'
+                ? 'bg-gray-700/50 hover:bg-gray-600 text-white shadow-lg shadow-gray-900/50 hover:shadow-gray-600/30'
+                : 'bg-gray-200/50 hover:bg-gray-300 text-gray-800 shadow-lg shadow-gray-300/50 hover:shadow-gray-400/40'
+                } disabled:opacity-50 disabled:cursor-not-allowed`}
             >
               إلغاء
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-500 via-orange-600 to-amber-600 hover:from-orange-600 hover:via-amber-600 hover:to-orange-700 text-white rounded-xl font-bold transition-all duration-200 shadow-xl shadow-orange-500/40 hover:shadow-orange-600/50 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 hover:from-emerald-600 hover:via-teal-600 hover:to-emerald-700 text-white rounded-xl font-bold transition-all duration-200 shadow-xl shadow-emerald-500/40 hover:shadow-emerald-600/50 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Save className="w-5 h-5" />
               {editingTicket ? 'حفظ التعديلات' : 'إضافة التغيير'}

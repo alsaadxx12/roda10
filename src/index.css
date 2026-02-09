@@ -19,7 +19,7 @@ body,
 html.dark,
 body.dark,
 html.dark #root {
-  background: radial-gradient(circle at 50% 0%, #1a154d 0%, #0d0b21 50%, #080716 100%) !important;
+  background: radial-gradient(circle at 50% 0%, #064e3b 0%, #022c22 50%, #011b15 100%) !important;
   background-attachment: fixed !important;
 }
 
@@ -27,14 +27,14 @@ html.dark #root {
 .dark .bg-slate-900,
 .dark .bg-gray-900,
 .dark .bg-gray-800 {
-  background-color: rgba(20, 18, 56, 0.7) !important;
+  background-color: rgba(6, 78, 59, 0.7) !important;
   backdrop-filter: blur(12px);
 }
 
 .dark .border-gray-700,
 .dark .border-gray-800,
 .dark .border-white\/10 {
-  border-color: rgba(99, 102, 241, 0.2) !important;
+  border-color: rgba(52, 211, 153, 0.2) !important;
 }
 
 @layer utilities {
@@ -151,6 +151,7 @@ html.dark #root {
   0% {
     transform: translateX(-100%);
   }
+
   100% {
     transform: translateX(100%);
   }
@@ -353,7 +354,7 @@ body {
 /* Dark mode body */
 body.dark,
 html.dark body {
-  background: linear-gradient(135deg, #1a1d29 0%, #1f2937 50%, #111827 100%);
+  background: linear-gradient(135deg, #064e3b 0%, #022c22 50%, #011b15 100%);
   color: #f3f4f6;
 }
 

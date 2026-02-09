@@ -151,10 +151,10 @@ const AccountsTable: React.FC<AccountsTableProps> = (props) => {
           const totals = calculateTicketTotals(voucher);
           const isSettled = voucher.settlement === true;
           const distributionEntries = [
-            { label: settings.gatesColumnLabel || 'جات', value: voucher.gates, icon: <Zap className="w-3 h-3 text-yellow-500" /> },
-            { label: settings.internalColumnLabel || 'داخلي', value: voucher.internal, icon: <ArrowDownRight className="w-3 h-3 text-blue-500" /> },
-            { label: settings.externalColumnLabel || 'خارجي', value: voucher.external, icon: <ArrowUpLeft className="w-3 h-3 text-purple-500" /> },
-            { label: settings.flyColumnLabel || 'فلاي', value: voucher.fly, icon: <Plane className="w-3 h-3 text-green-500" /> },
+            { label: settings.gatesColumnLabel || 'جات', value: voucher.gates, icon: <Zap className="w-3 h-3 text-emerald-500" /> },
+            { label: settings.internalColumnLabel || 'داخلي', value: voucher.internal, icon: <ArrowDownRight className="w-3 h-3 text-teal-500" /> },
+            { label: settings.externalColumnLabel || 'خارجي', value: voucher.external, icon: <ArrowUpLeft className="w-3 h-3 text-green-500" /> },
+            { label: settings.flyColumnLabel || 'فلاي', value: voucher.fly, icon: <Plane className="w-3 h-3 text-emerald-600" /> },
           ].filter(entry => entry.value > 0);
 
           return (
@@ -164,13 +164,13 @@ const AccountsTable: React.FC<AccountsTableProps> = (props) => {
                 : 'bg-white dark:bg-gray-800/60 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
                 }`}
               style={isSettled ? {
-                background: `linear-gradient(to bottom right, ${customSettings.settledColor || '#4c1d95'}, ${customSettings.settledColorSecondary || '#312e81'})`,
-                borderColor: `${customSettings.settledColor || '#4c1d95'}ee`
+                background: `linear-gradient(to bottom right, ${customSettings.settledColor || '#065f46'}, ${customSettings.settledColorSecondary || '#064e3b'})`,
+                borderColor: `${customSettings.settledColor || '#065f46'}ee`
               } : {}}>
               {isSettled && (
                 <div className="absolute top-0 left-0 w-32 h-32 overflow-hidden pointer-events-none z-20">
                   <div className="absolute transform -rotate-45 text-center text-white font-[950] text-[9.5px] py-1.5 -left-10 top-8 w-44 shadow-[0_4px_12px_rgba(0,0,0,0.3)] uppercase tracking-wider border-y border-white/20 backdrop-blur-sm"
-                    style={{ background: `linear-gradient(to right, ${customSettings.settledRibbonColor || '#8b5cf6'}dd, ${customSettings.settledColor || '#4c1d95'}dd, ${customSettings.settledRibbonColor || '#8b5cf6'}dd)` }}>
+                    style={{ background: `linear-gradient(to right, ${customSettings.settledRibbonColor || '#10b981'}dd, ${customSettings.settledColor || '#065f46'}dd, ${customSettings.settledRibbonColor || '#10b981'}dd)` }}>
                     <div className="relative">
                       متحاسب عليه
                       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer-slide" />
@@ -197,7 +197,7 @@ const AccountsTable: React.FC<AccountsTableProps> = (props) => {
                       </div>
                       <div className="flex items-center justify-center lg:justify-start gap-2 w-full">
                         <div className={`p-1.5 rounded-lg ${isSettled ? 'bg-white/15' : 'bg-gray-100 dark:bg-gray-700'}`}>
-                          <Building2 className={`w-3.5 h-3.5 ${isSettled ? 'text-white' : 'text-indigo-500 dark:text-indigo-400'}`} />
+                          <Building2 className={`w-3.5 h-3.5 ${isSettled ? 'text-white' : 'text-emerald-500 dark:text-emerald-400'}`} />
                         </div>
                         <p className={`text-base font-[900] truncate ${isSettled ? 'text-white' : 'text-slate-800 dark:text-slate-100'}`}>
                           {voucher.companyName}
@@ -217,7 +217,7 @@ const AccountsTable: React.FC<AccountsTableProps> = (props) => {
                       <button
                         onClick={() => handleSettlementToggle(voucher)}
                         className={`flex-1 py-1 rounded-xl flex items-center justify-center gap-2 transition-all font-bold text-xs border-2 ${voucher.settlement
-                          ? (isSettled ? 'bg-purple-500/20 border-purple-400/30 text-purple-300' : 'bg-purple-50 border-purple-200 text-purple-600 dark:bg-purple-900/30 dark:border-purple-800 dark:text-purple-300')
+                          ? (isSettled ? 'bg-emerald-500/20 border-emerald-400/30 text-emerald-300' : 'bg-emerald-50 border-emerald-200 text-emerald-600 dark:bg-emerald-900/30 dark:border-emerald-800 dark:text-emerald-300')
                           : (isSettled ? 'bg-white/5 border-white/10 text-gray-300' : 'bg-gray-50 border-gray-100 text-gray-500 dark:bg-gray-700/50 dark:border-gray-700 dark:text-gray-400')}`}
                       >
                         <DollarSign size={14} /> <span>تحاسب</span>
@@ -229,8 +229,8 @@ const AccountsTable: React.FC<AccountsTableProps> = (props) => {
                   <div className="lg:col-span-5 lg:border-x-2 lg:border-dashed lg:border-gray-200 lg:dark:border-gray-700 px-2 flex flex-col justify-center gap-2 py-1 lg:py-0 border-y-2 lg:border-y-0 border-dashed border-gray-100 dark:border-gray-800">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-0.5">
                       <div className="flex items-center gap-2.5 text-[11px] font-bold text-gray-500 dark:text-gray-400">
-                        <div className={`p-1 rounded-md ${isSettled ? 'bg-white/10' : 'bg-indigo-50 dark:bg-indigo-900/30'}`}>
-                          <User className="w-3.5 h-3.5 text-indigo-500" />
+                        <div className={`p-1 rounded-md ${isSettled ? 'bg-white/10' : 'bg-emerald-50 dark:bg-emerald-900/30'}`}>
+                          <User className="w-3.5 h-3.5 text-emerald-500" />
                         </div>
                         <div className="flex flex-col">
                           <span className="text-[10px] opacity-60">منظم السند</span>
@@ -239,8 +239,8 @@ const AccountsTable: React.FC<AccountsTableProps> = (props) => {
                       </div>
 
                       <div className="flex items-center gap-2.5 text-[11px] font-bold text-gray-500 dark:text-gray-400">
-                        <div className={`p-1 rounded-md ${isSettled ? 'bg-white/10' : 'bg-orange-50 dark:bg-orange-900/30'}`}>
-                          <Calendar className="w-3.5 h-3.5 text-orange-500" />
+                        <div className={`p-1 rounded-md ${isSettled ? 'bg-white/10' : 'bg-teal-50 dark:bg-teal-900/30'}`}>
+                          <Calendar className="w-3.5 h-3.5 text-teal-500" />
                         </div>
                         <div className="flex flex-col">
                           <span className="text-[10px] opacity-60">تاريخ السند</span>
@@ -293,8 +293,8 @@ const AccountsTable: React.FC<AccountsTableProps> = (props) => {
                         {voucher.type === 'receipt' ? 'إجمالي المبلغ المستلم' : 'إجمالي المبلغ المدفوع'}
                       </span>
                       <div className={`flex items-baseline gap-2 font-mono font-black text-xl lg:text-2xl ${voucher.currency === 'IQD'
-                        ? (voucher.type === 'receipt' ? 'text-blue-500 drop-shadow-[0_4px_10px_rgba(59,130,246,0.3)]' : 'text-orange-500 drop-shadow-[0_4px_10px_rgba(249,115,22,0.3)]')
-                        : (voucher.type === 'receipt' ? 'text-emerald-500 drop-shadow-[0_4px_10px_rgba(16,185,129,0.3)]' : 'text-rose-500 drop-shadow-[0_4px_10px_rgba(244,63,94,0.3)]')
+                        ? (voucher.type === 'receipt' ? 'text-emerald-500 drop-shadow-[0_4px_10px_rgba(16,185,129,0.3)]' : 'text-teal-500 drop-shadow-[0_4px_10px_rgba(20,184,166,0.3)]')
+                        : (voucher.type === 'receipt' ? 'text-green-500 drop-shadow-[0_4px_10px_rgba(34,197,94,0.3)]' : 'text-rose-500 drop-shadow-[0_4px_10px_rgba(244,63,94,0.3)]')
                         }`}>
                         {formatNumber(totals.amount)}
                         <span className="text-sm font-bold opacity-60 ml-1">{getCurrencySymbol(voucher.currency)}</span>
@@ -322,9 +322,9 @@ const AccountsTable: React.FC<AccountsTableProps> = (props) => {
                           <MessageCircle size={15} className="mx-auto" />
                         </button>
                       )}
-                      <button onClick={() => props.onViewVoucher(voucher.id)} className={`flex-1 lg:flex-none p-1.5 rounded-lg transition-all shadow-sm ${isSettled ? 'bg-white/10 text-white hover:bg-white/20' : 'bg-purple-50 text-purple-500 hover:bg-purple-100 dark:bg-purple-900/30 dark:hover:bg-purple-900/50'}`} title="عرض"><Eye size={15} className="mx-auto" /></button>
-                      {!props.readOnlyMode && <button onClick={() => props.onEditVoucher(voucher.id)} className={`flex-1 lg:flex-none p-1.5 rounded-lg transition-all shadow-sm ${isSettled ? 'bg-white/10 text-white hover:bg-white/20' : 'bg-blue-50 text-blue-500 hover:bg-blue-100 dark:bg-blue-900/30 dark:hover:bg-blue-900/50'}`} title="تعديل"><Pencil size={15} className="mx-auto" /></button>}
-                      <button onClick={() => handlePrintVoucher(voucher)} className={`flex-1 lg:flex-none p-1.5 rounded-lg transition-all shadow-sm ${isSettled ? 'bg-white/10 text-white hover:bg-white/20' : 'bg-orange-50 text-orange-500 hover:bg-orange-100 dark:bg-orange-900/30 dark:hover:bg-orange-900/50'}`} title="طباعة"><Printer size={15} className="mx-auto" /></button>
+                      <button onClick={() => props.onViewVoucher(voucher.id)} className={`flex-1 lg:flex-none p-1.5 rounded-lg transition-all shadow-sm ${isSettled ? 'bg-white/10 text-white hover:bg-white/20' : 'bg-emerald-50 text-emerald-500 hover:bg-emerald-100 dark:bg-emerald-900/30 dark:hover:bg-emerald-900/50'}`} title="عرض"><Eye size={15} className="mx-auto" /></button>
+                      {!props.readOnlyMode && <button onClick={() => props.onEditVoucher(voucher.id)} className={`flex-1 lg:flex-none p-1.5 rounded-lg transition-all shadow-sm ${isSettled ? 'bg-white/10 text-white hover:bg-white/20' : 'bg-teal-50 text-teal-500 hover:bg-teal-100 dark:bg-teal-900/30 dark:hover:bg-teal-900/50'}`} title="تعديل"><Pencil size={15} className="mx-auto" /></button>}
+                      <button onClick={() => handlePrintVoucher(voucher)} className={`flex-1 lg:flex-none p-1.5 rounded-lg transition-all shadow-sm ${isSettled ? 'bg-white/10 text-white hover:bg-white/20' : 'bg-green-50 text-green-500 hover:bg-green-100 dark:bg-green-900/30 dark:hover:bg-green-900/50'}`} title="طباعة"><Printer size={15} className="mx-auto" /></button>
                       {!props.readOnlyMode && <button onClick={() => props.onDeleteVoucher(voucher.id)} className={`flex-1 lg:flex-none p-1.5 rounded-lg transition-all shadow-sm ${isSettled ? 'bg-white/10 text-white hover:bg-white/20' : 'bg-red-50 text-red-500 hover:bg-red-100 dark:bg-red-900/30 dark:hover:bg-red-900/50'}`} title="حذف"><Trash2 size={15} className="mx-auto" /></button>}
                     </div>
                   </div>

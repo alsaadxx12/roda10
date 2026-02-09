@@ -12,7 +12,7 @@ interface ThemePreset {
 }
 
 const THEME_PRESETS: ThemePreset[] = [
-  { name: 'افتراضي', gradient: 'from-indigo-700 via-indigo-800 to-blue-800' },
+  { name: 'افتراضي', gradient: 'from-emerald-700 via-emerald-800 to-green-900' },
   { name: 'محيطي', gradient: 'from-blue-600 via-cyan-600 to-teal-600' },
   { name: 'غروب', gradient: 'from-red-500 via-orange-500 to-yellow-500' },
   { name: 'غابة', gradient: 'from-green-600 via-teal-700 to-green-800' },
