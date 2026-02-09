@@ -43,6 +43,11 @@ type TemplateSettings = {
   internalColumnLabel?: string;
   externalColumnLabel?: string;
   flyColumnLabel?: string;
+  receivedFromLabelEn?: string;
+  amountReceivedLabelEn?: string;
+  amountInWordsLabelEn?: string;
+  detailsLabelEn?: string;
+  phoneLabelEn?: string;
 };
 
 const numberToArabicWords = (num: number): string => {
@@ -104,6 +109,11 @@ export async function generateVoucherHTML(
     phoneLabel = 'Phone Number',
     cashierLabel = 'منظم الوصل',
     recipientSignatureLabel = 'توقيع المستلم',
+    receivedFromLabelEn = 'Received From',
+    amountReceivedLabelEn = 'Amount Received',
+    amountInWordsLabelEn = 'The amount is written',
+    detailsLabelEn = 'Details',
+    phoneLabelEn = 'Phone Number',
   } = templateSettings;
 
   const formatDate = (date: Date | string | number | undefined) => {
@@ -122,9 +132,6 @@ export async function generateVoucherHTML(
     return voucherData.type === 'receipt' ? 'سند قبض' : 'سند صرف';
   };
 
-  const getRecipientLabel = () => {
-    return voucherData.type === 'receipt' ? 'استلمنا من السيد/ السادة:' : 'ادفعوا إلى السيد/ السادة:';
-  };
 
   const getAmountInWords = (amount: number, currency: string): string => {
     const cur = currency === 'IQD' ? 'دينار عراقي' : 'دولار أمريكي';
@@ -263,32 +270,32 @@ export async function generateVoucherHTML(
           <table class="content-table">
             <tbody>
               <tr>
-                <td class="label-ar">${getRecipientLabel()}</td>
+                <td class="label-ar">${receivedFromLabel}</td>
                 <td class="value-col">${voucherData.companyName || '-'}</td>
-                <td class="label-en">${receivedFromLabel}</td>
+                <td class="label-en">${receivedFromLabelEn}</td>
               </tr>
               <tr>
                 <td class="label-ar">${amountReceivedLabel}</td>
                 <td class="value-col" dir="ltr">${displayAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${displayCurrencySymbol}</td>
-                <td class="label-en">Amount Received</td>
+                <td class="label-en">${amountReceivedLabelEn}</td>
               </tr>
               <tr>
                 <td class="label-ar">${amountInWordsLabel}</td>
                 <td class="value-col">${amountWordsText}</td>
-                <td class="label-en">The amount is written</td>
+                <td class="label-en">${amountInWordsLabelEn}</td>
               </tr>
               ${voucherData.phone ? `
                 <tr>
                   <td class="label-ar">${phoneLabel}</td>
                   <td class="value-col" dir="ltr">${voucherData.phone}</td>
-                  <td class="label-en">Phone Number</td>
+                  <td class="label-en">${phoneLabelEn}</td>
                 </tr>
               ` : ''}
               ${voucherData.details ? `
                 <tr>
                   <td class="label-ar">${detailsLabel}</td>
                   <td class="value-col">${voucherData.details}</td>
-                  <td class="label-en">Details</td>
+                  <td class="label-en">${detailsLabelEn}</td>
                 </tr>
               ` : ''}
             </tbody>

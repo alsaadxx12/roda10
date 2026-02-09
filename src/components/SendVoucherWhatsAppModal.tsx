@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { X, MessageCircle, FileText, Send, Loader2, Check, AlertTriangle, Image as ImageIcon } from 'lucide-react';
-import { generateVoucherHTML } from '../pages/Settings/components/PrintTemplate';
+import { generateVoucherHTML } from '../pages/Accounts/components/PrintTemplate';
 import { sendWhatsAppImage, processMessageTemplate } from '../utils/whatsappUtils';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../lib/firebase';

@@ -274,9 +274,17 @@ const PublicVoucher: React.FC = () => {
               <div className="company-info">
                 <div className="company-name">{printSettings?.companyNameLabel || 'شركة الروضتين للسفر والسياحة'}</div>
               </div>
-              <div className="logo-container">
-                <img src={logoUrl} alt="Logo" className="logo" />
-              </div>
+              {logoUrl ? (
+                <div className="logo-container">
+                  <img src={logoUrl} alt="Logo" className="logo" />
+                </div>
+              ) : printSettings?.logoText ? (
+                <div className="logo-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+                  <span style={{ fontSize: '16pt', fontWeight: 900, color: primaryColor }}>{printSettings.logoText}</span>
+                </div>
+              ) : (
+                <div className="logo-container"></div>
+              )}
             </div>
 
             <div className="info-bar">
@@ -307,20 +315,20 @@ const PublicVoucher: React.FC = () => {
                   <tr>
                     <td className="label-ar">{printSettings?.amountInWordsLabel || 'المبلغ كتابة'}</td>
                     <td className="value-col">{amountWordsText}</td>
-                    <td className="label-en">The amount is written</td>
+                    <td className="label-en">{printSettings?.amountInWordsLabelEn || 'The amount is written'}</td>
                   </tr>
                   {voucherData.phone && (
                     <tr>
                       <td className="label-ar">{printSettings?.phoneLabel || 'رقم الهاتف'}</td>
                       <td className="value-col" dir="ltr">{voucherData.phone}</td>
-                      <td className="label-en">Phone Number</td>
+                      <td className="label-en">{printSettings?.phoneLabelEn || 'Phone Number'}</td>
                     </tr>
                   )}
                   {voucherData.details && (
                     <tr>
                       <td className="label-ar">{printSettings?.detailsLabel || 'التفاصيل'}</td>
                       <td className="value-col">{voucherData.details}</td>
-                      <td className="label-en">Details</td>
+                      <td className="label-en">{printSettings?.detailsLabelEn || 'Details'}</td>
                     </tr>
                   )}
                 </tbody>
@@ -340,7 +348,7 @@ const PublicVoucher: React.FC = () => {
 
             <div className="signatures">
               <div className="signature-box" style={{ textAlign: 'right' }}>
-                <div>{printSettings?.cashierLabel || 'منظم الوصل'}: {voucherData.employeeName || 'شهد حيدر'}</div>
+                <div>{printSettings?.cashierLabel || 'منظم الوصل'}: {voucherData.employeeName || 'بواسطة الموظف'}</div>
               </div>
               <div className="qr-codes-container">
                 <div className="p-2 bg-white rounded-2xl overflow-hidden shadow-lg">
@@ -351,12 +359,14 @@ const PublicVoucher: React.FC = () => {
                     fgColor={"#000000"}
                     level={"H"}
                     includeMargin={false}
-                    imageSettings={{
-                      src: logoUrl,
-                      height: 20,
-                      width: 20,
-                      excavate: true,
-                    }}
+                    {...(logoUrl && {
+                      imageSettings: {
+                        src: logoUrl,
+                        height: 20,
+                        width: 20,
+                        excavate: true,
+                      }
+                    })}
                   />
                 </div>
               </div>

@@ -27,6 +27,11 @@ interface PrintSettings {
   cashierLabel: string;
   recipientSignatureLabel: string;
   directorSignatureLabel: string;
+  receivedFromLabelEn: string;
+  amountReceivedLabelEn: string;
+  amountInWordsLabelEn: string;
+  detailsLabelEn: string;
+  phoneLabelEn: string;
 }
 
 export default function PrintTemplateEditor() {
@@ -51,7 +56,12 @@ export default function PrintTemplateEditor() {
     phoneLabel: 'Phone Number',
     cashierLabel: 'منظم الوصل',
     recipientSignatureLabel: 'توقيع المستلم',
-    directorSignatureLabel: 'المدير'
+    directorSignatureLabel: 'المدير',
+    receivedFromLabelEn: 'Received From',
+    amountReceivedLabelEn: 'Amount Received',
+    amountInWordsLabelEn: 'The amount is written',
+    detailsLabelEn: 'Details',
+    phoneLabelEn: 'Phone Number',
   });
   const [previewHtml, setPreviewHtml] = useState('');
   const [isSaving, setIsSaving] = useState(false);
@@ -223,6 +233,11 @@ export default function PrintTemplateEditor() {
               <input name="cashierLabel" value={settings.cashierLabel} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="تسمية الكاشير" />
               <input name="recipientSignatureLabel" value={settings.recipientSignatureLabel} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="تسمية توقيع المستلم" />
               <input name="directorSignatureLabel" value={settings.directorSignatureLabel} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="تسمية توقيع المدير" />
+              <input name="receivedFromLabelEn" value={settings.receivedFromLabelEn} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="Received From Label" />
+              <input name="amountReceivedLabelEn" value={settings.amountReceivedLabelEn} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="Amount Received Label" />
+              <input name="amountInWordsLabelEn" value={settings.amountInWordsLabelEn} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="Amount In Words Label" />
+              <input name="detailsLabelEn" value={settings.detailsLabelEn} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="Details Label" />
+              <input name="phoneLabelEn" value={settings.phoneLabelEn} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border rounded-md" placeholder="Phone Number Label" />
             </div>
 
             <h4 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-3 flex items-center gap-2">
