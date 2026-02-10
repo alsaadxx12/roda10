@@ -78,24 +78,24 @@ export default function RecentVouchers() {
 
   return (
     <div className={`relative overflow-hidden rounded-2xl shadow-lg transition-all duration-200 h-full flex flex-col ${theme === 'dark'
-        ? 'bg-[#1a1d29]/90 border border-white/10 backdrop-blur-xl'
-        : 'bg-white border border-gray-200 shadow-sm'
+      ? 'bg-[#1a1d29]/90 border border-white/10 backdrop-blur-xl'
+      : 'bg-white border border-gray-200 shadow-sm'
       }`}>
       {/* Decorative Gradient Background */}
       <div className={`absolute -top-24 -left-24 w-48 h-48 rounded-full blur-[100px] opacity-15 pointer-events-none ${activeType === 'receipt' ? 'bg-emerald-500' : 'bg-rose-500'
         }`} />
 
       {/* Header Container */}
-      <div className="relative p-6 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5">
+      <div className="relative p-4 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/5">
         <div className="flex items-center gap-4">
-          <div className={`flex items-center justify-center w-12 h-12 rounded-xl shadow-md ${theme === 'dark'
-              ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-emerald-500/20'
-              : 'bg-gradient-to-br from-green-600 to-emerald-600 text-white shadow-emerald-600/20'
+          <div className={`flex items-center justify-center w-10 h-10 rounded-lg shadow-sm ${theme === 'dark'
+            ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-emerald-500/20'
+            : 'bg-gradient-to-br from-green-600 to-emerald-600 text-white shadow-emerald-600/20'
             }`}>
-            <FileText className="w-6 h-6" />
+            <FileText className="w-5 h-5" />
           </div>
           <div>
-            <h3 className={`text-xl font-bold tracking-tight ${theme === 'dark' ? 'text-white' : 'text-slate-900'
+            <h3 className={`text-lg font-bold tracking-tight ${theme === 'dark' ? 'text-white' : 'text-slate-900'
               }`}>
               أحدث السندات المالية
             </h3>
@@ -113,8 +113,8 @@ export default function RecentVouchers() {
           <button
             onClick={() => setActiveType('receipt')}
             className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold transition-colors duration-200 ${activeType === 'receipt'
-                ? 'bg-emerald-500 text-white shadow-md'
-                : 'text-gray-600 hover:text-emerald-600'
+              ? 'bg-emerald-500 text-white shadow-md'
+              : 'text-gray-600 hover:text-emerald-600'
               }`}
           >
             <TrendingUp className="w-4 h-4" />
@@ -123,8 +123,8 @@ export default function RecentVouchers() {
           <button
             onClick={() => setActiveType('payment')}
             className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold transition-colors duration-200 ${activeType === 'payment'
-                ? 'bg-rose-500 text-white shadow-md'
-                : 'text-gray-600 hover:text-rose-600'
+              ? 'bg-rose-500 text-white shadow-md'
+              : 'text-gray-600 hover:text-rose-600'
               }`}
           >
             <TrendingDown className="w-4 h-4" />
@@ -134,7 +134,7 @@ export default function RecentVouchers() {
       </div>
 
       {/* Main Content Area */}
-      <div className="relative flex-1 px-6 pb-6 overflow-hidden flex flex-col">
+      <div className="relative flex-1 px-4 pb-4 overflow-hidden flex flex-col">
         {loading ? (
           <div className="flex-1 flex flex-col items-center justify-center gap-4">
             <div className={`relative flex items-center justify-center w-12 h-12 rounded-full border-2 border-dashed animate-spin ${theme === 'dark' ? 'border-white/20' : 'border-gray-200'
@@ -156,25 +156,25 @@ export default function RecentVouchers() {
             <span className={`text-xs mt-1 ${theme === 'dark' ? 'text-gray-500' : 'text-gray-400'}`}>ابدأ بإضافة أول سند {activeType === 'receipt' ? 'قبض' : 'دفع'}</span>
           </div>
         ) : (
-          <div className="flex-1 space-y-3 overflow-y-auto no-scrollbar pr-1">
+          <div className="flex-1 space-y-2 overflow-y-auto no-scrollbar pr-1 mt-2">
             {vouchers.map((voucher) => (
               <div
                 key={voucher.id}
-                className={`group/item flex items-center gap-4 p-4 rounded-xl border transition-all duration-200 ${theme === 'dark'
-                    ? 'bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/10'
-                    : 'bg-white border-gray-100 shadow-sm hover:shadow-md hover:border-gray-200'
+                className={`group/item flex items-center gap-3 p-3 rounded-lg border transition-all duration-200 ${theme === 'dark'
+                  ? 'bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/10'
+                  : 'bg-white border-gray-100 shadow-sm hover:shadow-md hover:border-gray-200'
                   }`}
               >
                 {/* Status Indicator Bar */}
-                <div className={`w-1 h-12 rounded-full flex-shrink-0 ${voucher.type === 'receipt' ? 'bg-emerald-500' : 'bg-rose-500'
+                <div className={`w-0.5 h-10 rounded-full flex-shrink-0 ${voucher.type === 'receipt' ? 'bg-emerald-500' : 'bg-rose-500'
                   }`} />
 
                 {/* Voucher Icon */}
-                <div className={`flex items-center justify-center w-11 h-11 rounded-lg flex-shrink-0 ${voucher.type === 'receipt'
-                    ? 'bg-emerald-500/10 text-emerald-600'
-                    : 'bg-rose-500/10 text-rose-600'
+                <div className={`flex items-center justify-center w-9 h-9 rounded-lg flex-shrink-0 ${voucher.type === 'receipt'
+                  ? 'bg-emerald-500/10 text-emerald-600'
+                  : 'bg-rose-500/10 text-rose-600'
                   }`}>
-                  {voucher.type === 'receipt' ? <ArrowDownRight className="w-5 h-5" /> : <ArrowUpLeft className="w-5 h-5" />}
+                  {voucher.type === 'receipt' ? <ArrowDownRight className="w-4 h-4" /> : <ArrowUpLeft className="w-4 h-4" />}
                 </div>
 
                 {/* Details */}
@@ -200,14 +200,14 @@ export default function RecentVouchers() {
                 {/* Amount Section */}
                 <div className="text-left flex flex-col items-end gap-1">
                   <div className={`text-base font-bold tracking-tight leading-none ${voucher.type === 'receipt'
-                      ? 'text-emerald-600'
-                      : 'text-rose-600'
+                    ? 'text-emerald-600'
+                    : 'text-rose-600'
                     }`}>
                     {formatCurrency(voucher.amount, voucher.currency)}
                   </div>
                   <div className={`flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-semibold ${voucher.type === 'receipt'
-                      ? 'bg-emerald-500/10 text-emerald-700'
-                      : 'bg-rose-500/10 text-rose-700'
+                    ? 'bg-emerald-500/10 text-emerald-700'
+                    : 'bg-rose-500/10 text-rose-700'
                     }`}>
                     {voucher.type === 'receipt' ? 'قبض' : 'دفع'}
                   </div>
@@ -219,14 +219,14 @@ export default function RecentVouchers() {
       </div>
 
       {/* Action Footer */}
-      <div className={`p-4 mx-6 mb-6 rounded-xl border flex items-center justify-between transition-colors duration-200 ${theme === 'dark'
-          ? 'bg-white/5 border-white/10 text-gray-400 hover:text-white'
-          : 'bg-gray-50 border-gray-200 text-gray-600 hover:text-gray-900'
+      <div className={`p-3 mx-4 mb-4 rounded-lg border flex items-center justify-between transition-colors duration-200 ${theme === 'dark'
+        ? 'bg-white/5 border-white/10 text-gray-400 hover:text-white'
+        : 'bg-gray-50 border-gray-200 text-gray-600 hover:text-gray-900'
         }`}>
         <span className="text-xs font-medium">عرض السجل الكامل للسندات</span>
-        <button className={`p-1.5 rounded-md transition-colors duration-200 ${theme === 'dark' ? 'bg-white/10 hover:bg-white/20' : 'bg-white hover:bg-gray-200 shadow-sm'
+        <button className={`p-1 rounded-md transition-colors duration-200 ${theme === 'dark' ? 'bg-white/10 hover:bg-white/20' : 'bg-white hover:bg-gray-200 shadow-sm'
           }`}>
-          <ExternalLink className="w-4 h-4" />
+          <ExternalLink className="w-3.5 h-3.5" />
         </button>
       </div>
 
