@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { collection, getDocs, query, where, orderBy, Timestamp, deleteDoc, doc, addDoc, serverTimestamp, getDoc, updateDoc, setDoc, limit, startAfter, DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
+import { collection, getDocs, query, where, orderBy, Timestamp, deleteDoc, doc, addDoc, getDoc, updateDoc, setDoc, limit, startAfter, DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
 import { db } from '../../../lib/firebase';
 import { addDeletedVoucher } from '../../../lib/collections/safes';
 import { useAuth } from '../../../contexts/AuthContext';
@@ -269,11 +269,12 @@ export default function useVouchers({
         throw new Error('رقم الفاتورة غير متوفر');
       }
 
+      const now = Timestamp.now();
       const voucherWithInvoiceNumber = {
         ...voucherData,
         confirmation: false,
         invoiceNumber: parseInt(nextInvoiceNumber) || 1000,
-        createdAt: serverTimestamp(),
+        createdAt: now,
         settlement: false
       };
 
@@ -281,8 +282,10 @@ export default function useVouchers({
       const docRef = await addDoc(vouchersRef, voucherWithInvoiceNumber);
 
       await incrementInvoiceNumber();
+      // Small delay to ensure Firestore indexes the new document before re-fetching
+      await new Promise(resolve => setTimeout(resolve, 500));
       fetchVouchersPage('first');
-      return { id: docRef.id, ...voucherWithInvoiceNumber, createdAt: new Date() } as Ticket;
+      return { id: docRef.id, ...voucherWithInvoiceNumber, createdAt: now.toDate() } as Ticket;
     } catch (error) {
       console.error('Error creating voucher:', error);
       throw error;
