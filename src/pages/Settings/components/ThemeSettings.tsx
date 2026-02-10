@@ -239,10 +239,10 @@ export default function ThemeSettings() {
             </div>
           </div>
 
-          {/* Favicon Upload */}
+          {/* App Icon / Favicon Upload */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-              أيقونة المتصفح (Favicon)
+              أيقونة التطبيق والمتصفح (App Icon / Favicon)
             </label>
             <div
               className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all ${theme === 'dark'
@@ -266,10 +266,10 @@ export default function ThemeSettings() {
                     }`} />
                 )}
                 <span className="font-medium text-sm text-gray-700 dark:text-gray-300">
-                  {isUploadingFavicon ? 'جاري الرفع...' : 'انقر لرفع أيقونة المتصفح'}
+                  {isUploadingFavicon ? 'جاري الرفع...' : 'انقر لرفع أيقونة التطبيق'}
                 </span>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
-                  PNG, ICO (بحد أقصى 1MB)
+                  PNG, ICO (بحد أقصى 1MB) — تظهر في المتصفح وعلى شاشة الهاتف
                 </p>
               </div>
             </div>

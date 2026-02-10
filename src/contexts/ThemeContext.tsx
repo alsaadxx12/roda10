@@ -74,25 +74,56 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     return () => unsubscribe();
   }, []);
 
-  // Update favicon dynamically
+  // Update favicon, apple-touch-icon, and dynamic PWA manifest
   useEffect(() => {
-    const url = customSettings.faviconUrl || customSettings.logoUrl;
-    if (url) {
+    const iconUrl = customSettings.faviconUrl || customSettings.logoUrl;
+    if (iconUrl) {
+      // Update favicon
       let link: HTMLLinkElement | null = document.querySelector("link[rel~='icon']");
       if (!link) {
         link = document.createElement('link');
         link.rel = 'icon';
         document.getElementsByTagName('head')[0].appendChild(link);
       }
-      link.href = url;
+      link.href = iconUrl;
 
-      // Also update apple-touch-icon
-      let appleLink: HTMLLinkElement | null = document.querySelector("link[rel='apple-touch-icon']");
-      if (appleLink) {
-        appleLink.href = url;
+      // Update all apple-touch-icons
+      document.querySelectorAll("link[rel='apple-touch-icon']").forEach((el) => {
+        (el as HTMLLinkElement).href = iconUrl;
+      });
+
+      // Generate dynamic manifest with custom icon
+      const manifest = {
+        id: 'com.fly4all.acc',
+        name: customSettings.logoText || 'RODA10',
+        short_name: customSettings.logoText || 'RODA10',
+        description: 'نظام إدارة متكامل للأعمال والحجوزات والمبيعات',
+        start_url: '/',
+        scope: '/',
+        display: 'standalone',
+        background_color: '#0f172a',
+        theme_color: '#2563eb',
+        orientation: 'portrait',
+        categories: ['business', 'finance', 'travel'],
+        icons: [
+          { src: iconUrl, sizes: '192x192', type: 'image/png', purpose: 'any' },
+          { src: iconUrl, sizes: 'any', type: 'image/png', purpose: 'maskable' },
+          { src: iconUrl, sizes: '512x512', type: 'image/png', purpose: 'any' },
+        ],
+        shortcuts: [
+          { name: 'تسجيل الحضور', url: '/attendance-standalone', icons: [{ src: iconUrl, sizes: '192x192' }] },
+          { name: 'لوحة التحكم', url: '/dashboard', icons: [{ src: iconUrl, sizes: '192x192' }] },
+        ],
+      };
+      const blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+      const manifestUrl = URL.createObjectURL(blob);
+
+      let manifestLink: HTMLLinkElement | null = document.querySelector("link[rel='manifest']");
+      if (manifestLink) {
+        manifestLink.href = manifestUrl;
       }
     }
-  }, [customSettings.logoUrl, customSettings.faviconUrl]);
+  }, [customSettings.logoUrl, customSettings.faviconUrl, customSettings.logoText]);
 
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme);
