@@ -146,7 +146,7 @@ const AccountsTable: React.FC<AccountsTableProps> = (props) => {
 
   return (
     <>
-      <div className="space-y-2">
+      <div className="space-y-1.5">
         {props.vouchers.map((voucher) => {
           const totals = calculateTicketTotals(voucher);
           const isSettled = voucher.settlement === true;
@@ -159,7 +159,7 @@ const AccountsTable: React.FC<AccountsTableProps> = (props) => {
 
           return (
             <div key={voucher.id}
-              className={`relative rounded-xl shadow-sm border overflow-hidden transition-all duration-300 group ${isSettled
+              className={`relative rounded-lg shadow-sm border overflow-hidden transition-all duration-200 group ${isSettled
                 ? 'text-white'
                 : 'bg-white dark:bg-gray-800/60 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
                 }`}
@@ -179,19 +179,19 @@ const AccountsTable: React.FC<AccountsTableProps> = (props) => {
                 </div>
               )}
 
-              <div className="p-1.5 relative">
-                <div className="flex flex-col lg:grid lg:grid-cols-12 lg:gap-x-2 gap-y-2">
+              <div className="p-1 relative">
+                <div className="flex flex-col lg:grid lg:grid-cols-12 lg:gap-x-1.5 gap-y-1">
                   {/* Section 1: Basic Info */}
-                  <div className="lg:col-span-3 flex flex-col justify-center gap-2">
+                  <div className="lg:col-span-3 flex flex-col justify-center gap-1">
                     <div className="flex flex-col items-center lg:items-start text-center lg:text-right">
-                      <div className="flex items-center justify-between w-full mb-2">
-                        <span className={`px-3 py-1 font-black rounded-lg text-xs uppercase tracking-wider ${voucher.type === 'receipt'
+                      <div className="flex items-center justify-between w-full mb-1">
+                        <span className={`px-2 py-0.5 font-black rounded-md text-[10px] uppercase tracking-wider ${voucher.type === 'receipt'
                           ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300'
                           : 'bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-300'
                           }`}>
                           {voucher.type === 'receipt' ? 'سند قبض' : 'سند دفع'}
                         </span>
-                        <span className={`font-mono font-black text-sm px-2 py-1 rounded-md ${isSettled ? 'bg-white/10 text-gray-300' : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'}`}>
+                        <span className={`font-mono font-black text-xs px-1.5 py-0.5 rounded-md ${isSettled ? 'bg-white/10 text-gray-300' : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'}`}>
                           #{voucher.invoiceNumber || voucher.id.substring(0, 6)}
                         </span>
                       </div>
@@ -199,13 +199,13 @@ const AccountsTable: React.FC<AccountsTableProps> = (props) => {
                         <div className={`p-1.5 rounded-lg ${isSettled ? 'bg-white/15' : 'bg-gray-100 dark:bg-gray-700'}`}>
                           <Building2 className={`w-3.5 h-3.5 ${isSettled ? 'text-white' : 'text-emerald-500 dark:text-emerald-400'}`} />
                         </div>
-                        <p className={`text-base font-[900] truncate ${isSettled ? 'text-white' : 'text-slate-800 dark:text-slate-100'}`}>
+                        <p className={`text-sm font-[900] truncate ${isSettled ? 'text-white' : 'text-slate-800 dark:text-slate-100'}`}>
                           {voucher.companyName}
                         </p>
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1.5">
                       <button
                         onClick={() => handleConfirmationToggle(voucher)}
                         className={`flex-1 py-1 rounded-xl flex items-center justify-center gap-2 transition-all font-bold text-xs border-2 ${voucher.confirmation
@@ -226,7 +226,7 @@ const AccountsTable: React.FC<AccountsTableProps> = (props) => {
                   </div>
 
                   {/* Section 2: Details */}
-                  <div className="lg:col-span-5 lg:border-x-2 lg:border-dashed lg:border-gray-200 lg:dark:border-gray-700 px-2 flex flex-col justify-center gap-2 py-1 lg:py-0 border-y-2 lg:border-y-0 border-dashed border-gray-100 dark:border-gray-800">
+                  <div className="lg:col-span-5 lg:border-x lg:border-dashed lg:border-gray-200 lg:dark:border-gray-700 px-1.5 flex flex-col justify-center gap-1 py-0.5 lg:py-0 border-y lg:border-y-0 border-dashed border-gray-100 dark:border-gray-800">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-0.5">
                       <div className="flex items-center gap-2.5 text-[11px] font-bold text-gray-500 dark:text-gray-400">
                         <div className={`p-1 rounded-md ${isSettled ? 'bg-white/10' : 'bg-emerald-50 dark:bg-emerald-900/30'}`}>
@@ -274,7 +274,7 @@ const AccountsTable: React.FC<AccountsTableProps> = (props) => {
                     </div>
 
                     {voucher.details && (
-                      <div className={`mt-1 p-2 rounded-xl text-right text-sm font-bold leading-relaxed border ${isSettled
+                      <div className={`mt-0.5 p-1.5 rounded-lg text-right text-xs font-bold leading-relaxed border ${isSettled
                         ? 'bg-white/10 border-white/5 text-white'
                         : 'bg-gray-50 dark:bg-gray-700/50 border-gray-100 dark:border-gray-600 text-slate-700 dark:text-slate-300'
                         }`}>
@@ -287,12 +287,12 @@ const AccountsTable: React.FC<AccountsTableProps> = (props) => {
                   </div>
 
                   {/* Section 3: Financials & Actions */}
-                  <div className="lg:col-span-4 flex flex-col justify-center gap-3">
+                  <div className="lg:col-span-4 flex flex-col justify-center gap-1.5">
                     <div className="flex flex-col items-center lg:items-center justify-center">
                       <span className={`text-xs font-bold mb-1 ${isSettled ? 'text-white/60' : 'text-gray-500 dark:text-gray-400'}`}>
                         {voucher.type === 'receipt' ? 'إجمالي المبلغ المستلم' : 'إجمالي المبلغ المدفوع'}
                       </span>
-                      <div className={`flex items-baseline gap-2 font-mono font-black text-xl lg:text-2xl ${voucher.currency === 'IQD'
+                      <div className={`flex items-baseline gap-1.5 font-mono font-black text-lg lg:text-xl ${voucher.currency === 'IQD'
                         ? (voucher.type === 'receipt' ? 'text-emerald-500 drop-shadow-[0_4px_10px_rgba(16,185,129,0.3)]' : 'text-teal-500 drop-shadow-[0_4px_10px_rgba(20,184,166,0.3)]')
                         : (voucher.type === 'receipt' ? 'text-green-500 drop-shadow-[0_4px_10px_rgba(34,197,94,0.3)]' : 'text-rose-500 drop-shadow-[0_4px_10px_rgba(244,63,94,0.3)]')
                         }`}>
@@ -301,9 +301,9 @@ const AccountsTable: React.FC<AccountsTableProps> = (props) => {
                       </div>
 
                       {voucher.type === 'receipt' && distributionEntries.length > 0 && (
-                        <div className={`mt-2 w-full grid grid-cols-2 gap-x-2 gap-y-1 p-1 rounded-xl ${isSettled ? 'bg-white/10' : 'bg-slate-50 dark:bg-gray-700/40'}`}>
+                        <div className={`mt-1 w-full grid grid-cols-2 gap-x-1.5 gap-y-0.5 p-0.5 rounded-lg ${isSettled ? 'bg-white/10' : 'bg-slate-50 dark:bg-gray-700/40'}`}>
                           {distributionEntries.map(entry => (
-                            <div className="flex items-center justify-between gap-2 px-2" key={entry.label}>
+                            <div className="flex items-center justify-between gap-1.5 px-1.5" key={entry.label}>
                               <div className="flex items-center gap-1 text-[10px] font-black text-gray-500 dark:text-gray-400">
                                 {entry.icon} {entry.label}
                               </div>
