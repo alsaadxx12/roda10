@@ -737,8 +737,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             )}
           </div>
 
-          {/* Center - Exchange Rate */}
-          <div className="flex-1 flex items-center justify-center">
+          {/* Center - Exchange Rate (hidden on mobile) */}
+          <div className="hidden md:flex flex-1 items-center justify-center">
             <div className="relative flex items-center justify-center px-4 py-1.5 bg-gradient-to-r from-white/15 to-white/10 backdrop-blur-md rounded-xl border border-white/30 shadow-md hover:shadow-lg transition-all duration-300 hover:from-white/20 hover:to-white/15 group min-w-[80px]">
               {/* Decorative gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
