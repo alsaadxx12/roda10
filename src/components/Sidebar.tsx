@@ -19,6 +19,7 @@ import {
 import { updatePassword, EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
 import { auth } from '../lib/firebase';
 import { menuItems } from '../lib/constants';
+import BrandingLogo from './BrandingLogo';
 
 interface SidebarProps {
   isSidebarOpen: boolean;
@@ -133,12 +134,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen, toggleSidebar, isColla
           }`}
       >
         {/* Sidebar Header & Toggle */}
-        {!isMobile && (
-          <div className={`p-4 border-b border-gray-100 dark:border-gray-800 flex items-center ${isCollapsed ? 'justify-center' : 'justify-end'}`}>
+        <div className={`p-4 border-b border-gray-100 dark:border-gray-800 flex items-center ${isCollapsed ? 'justify-center' : 'justify-between'}`}>
+          {!isCollapsed && <BrandingLogo size={28} className="mr-2" />}
 
+          {!isMobile && (
             <button
               onClick={() => onCollapseChange(!isCollapsed)}
-              className={`p-1.5 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors ${isCollapsed ? '' : 'mr-auto'}`}
+              className={`p-1.5 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors`}
             >
               {isCollapsed ? (
                 <ChevronsLeft className="w-5 h-5 rotate-180" />
@@ -149,8 +151,17 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen, toggleSidebar, isColla
                 </div>
               )}
             </button>
-          </div>
-        )}
+          )}
+
+          {isMobile && (
+            <button
+              onClick={toggleSidebar}
+              className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          )}
+        </div>
 
         <ScrollArea.Root className="flex-1 overflow-hidden">
           <ScrollArea.Viewport className="h-full w-full">

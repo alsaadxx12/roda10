@@ -24,6 +24,7 @@ import { useNotifications } from '../hooks/useNotifications';
 import { subscribeToLeaves, updateLeaveStatus } from '../lib/collections/leaves';
 import { LeaveRequest } from '../pages/Leaves/types';
 import { ClipboardList } from 'lucide-react';
+import BrandingLogo from './BrandingLogo';
 
 const NOTIFICATION_SOUNDS = [
   { id: 'notification_high_pitch_alert', url: 'https://actions.google.com/sounds/v1/office/notification_high_pitch_alert.ogg' },
@@ -749,34 +750,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             </div>
           </div>
 
-          {/* Right Side - Logo/Brand */}
           <div className="flex items-center gap-2 md:gap-4 flex-shrink-0">
-            {customSettings.logoUrl ? (
-              <div className="flex items-center">
-                <img
-                  src={customSettings.logoUrl}
-                  alt="Logo"
-                  className="w-auto object-contain transition-all duration-500"
-                  style={{
-                    height: `${customSettings.logoSize || 32}px`,
-                    filter: customSettings.showLogoGlow ? 'drop-shadow(0 0 12px rgba(255,255,255,0.8))' : 'none'
-                  }}
-                  onError={(e: any) => (e.currentTarget.style.display = 'none')}
-                />
-              </div>
-            ) : customSettings.logoText ? (
-              <div className="flex items-center">
-                <span
-                  className="font-black text-white tracking-wider drop-shadow-md transition-all duration-500"
-                  style={{
-                    fontSize: `${(customSettings.logoSize || 32) / 2}pt`,
-                    textShadow: customSettings.showLogoGlow ? '0 0 12px rgba(255,255,255,0.6)' : 'none'
-                  }}
-                >
-                  {customSettings.logoText}
-                </span>
-              </div>
-            ) : null}
+            <BrandingLogo navigateHome={false} />
           </div>
         </div>
       </header>
