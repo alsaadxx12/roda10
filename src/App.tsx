@@ -1,4 +1,4 @@
-import { useEffect, lazy, Suspense } from 'react';
+import { useEffect, useState, lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ExchangeRateProvider } from './contexts/ExchangeRateContext';
@@ -15,6 +15,7 @@ import PermissionGuard from './components/PermissionGuard';
 import GlobalApiSync from './components/GlobalApiSync';
 import AppErrorBoundary from './components/AppErrorBoundary';
 import ConnectivityManager from './components/ConnectivityManager';
+import SplashScreen from './components/SplashScreen';
 import { checkAndCalculateEmployeeOfTheMonth } from './lib/services/employeeOfTheMonthService';
 import Subscriptions from './pages/Subscriptions';
 
@@ -81,10 +82,22 @@ function RootRedirect() {
 
 function AppRoutes() {
   const { user, loading } = useAuth();
+  const [showSplash, setShowSplash] = useState(() => {
+    return !sessionStorage.getItem('splash_shown');
+  });
 
   useEffect(() => {
     checkAndCalculateEmployeeOfTheMonth();
   }, []);
+
+  const handleSplashFinish = () => {
+    sessionStorage.setItem('splash_shown', '1');
+    setShowSplash(false);
+  };
+
+  if (showSplash) {
+    return <SplashScreen onFinish={handleSplashFinish} />;
+  }
 
   if (loading) {
     return <LoadingFallback />;
