@@ -28,25 +28,87 @@ import BrandingLogo from '../../components/BrandingLogo';
 
 // Specialized Airport Data
 const AIRPORTS = [
+    // Middle East
     { name: 'Baghdad Intl', city: 'Baghdad', country: 'Iraq', iata: 'BGW', flag: '🇮🇶' },
     { name: 'Basra Intl', city: 'Basra', country: 'Iraq', iata: 'BSR', flag: '🇮🇶' },
     { name: 'Erbil Intl', city: 'Erbil', country: 'Iraq', iata: 'EBL', flag: '🇮🇶' },
     { name: 'Sulaimaniyah Intl', city: 'Sulaimaniyah', country: 'Iraq', iata: 'ISU', flag: '🇮🇶' },
     { name: 'Najaf Intl', city: 'Najaf', country: 'Iraq', iata: 'NJF', flag: '🇮🇶' },
-    { name: 'Istanbul Airport', city: 'Istanbul', country: 'Turkey', iata: 'IST', flag: '🇹🇷' },
-    { name: 'Sabiha Gökçen', city: 'Istanbul', country: 'Turkey', iata: 'SAW', flag: '🇹🇷' },
-    { name: 'Ankara Esenboğa', city: 'Ankara', country: 'Turkey', iata: 'ESB', flag: '🇹🇷' },
-    { name: 'Antalya Airport', city: 'Antalya', country: 'Turkey', iata: 'AYT', flag: '🇹🇷' },
     { name: 'Dubai Intl', city: 'Dubai', country: 'UAE', iata: 'DXB', flag: '🇦🇪' },
     { name: 'Abu Dhabi Intl', city: 'Abu Dhabi', country: 'UAE', iata: 'AUH', flag: '🇦🇪' },
     { name: 'Sharjah Intl', city: 'Sharjah', country: 'UAE', iata: 'SHJ', flag: '🇦🇪' },
+    { name: 'Istanbul Airport', city: 'Istanbul', country: 'Turkey', iata: 'IST', flag: '🇹🇷' },
+    { name: 'Sabiha Gökçen', city: 'Istanbul', country: 'Turkey', iata: 'SAW', flag: '🇹🇷' },
     { name: 'King Khalid Intl', city: 'Riyadh', country: 'Saudi Arabia', iata: 'RUH', flag: '🇸🇦' },
     { name: 'King Abdulaziz Intl', city: 'Jeddah', country: 'Saudi Arabia', iata: 'JED', flag: '🇸🇦' },
-    { name: 'Cairo Intl', city: 'Cairo', country: 'Egypt', iata: 'CAI', flag: '🇪🇬' },
-    { name: 'Hamad Intl', city: 'Doha', country: 'Qatar', iata: 'DOH', flag: '🇶🇦' },
     { name: 'Queen Alia Intl', city: 'Amman', country: 'Jordan', iata: 'AMM', flag: '🇯🇴' },
-    { name: 'John F Kennedy', city: 'New York', country: 'USA', iata: 'JFK', flag: '🇺🇸' },
+    { name: 'Beirut Rafic Hariri', city: 'Beirut', country: 'Lebanon', iata: 'BEY', flag: '🇱🇧' },
+    { name: 'Kuwait Intl', city: 'Kuwait City', country: 'Kuwait', iata: 'KWI', flag: '🇰🇼' },
+    { name: 'Muscat Intl', city: 'Muscat', country: 'Oman', iata: 'MCT', flag: '🇴🇲' },
+    { name: 'Hamad Intl', city: 'Doha', country: 'Qatar', iata: 'DOH', flag: '🇶🇦' },
+    { name: 'Bahrain Intl', city: 'Manama', country: 'Bahrain', iata: 'BAH', flag: '🇧🇭' },
+    { name: 'Cairo Intl', city: 'Cairo', country: 'Egypt', iata: 'CAI', flag: '🇪🇬' },
+    { name: 'Tehran Imam Khomeini', city: 'Tehran', country: 'Iran', iata: 'IKA', flag: '🇮🇷' },
+
+    // Europe
     { name: 'London Heathrow', city: 'London', country: 'UK', iata: 'LHR', flag: '🇬🇧' },
+    { name: 'Paris Charles de Gaulle', city: 'Paris', country: 'France', iata: 'CDG', flag: '🇫🇷' },
+    { name: 'Frankfurt Airport', city: 'Frankfurt', country: 'Germany', iata: 'FRA', flag: '🇩🇪' },
+    { name: 'Amsterdam Schiphol', city: 'Amsterdam', country: 'Netherlands', iata: 'AMS', flag: '🇳🇱' },
+    { name: 'Madrid Barajas', city: 'Madrid', country: 'Spain', iata: 'MAD', flag: '🇪🇸' },
+    { name: 'Rome Fiumicino', city: 'Rome', country: 'Italy', iata: 'FCO', flag: '🇮🇹' },
+    { name: 'Zurich Airport', city: 'Zurich', country: 'Switzerland', iata: 'ZRH', flag: '🇨🇭' },
+    { name: 'Vienna Intl', city: 'Vienna', country: 'Austria', iata: 'VIE', flag: '🇦🇹' },
+    { name: 'Brussels Airport', city: 'Brussels', country: 'Belgium', iata: 'BRU', flag: '🇧🇪' },
+    { name: 'Stockholm Arlanda', city: 'Stockholm', country: 'Sweden', iata: 'ARN', flag: '🇸🇪' },
+    { name: 'Dublin Airport', city: 'Dublin', country: 'Ireland', iata: 'DUB', flag: '🇮🇪' },
+    { name: 'Lisbon Airport', city: 'Lisbon', country: 'Portugal', iata: 'LIS', flag: '🇵🇹' },
+    { name: 'Athens Intl', city: 'Athens', country: 'Greece', iata: 'ATH', flag: '🇬🇷' },
+    { name: 'Warsaw Chopin', city: 'Warsaw', country: 'Poland', iata: 'WAW', flag: '🇵🇱' },
+    { name: 'Prague Václav Havel', city: 'Prague', country: 'Czech Republic', iata: 'PRG', flag: '🇨🇿' },
+    { name: 'Copenhagen Airport', city: 'Copenhagen', country: 'Denmark', iata: 'CPH', flag: '🇩🇰' },
+    { name: 'Oslo Gardermoen', city: 'Oslo', country: 'Norway', iata: 'OSL', flag: '🇳🇴' },
+    { name: 'Helsinki Airport', city: 'Helsinki', country: 'Finland', iata: 'HEL', flag: '🇫🇮' },
+
+    // Asia & Oceania
+    { name: 'Tokyo Haneda', city: 'Tokyo', country: 'Japan', iata: 'HND', flag: '🇯🇵' },
+    { name: 'Seoul Incheon', city: 'Seoul', country: 'South Korea', iata: 'ICN', flag: '🇰🇷' },
+    { name: 'Beijing Capital', city: 'Beijing', country: 'China', iata: 'PEK', flag: '🇨🇳' },
+    { name: 'Hong Kong Intl', city: 'Hong Kong', country: 'HK', iata: 'HKG', flag: '🇭🇰' },
+    { name: 'Singapore Changi', city: 'Singapore', country: 'Singapore', iata: 'SIN', flag: '🇸🇬' },
+    { name: 'Sydney Kingsford Smith', city: 'Sydney', country: 'Australia', iata: 'SYD', flag: '🇦🇺' },
+    { name: 'Auckland Airport', city: 'Auckland', country: 'New Zealand', iata: 'AKL', flag: '🇳🇿' },
+    { name: 'Delhi Indira Gandhi', city: 'Delhi', country: 'India', iata: 'DEL', flag: '🇮🇳' },
+    { name: 'Mumbai Chhatrapati Shivaji', city: 'Mumbai', country: 'India', iata: 'BOM', flag: '🇮🇳' },
+    { name: 'Bangkok Suvarnabhumi', city: 'Bangkok', country: 'Thailand', iata: 'BKK', flag: '🇹🇭' },
+    { name: 'Kuala Lumpur Intl', city: 'Kuala Lumpur', country: 'Malaysia', iata: 'KUL', flag: '🇲🇾' },
+    { name: 'Jakarta Soekarno-Hatta', city: 'Jakarta', country: 'Indonesia', iata: 'CGK', flag: '🇮🇩' },
+    { name: 'Manila Ninoy Aquino', city: 'Manila', country: 'Philippines', iata: 'MNL', flag: '🇵🇭' },
+    { name: 'Ho Chi Minh Tan Son Nhat', city: 'Ho Chi Minh', country: 'Vietnam', iata: 'SGN', flag: '🇻🇳' },
+    { name: 'Karachi Jinnah Intl', city: 'Karachi', country: 'Pakistan', iata: 'KHI', flag: '🇵🇰' },
+    { name: 'Colombo Bandaranaike', city: 'Colombo', country: 'Sri Lanka', iata: 'CMB', flag: '🇱🇰' },
+
+    // Americas
+    { name: 'New York JFK', city: 'New York', country: 'USA', iata: 'JFK', flag: '🇺🇸' },
+    { name: 'Los Angeles Intl', city: 'Los Angeles', country: 'USA', iata: 'LAX', flag: '🇺🇸' },
+    { name: 'Toronto Pearson', city: 'Toronto', country: 'Canada', iata: 'YYZ', flag: '🇨🇦' },
+    { name: 'Vancouver Intl', city: 'Vancouver', country: 'Canada', iata: 'YVR', flag: '🇨🇦' },
+    { name: 'Mexico City Intl', city: 'Mexico City', country: 'Mexico', iata: 'MEX', flag: '🇲🇽' },
+    { name: 'São Paulo Guarulhos', city: 'São Paulo', country: 'Brazil', iata: 'GRU', flag: '🇧🇷' },
+    { name: 'Buenos Aires Ezeiza', city: 'Buenos Aires', country: 'Argentina', iata: 'EZE', flag: '🇦🇷' },
+    { name: 'Santiago Arturo Merino Benítez', city: 'Santiago', country: 'Chile', iata: 'SCL', flag: '🇨🇱' },
+    { name: 'Bogotá El Dorado', city: 'Bogotá', country: 'Colombia', iata: 'BOG', flag: '🇨🇴' },
+    { name: 'Lima Jorge Chávez', city: 'Lima', country: 'Peru', iata: 'LIM', flag: '🇵🇪' },
+
+    // Africa
+    { name: 'Johannesburg OR Tambo', city: 'Johannesburg', country: 'South Africa', iata: 'JNB', flag: '🇿🇦' },
+    { name: 'Cape Town Intl', city: 'Cape Town', country: 'South Africa', iata: 'CPT', flag: '🇿🇦' },
+    { name: 'Casablanca Mohammed V', city: 'Casablanca', country: 'Morocco', iata: 'CMN', flag: '🇲🇦' },
+    { name: 'Nairobi Jomo Kenyatta', city: 'Nairobi', country: 'Kenya', iata: 'NBO', flag: '🇰🇪' },
+    { name: 'Addis Ababa Bole', city: 'Addis Ababa', country: 'Ethiopia', iata: 'ADD', flag: '🇪🇹' },
+    { name: 'Lagos Murtala Muhammed', city: 'Lagos', country: 'Nigeria', iata: 'LOS', flag: '🇳🇬' },
+    { name: 'Algiers Houari Boumediene', city: 'Algiers', country: 'Algeria', iata: 'ALG', flag: '🇩🇿' },
+    { name: 'Tunis Carthage', city: 'Tunis', country: 'Tunisia', iata: 'TUN', flag: '🇹🇳' },
 ].sort((a, b) => a.country.localeCompare(b.country));
 
 const COUNTRIES = Array.from(new Set(AIRPORTS.map(a => a.country))).sort();
@@ -266,7 +328,7 @@ const LandingPage: React.FC = () => {
                                         </div>
 
                                         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-                                            <div className="md:col-span-4 space-y-3">
+                                            <div className="md:col-span-6 space-y-3">
                                                 <span className="text-[10px] font-black text-gray-700 uppercase tracking-widest ml-1">Region Override</span>
                                                 <div className="relative">
                                                     <select
@@ -280,7 +342,7 @@ const LandingPage: React.FC = () => {
                                                     <ChevronDown size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-emerald-500 pointer-events-none" />
                                                 </div>
                                             </div>
-                                            <div className="md:col-span-8 space-y-3">
+                                            <div className="md:col-span-6 space-y-3">
                                                 <span className="text-[10px] font-black text-gray-700 uppercase tracking-widest ml-1">Universal Search Vector</span>
                                                 <div className="relative group">
                                                     <input
@@ -545,7 +607,7 @@ const LandingPage: React.FC = () => {
                                     <button
                                         onClick={() => {
                                             if (chatMessage.trim()) {
-                                                window.open(`https://wa.me/9647700000000?text=${encodeURIComponent(chatMessage)}`, '_blank');
+                                                window.open(`https://wa.me/9647714289278?text=${encodeURIComponent(chatMessage)}`, '_blank');
                                                 setChatMessage('');
                                                 setShowChat(false);
                                             }
@@ -577,7 +639,7 @@ const LandingPage: React.FC = () => {
                 <div className="max-w-[1440px] mx-auto px-12 grid grid-cols-1 md:grid-cols-4 gap-20">
                     <div className="md:col-span-2 space-y-10">
                         <div className="flex items-center gap-6">
-                            <div className="w-14 h-14 bg-emerald-500 rounded-2xl flex items-center justify-center text-black font-black text-2xl">R</div>
+                            <BrandingLogo size={56} navigateHome={false} />
                             <span className="text-5xl font-black tracking-tighter uppercase grad-text">{customSettings.logoText || 'RODA10'}</span>
                         </div>
                         <p className="max-w-md text-sm font-bold text-gray-700 leading-relaxed uppercase tracking-widest">

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTheme } from '../../../contexts/ThemeContext';
 import { Palette, Image as ImageIcon, Save, Check, Loader2, Upload, Sparkles, DollarSign, LayoutGrid, Zap } from 'lucide-react';
-import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../lib/firebase';
 import SettingsCard from '../../../components/SettingsCard';
 // Firebase storage removed in favor of Base64 storage
@@ -62,6 +62,21 @@ export default function ThemeSettings() {
   const [isUploadingLogo, setIsUploadingLogo] = useState(false);
   const [isUploadingFavicon, setIsUploadingFavicon] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
+
+  // Sync local state with global settings when they load
+  useEffect(() => {
+    if (customSettings) {
+      setLogoUrl(customSettings.logoUrl || '');
+      setLogoText(customSettings.logoText || '');
+      setFaviconUrl(customSettings.faviconUrl || '');
+      setSelectedGradient(customSettings.headerGradient || THEME_PRESETS[0].gradient);
+      setLogoSize(customSettings.logoSize || 32);
+      setShowLogoGlow(customSettings.showLogoGlow || false);
+      setSettledColor(customSettings.settledColor || '#064e3b');
+      setSettledColorSecondary(customSettings.settledColorSecondary || '#022c22');
+      setSettledRibbonColor(customSettings.settledRibbonColor || '#10b981');
+    }
+  }, [customSettings]);
 
   const handleSave = () => {
     setIsSaving(true);
