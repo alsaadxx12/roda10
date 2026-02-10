@@ -111,52 +111,50 @@ function AppRoutes() {
         path="/*"
         element={
           <AuthGuard>
-            <ExchangeRateProvider>
-              <BuyersDataProvider>
-                <Layout>
-                  <PageTransition>
-                    <Suspense fallback={<LoadingFallback />}>
-                      <Routes>
-                        <Route path="/dashboard" element={<PermissionGuard requiredPermissions={{ page: 'dashboard', actions: ['view'] }}><Dashboard /></PermissionGuard>} />
-                        <Route path="/profile" element={<ProfilePage />} />
-                        <Route path="/companies" element={<PermissionGuard requiredPermissions={{ page: 'companies', actions: ['view'] }}><Companies /></PermissionGuard>} />
-                        <Route path="/employees" element={<PermissionGuard requiredPermissions={{ page: 'employees', actions: ['view'] }}><Employees /></PermissionGuard>} />
-                        <Route path="/departments" element={<PermissionGuard requiredPermissions={{ page: 'departments', actions: ['view'] }}><Departments /></PermissionGuard>} />
-                        <Route path="/accounts" element={<PermissionGuard requiredPermissions={{ page: 'accounts', actions: ['view'] }}><Accounts /></PermissionGuard>} />
-                        <Route path="/safes" element={<PermissionGuard requiredPermissions={{ page: 'safes', actions: ['view'] }}><Safes /></PermissionGuard>} />
-                        <Route path="/balances" element={<PermissionGuard requiredPermissions={{ page: 'الأرصدة', actions: ['view'] }}><Balances /></PermissionGuard>} />
-                        <Route path="/api-integrations" element={<PermissionGuard requiredPermissions={{ page: 'API', actions: ['view'] }}><ApiIntegrations /></PermissionGuard>} />
-                        <Route path="/subscriptions" element={<PermissionGuard requiredPermissions={{ page: 'subscriptions', actions: ['view'] }}><Subscriptions /></PermissionGuard>} />
-                        <Route path="/reports" element={<PermissionGuard requiredPermissions={{ page: 'التبليغات', actions: ['view'] }}><Reports /></PermissionGuard>} />
-                        <Route path="/settings" element={<PermissionGuard requiredPermissions={{ page: 'settings', actions: ['view'] }}><Settings /></PermissionGuard>} />
-                        <Route path="/pending-issues" element={<PermissionGuard requiredPermissions={{ page: 'المشاكل المعلقة', actions: ['view'] }}><PendingIssues /></PermissionGuard>} />
-                        <Route path="/mastercard-issues" element={<PermissionGuard requiredPermissions={{ page: 'مشاكل بوابة الماستر', actions: ['view'] }}><MastercardIssues /></PermissionGuard>} />
-                        <Route path="/attendance" element={<PermissionGuard requiredPermissions={{ page: 'تسجيل الحضور', actions: ['view'] }}><Attendance /></PermissionGuard>} />
-                        <Route path="/attendance-reports" element={<PermissionGuard requiredPermissions={{ page: 'تقارير الحضور', actions: ['view'] }}><AttendanceReports /></PermissionGuard>} />
-                        <Route path="/branches" element={<PermissionGuard requiredPermissions={{ page: 'الفروع', actions: ['view'] }}><Branches /></PermissionGuard>} />
-                        <Route path="/leaves" element={<Leaves />} />
-                        <Route path="/security" element={<SecurityPage />} />
-                        <Route path="/notification-settings" element={<PersonalNotificationSettings />} />
-                        <Route path="/data-fly" element={<PermissionGuard requiredPermissions={{ page: 'الإعدادات والربط', actions: ['view'] }}><DataFly /></PermissionGuard>} />
-                        <Route path="/announcements" element={<PermissionGuard requiredPermissions={{ page: 'announcements', actions: ['view'] }}><Announcements /></PermissionGuard>} />
-                        <Route
-                          path="/buyers-accounts/*"
-                          element={
-                            <PermissionGuard requiredPermissions={{ page: 'الإعدادات والربط', actions: ['view'] }}>
-                              <Routes>
-                                <Route index element={<BuyersAccounts />} />
-                                <Route path="statement" element={<StatementPage />} />
-                              </Routes>
-                            </PermissionGuard>
-                          }
-                        />
-                        <Route path="*" element={<Navigate to="/dashboard" />} />
-                      </Routes>
-                    </Suspense>
-                  </PageTransition>
-                </Layout>
-              </BuyersDataProvider>
-            </ExchangeRateProvider>
+            <BuyersDataProvider>
+              <Layout>
+                <PageTransition>
+                  <Suspense fallback={<LoadingFallback />}>
+                    <Routes>
+                      <Route path="/dashboard" element={<PermissionGuard requiredPermissions={{ page: 'dashboard', actions: ['view'] }}><Dashboard /></PermissionGuard>} />
+                      <Route path="/profile" element={<ProfilePage />} />
+                      <Route path="/companies" element={<PermissionGuard requiredPermissions={{ page: 'companies', actions: ['view'] }}><Companies /></PermissionGuard>} />
+                      <Route path="/employees" element={<PermissionGuard requiredPermissions={{ page: 'employees', actions: ['view'] }}><Employees /></PermissionGuard>} />
+                      <Route path="/departments" element={<PermissionGuard requiredPermissions={{ page: 'departments', actions: ['view'] }}><Departments /></PermissionGuard>} />
+                      <Route path="/accounts" element={<PermissionGuard requiredPermissions={{ page: 'accounts', actions: ['view'] }}><Accounts /></PermissionGuard>} />
+                      <Route path="/safes" element={<PermissionGuard requiredPermissions={{ page: 'safes', actions: ['view'] }}><Safes /></PermissionGuard>} />
+                      <Route path="/balances" element={<PermissionGuard requiredPermissions={{ page: 'الأرصدة', actions: ['view'] }}><Balances /></PermissionGuard>} />
+                      <Route path="/api-integrations" element={<PermissionGuard requiredPermissions={{ page: 'API', actions: ['view'] }}><ApiIntegrations /></PermissionGuard>} />
+                      <Route path="/subscriptions" element={<PermissionGuard requiredPermissions={{ page: 'subscriptions', actions: ['view'] }}><Subscriptions /></PermissionGuard>} />
+                      <Route path="/reports" element={<PermissionGuard requiredPermissions={{ page: 'التبليغات', actions: ['view'] }}><Reports /></PermissionGuard>} />
+                      <Route path="/settings" element={<PermissionGuard requiredPermissions={{ page: 'settings', actions: ['view'] }}><Settings /></PermissionGuard>} />
+                      <Route path="/pending-issues" element={<PermissionGuard requiredPermissions={{ page: 'المشاكل المعلقة', actions: ['view'] }}><PendingIssues /></PermissionGuard>} />
+                      <Route path="/mastercard-issues" element={<PermissionGuard requiredPermissions={{ page: 'مشاكل بوابة الماستر', actions: ['view'] }}><MastercardIssues /></PermissionGuard>} />
+                      <Route path="/attendance" element={<PermissionGuard requiredPermissions={{ page: 'تسجيل الحضور', actions: ['view'] }}><Attendance /></PermissionGuard>} />
+                      <Route path="/attendance-reports" element={<PermissionGuard requiredPermissions={{ page: 'تقارير الحضور', actions: ['view'] }}><AttendanceReports /></PermissionGuard>} />
+                      <Route path="/branches" element={<PermissionGuard requiredPermissions={{ page: 'الفروع', actions: ['view'] }}><Branches /></PermissionGuard>} />
+                      <Route path="/leaves" element={<Leaves />} />
+                      <Route path="/security" element={<SecurityPage />} />
+                      <Route path="/notification-settings" element={<PersonalNotificationSettings />} />
+                      <Route path="/data-fly" element={<PermissionGuard requiredPermissions={{ page: 'الإعدادات والربط', actions: ['view'] }}><DataFly /></PermissionGuard>} />
+                      <Route path="/announcements" element={<PermissionGuard requiredPermissions={{ page: 'announcements', actions: ['view'] }}><Announcements /></PermissionGuard>} />
+                      <Route
+                        path="/buyers-accounts/*"
+                        element={
+                          <PermissionGuard requiredPermissions={{ page: 'الإعدادات والربط', actions: ['view'] }}>
+                            <Routes>
+                              <Route index element={<BuyersAccounts />} />
+                              <Route path="statement" element={<StatementPage />} />
+                            </Routes>
+                          </PermissionGuard>
+                        }
+                      />
+                      <Route path="*" element={<Navigate to="/dashboard" />} />
+                    </Routes>
+                  </Suspense>
+                </PageTransition>
+              </Layout>
+            </BuyersDataProvider>
           </AuthGuard>
         }
       />
@@ -181,7 +179,9 @@ export default function App() {
                   <ConnectivityManager />
                   <GlobalApiSync />
                   <NotificationManager />
-                  <AppRoutes />
+                  <ExchangeRateProvider>
+                    <AppRoutes />
+                  </ExchangeRateProvider>
                 </GlobalModalsProvider>
               </NotificationProvider>
             </LanguageProvider>
