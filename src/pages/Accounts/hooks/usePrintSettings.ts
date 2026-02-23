@@ -9,6 +9,9 @@ export interface PrintSettings {
     flyColumnLabel: string;
     primaryColor: string;
     textColor: string;
+    labelBgColor: string;
+    labelBorderColor: string;
+    voucherTitleColor: string;
     logoUrl: string;
     footerAddress: string;
     companyNameLabel: string;
@@ -32,6 +35,9 @@ const defaultSettings: PrintSettings = {
     flyColumnLabel: 'فلاي',
     primaryColor: '#4A0E6B',
     textColor: '#111827',
+    labelBgColor: '#F3E8FF',
+    labelBorderColor: '#D1C4E9',
+    voucherTitleColor: '#F57C00',
     logoUrl: "",
     footerAddress: '9647730308111 - 964771800033 | كربلاء - شارع الإسكان - قرب مستشفى احمد الوائلي',
     companyNameLabel: 'شركة الروضتين للسفر والسياحة',

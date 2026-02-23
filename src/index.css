@@ -161,6 +161,18 @@ html.dark #root {
   animation: shimmer-slide 2s infinite;
 }
 
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Modal Swoop Animation */
 @keyframes modal-swoop-in {
   from {

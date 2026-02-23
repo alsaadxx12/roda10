@@ -13,6 +13,9 @@ interface PrintSettings {
   flyColumnLabel: string;
   primaryColor: string;
   textColor: string;
+  labelBgColor: string;
+  labelBorderColor: string;
+  voucherTitleColor: string;
   logoUrl: string;
   footerAddress: string;
   companyNameLabel: string;
@@ -44,6 +47,9 @@ export default function PrintTemplateEditor() {
     flyColumnLabel: 'العمود الرابع',
     primaryColor: '#4A0E6B',
     textColor: '#111827',
+    labelBgColor: '#F3E8FF',
+    labelBorderColor: '#D1C4E9',
+    voucherTitleColor: '#F57C00',
     logoUrl: "",
     footerAddress: '9647730308111 - 964771800033 | كربلاء - شارع الإسكان - قرب مستشفى احمد الوائلي',
     companyNameLabel: 'شركة الروضتين للسفر والسياحة',
@@ -192,6 +198,18 @@ export default function PrintTemplateEditor() {
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">لون النص</label>
                 <input type="color" name="textColor" value={settings.textColor} onChange={handleInputChange} className="w-full h-10 rounded-md" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">لون خلفية التسميات</label>
+                <input type="color" name="labelBgColor" value={settings.labelBgColor} onChange={handleInputChange} className="w-full h-10 rounded-md" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">لون حدود التسميات</label>
+                <input type="color" name="labelBorderColor" value={settings.labelBorderColor} onChange={handleInputChange} className="w-full h-10 rounded-md" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">لون عنوان الوصل</label>
+                <input type="color" name="voucherTitleColor" value={settings.voucherTitleColor} onChange={handleInputChange} className="w-full h-10 rounded-md" />
               </div>
             </div>
 

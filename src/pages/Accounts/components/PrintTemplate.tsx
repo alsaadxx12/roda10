@@ -24,6 +24,9 @@ export type VoucherData = {
 type TemplateSettings = {
   primaryColor: string;
   textColor: string;
+  labelBgColor?: string;
+  labelBorderColor?: string;
+  voucherTitleColor?: string;
   logoUrl: string;
   logoText?: string;
   footerAddress: string;
@@ -96,6 +99,9 @@ export async function generateVoucherHTML(
   const {
     primaryColor = '#4A0E6B',
     textColor = '#111827',
+    labelBgColor = '#F3E8FF',
+    labelBorderColor = '#D1C4E9',
+    voucherTitleColor = '#F57C00',
     logoUrl = "",
     logoText = "",
     footerAddress = '9647730308111 - 964771800033 | كربلاء - شارع الإسكان - قرب مستشفى احمد الوائلي',
@@ -222,16 +228,16 @@ export async function generateVoucherHTML(
         .info-bar-right { text-align: right; }
         .info-bar-left div, .info-bar-right div { font-size: 8pt; font-weight: 700; color: ${textColor}; line-height: 1.4; }
         .voucher-title { text-align: center; flex-grow: 1; }
-        .voucher-title h1 { margin: 0; font-size: 16pt; font-weight: 900; color: #F57C00; }
+        .voucher-title h1 { margin: 0; font-size: 16pt; font-weight: 900; color: ${voucherTitleColor}; }
         .content { flex-grow: 1; padding: 8px 16px; }
         .content-table { width: 100%; border-collapse: collapse; }
-        .content-table td { border: 1px solid #D1C4E9; padding: 4px 8px; font-weight: 700; font-size: 10.5pt; vertical-align: middle; }
-        .label-ar { background-color: #F3E8FF; width: 25%; text-align: right; }
+        .content-table td { border: 1px solid ${labelBorderColor}; padding: 4px 8px; font-weight: 700; font-size: 10.5pt; vertical-align: middle; }
+        .label-ar { background-color: ${labelBgColor}; width: 25%; text-align: right; }
         .value-col { text-align: center; font-size: 11.5pt; width: 50%; }
-        .label-en { background-color: #F3E8FF; width: 25%; text-align: left; }
+        .label-en { background-color: ${labelBgColor}; width: 25%; text-align: left; }
         .distribution-section { margin-top: 8px; }
-        .distribution-title { background-color: #F3E8FF; text-align: center; font-weight: 800; font-size: 9pt; padding: 2px; border: 1px solid #D1C4E9; }
-        .distribution-row { display: flex; justify-content: space-around; padding: 2px 8px; border: 1px solid #D1C4E9; border-top: none; }
+        .distribution-title { background-color: ${labelBgColor}; text-align: center; font-weight: 800; font-size: 9pt; padding: 2px; border: 1px solid ${labelBorderColor}; }
+        .distribution-row { display: flex; justify-content: space-around; padding: 2px 8px; border: 1px solid ${labelBorderColor}; border-top: none; }
         .distribution-item { font-size: 9pt; font-weight: 700; }
         .signatures { display: flex; justify-content: space-between; align-items: flex-end; padding: 8px 16px 5px; flex-shrink: 0; }
         .signature-box { text-align: center; font-size: 8pt; font-weight: 700; border-top: 1px dashed #9ca3af; padding-top: 8px; width: 150px; }

@@ -34,7 +34,7 @@ const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
   const [success, setSuccess] = React.useState<string | null>(null);
-  
+
   // Reset form when modal closes
   React.useEffect(() => {
     if (!isOpen) {
@@ -51,31 +51,31 @@ const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!employee) {
       setError('لم يتم العثور على بيانات الموظف');
       return;
     }
-    
+
     setIsSubmitting(true);
     setError(null);
     setSuccess(null);
-    
+
     try {
       // Validate form
       if (!formData.name.trim()) {
         throw new Error('يرجى إدخال اسم المصروف');
       }
-      
+
       // Check if expense with same name already exists
       const expensesRef = collection(db, 'expenses');
       const q = query(expensesRef, where('name', '==', formData.name.trim()));
       const existingExpenses = await getDocs(q);
-      
+
       if (!existingExpenses.empty) {
         throw new Error('يوجد مصروف بهذا الاسم بالفعل');
       }
-      
+
       // Create expense object
       const expenseData = {
         name: formData.name.trim(),
@@ -88,10 +88,10 @@ const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
         entityType: 'expense',
         paymentType: 'cash' // Default to cash
       };
-      
+
       // Add to Firestore
       const docRef = await addDoc(expensesRef, expenseData);
-      
+
       // Show success message
       setSuccess('تم إضافة المصروف بنجاح');
 
@@ -140,22 +140,22 @@ const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
             </button>
           </div>
         </div>
-        
+
         <div className="p-4">
           {error && (
             <div className="mb-4 p-3 bg-red-50 text-red-600 rounded-lg flex items-center gap-2 border border-red-100 text-sm">
-              <AlertTriangle className="w-5 h-5 flex-shrink-0" />
+              <AlertCircle className="w-5 h-5 flex-shrink-0" />
               <p>{error}</p>
             </div>
           )}
-          
+
           {success && (
             <div className="mb-4 p-3 bg-green-50 text-green-600 rounded-lg flex items-center gap-2 border border-green-100 text-sm">
               <Check className="w-5 h-5 flex-shrink-0" />
               <p>{success}</p>
             </div>
           )}
-          
+
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -172,7 +172,7 @@ const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
                 />
               </div>
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 المبلغ
@@ -187,7 +187,7 @@ const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
                     // Prevent multiple decimal points
                     const parts = value.split('.');
                     if (parts.length > 2) return;
-                    
+
                     setFormData(prev => ({ ...prev, amount: value }));
                   }}
                   className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 bg-gray-50 text-gray-900 shadow-sm pl-10"
@@ -197,7 +197,7 @@ const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
                 <DollarSign className="w-5 h-5 text-gray-400 absolute left-3 top-2" />
               </div>
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 رقم هاتف المسؤول
@@ -214,7 +214,7 @@ const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
                 <Phone className="w-5 h-5 text-gray-400 absolute left-3 top-2" />
               </div>
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 تفاصيل المصروف
@@ -229,7 +229,7 @@ const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
                 />
               </div>
             </div>
-            
+
             <div className="flex items-center justify-end gap-3 pt-3 border-t border-gray-200 mt-3">
               <button
                 type="button"

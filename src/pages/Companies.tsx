@@ -14,9 +14,13 @@ import NewEditCompanyModal from './Companies/components/NewEditCompanyModal';
 import DeleteCompanyModal from './Companies/components/DeleteCompanyModal';
 import ImportCompaniesModal from './Companies/components/ImportCompaniesModal';
 import EmptyCompaniesState from './Companies/components/EmptyCompaniesState';
-import useCompanies from './Companies/hooks/useCompanies';
+import useCompanies, { Company } from './Companies/hooks/useCompanies';
+import { doc, updateDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../lib/firebase';
+import { useAuth } from '../contexts/AuthContext';
 
 const Companies = () => {
+  const { employee } = useAuth();
   const { theme } = useTheme();
   const [isAddCompanyModalOpen, setIsAddCompanyModalOpen] = useState(false);
   const [isAddClientModalOpen, setIsAddClientModalOpen] = useState(false);
@@ -68,6 +72,20 @@ const Companies = () => {
   const handleExpenseAdded = () => {
     fetchData(1);
     setIsAddExpenseModalOpen(false);
+  };
+
+  const handleUpdate = async (id: string, data: Partial<Company>) => {
+    if (!selectedCompany) return;
+    const collectionName = selectedCompany.entityType === 'client' ? 'clients' :
+      selectedCompany.entityType === 'expense' ? 'expenses' : 'companies';
+    const companyRef = doc(db, collectionName, id);
+    await updateDoc(companyRef, {
+      ...data,
+      updatedAt: serverTimestamp(),
+      updatedBy: employee?.name || '',
+      updatedById: employee?.id || ''
+    });
+    fetchData(1);
   };
 
   return (
@@ -270,11 +288,9 @@ const Companies = () => {
       <NewEditCompanyModal
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
-        formData={formData}
-        setFormData={setFormData}
+        company={selectedCompany}
+        onUpdate={handleUpdate}
         isSubmitting={isSubmitting}
-        onSubmit={handleEditCompany}
-        selectedCompany={selectedCompany}
       />
 
       <DeleteCompanyModal
