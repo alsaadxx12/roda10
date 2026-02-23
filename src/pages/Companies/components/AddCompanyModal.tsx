@@ -99,8 +99,8 @@ const AddCompanyModal: React.FC<AddCompanyModalProps> = ({
     );
   }, [whatsappGroups, whatsAppSearchQuery]);
 
-  const handleLocalSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleLocalSubmit = async (e?: React.FormEvent) => {
+    e?.preventDefault();
 
     if (!employee) {
       setError('لم يتم العثور على بيانات الموظف');
@@ -179,7 +179,7 @@ const AddCompanyModal: React.FC<AddCompanyModalProps> = ({
       }
     }
     else {
-      await handleLocalSubmit(e!);
+      await handleLocalSubmit(e);
     }
   };
 
